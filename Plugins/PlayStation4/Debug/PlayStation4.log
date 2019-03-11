@@ -1,0 +1,30 @@
+﻿  InputBase.cpp
+  main.cpp
+  Ps4AudioEmitter.cpp
+c:\users\b8052301\ps4\richps4\plugins\playstation4\ps4audioemitter.h(2): fatal error C1083: Cannot open include file: 'audio3d.h': No such file or directory
+  PS4AudioSource.cpp
+c:\users\b8052301\ps4\richps4\plugins\playstation4\ps4audiosource.h(2): fatal error C1083: Cannot open include file: 'audio3d.h': No such file or directory
+  PS4AudioSystem.cpp
+c:\users\b8052301\ps4\richps4\plugins\playstation4\ps4soundemitter.h(3): fatal error C1083: Cannot open include file: './vectormath/scalar_cpp/vectormath_aos.h': No such file or directory
+  PS4ComputeShader.cpp
+  PS4Frame.cpp
+c:\users\b8052301\ps4\richps4\plugins\playstation4\ps4memoryaware.h(3): fatal error C1083: Cannot open include file: 'gnm.h': No such file or directory
+  PS4Input.cpp
+c:\users\b8052301\ps4\richps4\plugins\playstation4\ps4input.h(3): fatal error C1083: Cannot open include file: 'pad.h': No such file or directory
+  PS4MemoryAware.cpp
+c:\users\b8052301\ps4\richps4\plugins\playstation4\ps4memoryaware.h(3): fatal error C1083: Cannot open include file: 'gnm.h': No such file or directory
+  PS4Mesh.cpp
+c:\users\b8052301\ps4\richps4\plugins\playstation4\ps4memoryaware.h(3): fatal error C1083: Cannot open include file: 'gnm.h': No such file or directory
+  PS4RendererBase.cpp
+c:\users\b8052301\ps4\richps4\plugins\playstation4\ps4memoryaware.h(3): fatal error C1083: Cannot open include file: 'gnm.h': No such file or directory
+  PS4Shader.cpp
+c:\users\b8052301\ps4\richps4\plugins\playstation4\ps4memoryaware.h(3): fatal error C1083: Cannot open include file: 'gnm.h': No such file or directory
+  PS4Sound.cpp
+  PS4SoundEmitter.cpp
+c:\users\b8052301\ps4\richps4\plugins\playstation4\ps4soundemitter.h(3): fatal error C1083: Cannot open include file: './vectormath/scalar_cpp/vectormath_aos.h': No such file or directory
+  Ps4SoundSystem.cpp
+c:\users\b8052301\ps4\richps4\plugins\playstation4\ps4soundsystem.h(6): fatal error C1083: Cannot open include file: 'audio3d.h': No such file or directory
+  PS4Texture.cpp
+c:\users\b8052301\ps4\richps4\plugins\playstation4\ps4texture.h(4): fatal error C1083: Cannot open include file: 'gnm\texture.h': No such file or directory
+  PS4Window.cpp
+  Generating Code...

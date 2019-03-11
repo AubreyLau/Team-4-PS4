@@ -1,0 +1,28 @@
+﻿  Assets.cpp
+  Camera.cpp
+  GameTimer.cpp
+  Keyboard.cpp
+  Maths.cpp
+  Matrix2.cpp
+  Matrix3.cpp
+  Matrix4.cpp
+  MeshGeometry.cpp
+  Mouse.cpp
+  Plane.cpp
+  Quaternion.cpp
+  RendererBase.cpp
+  ShaderBase.cpp
+  SimpleFont.cpp
+  TextureBase.cpp
+  TextureLoader.cpp
+  TextureWriter.cpp
+  Win32Keyboard.cpp
+  Win32Mouse.cpp
+  Generating Code...
+  Compiling...
+  Win32Window.cpp
+c:\users\b8052301\ps4\richps4\common\win32window.cpp(129): warning C4244: '=': conversion from 'DWORD' to 'float', possible loss of data
+c:\users\b8052301\ps4\richps4\common\win32window.cpp(130): warning C4244: '=': conversion from 'DWORD' to 'float', possible loss of data
+  Window.cpp
+  Generating Code...
+  Common.vcxproj -> C:\Users\b8052301\ps4\RichPS4\Win32\Debug\Common.lib
