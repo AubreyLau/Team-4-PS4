@@ -18,25 +18,33 @@ int main(void) {
 
 	ExampleRenderer renderer(w);
 	//
-	PS4Input		input		= PS4Input();
-	
+	PS4Input		input = PS4Input();
+
 	Ps4SoundSystem*	soundSystem = new Ps4SoundSystem(8);
-	
+
 	while (true) {
 		input.Poll();
 
-		renderer.Update(2);
-		renderer.Render();
-	
+		/*renderer.Update(2);
+		renderer.Render();*/
+
 		if (input.GetButton(0)) {
-			std::cout << "LOL BUTTON" << std::endl;
+			std::cout << "Triangle BUTTON" << std::endl;
 		}
-	
+
 		if (input.GetButton(1)) {
 			return 1;
 		}
+
+		float x_axis0 = input.GetAxis(0).x;
+		float y_axis0 = input.GetAxis(0).y;
+
+		float x_axis1 = input.GetAxis(1).x;
+		float y_axis1 = input.GetAxis(1).y;
+
+		renderer.Update(2, x_axis0, y_axis0);
+		renderer.Render(x_axis1, y_axis1);
 	}
-	
+
 	return 1;
 }
-
