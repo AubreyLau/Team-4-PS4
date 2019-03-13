@@ -74,6 +74,13 @@ PS4Mesh* PS4RendererBase::setMesh(const std::string&filename) {
 
 }
 
+
+PS4Texture*  PS4RendererBase::SetTexture(const std::string&basicTexture/*, const std::string&bumpMap, const std::string&heightMap*/) {
+	static PS4Texture* t[3];
+	t[0] = PS4Texture::LoadTextureFromFile(basicTexture);
+	return *t;
+}
+
 //void PS4RendererBase::setMesh(const std::string&filename) {
 //	
 //	defaultSphere = PS4Mesh::GenerateSphere();

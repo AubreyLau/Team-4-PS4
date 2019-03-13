@@ -1,8 +1,8 @@
 ﻿  PS4RendererBase.cpp
-C:\Users\b8052301\Source\Repos\Team-4-PS4\Plugins\PlayStation4\PS4RendererBase.cpp(172,9): warning : unused variable 'a' [-Wunused-variable]
+C:\Users\b8052301\Source\Repos\Team-4-PS4\Plugins\PlayStation4\PS4RendererBase.cpp(179,9): warning : unused variable 'a' [-Wunused-variable]
                           bool a = true;
                                ^
-C:\Users\b8052301\Source\Repos\Team-4-PS4\Plugins\PlayStation4\PS4RendererBase.cpp(201,9): warning : unused variable 'a' [-Wunused-variable]
+C:\Users\b8052301\Source\Repos\Team-4-PS4\Plugins\PlayStation4\PS4RendererBase.cpp(208,9): warning : unused variable 'a' [-Wunused-variable]
                           bool a = true;
                                ^
   2 warnings generated.
