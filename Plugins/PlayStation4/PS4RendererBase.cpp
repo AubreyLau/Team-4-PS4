@@ -4,6 +4,9 @@
 #include "PS4Shader.h"
 #include "PS4Mesh.h"
 #include <gnmx\basegfxcontext.h>
+#include <fstream>
+#include <string>
+
 
 #include <.\graphics\api_gnm\toolkit\allocators.h>
 #include <.\graphics\api_gnm\toolkit\stack_allocator.h>
@@ -49,7 +52,10 @@ PS4RendererBase::PS4RendererBase(PS4Window*window)
 	);
 
 	defaultMesh		= PS4Mesh::GenerateTriangle();
+	defaultSphere = PS4Mesh::GenerateSphere();
+	myMesh = PS4Mesh::GenerateTriangle();
 	defaultTexture	= PS4Texture::LoadTextureFromFile("/app0/doge.gnf");
+	myTexture= PS4Texture::LoadTextureFromFile("/app0/test.gnf");
 
 	viewProjMat		= (Matrix4*)onionAllocator->allocate(sizeof(Matrix4), Gnm::kEmbeddedDataAlignment4);
 	*viewProjMat	= Matrix4();
@@ -60,10 +66,29 @@ PS4RendererBase::PS4RendererBase(PS4Window*window)
 	EndFrame(); //always swap at least once...
 }
 
+PS4Mesh* PS4RendererBase::setMesh(const std::string&filename) {
+	
+	defaultSphere = PS4Mesh::GenerateSphere();
+	myMesh = myMesh->GenerateMesh(filename);
+	return myMesh;
+
+}
+
+//void PS4RendererBase::setMesh(const std::string&filename) {
+//	
+//	defaultSphere = PS4Mesh::GenerateSphere();
+//	myMesh = myMesh->GenerateMesh(filename);
+//
+//}
+
+//  "$(SCE_ORBIS_SDK_DIR)\host_tools\bin\orbis-image2gnf" -i "%(FullPath)" -o "%(ProjectDir)%(Filename).gnf" -f Auto
 PS4RendererBase::~PS4RendererBase()	{
 	delete defaultMesh;
 	delete defaultTexture;
+	delete myTexture;
 	delete defaultShader;
+	delete defaultSphere;
+	delete myMesh;
 
 	DestroyGCMRendering();
 	DestroyVideoSystem();
@@ -208,6 +233,13 @@ void	PS4RendererBase::DestroyVideoSystem() {
 	sceVideoOutClose(videoHandle);
 }
 
+
+//
+Maths::Vector3 viewProjPos = Maths::Vector3(0, 0, 3);
+Maths::Matrix4 viewMat = Maths::Matrix4();
+Maths::Matrix4 projMat = Maths::Matrix4();
+
+
 void PS4RendererBase::RenderFrame()			{
 	currentFrame->StartFrame();	
 
@@ -237,9 +269,23 @@ void PS4RendererBase::RenderFrame()			{
 	trilinearSampler.setMipFilterMode(Gnm::kMipFilterModeLinear);
 
 	currentGFXContext->setTextures(Gnm::kShaderStagePs, 0, 1, &defaultTexture->GetAPITexture());
+
+
 	currentGFXContext->setSamplers(Gnm::kShaderStagePs, 0, 1, &trilinearSampler);
 
+	
+	viewMat = Matrix4::BuildViewMatrix(viewProjPos, Vector3(0, 0, 0), Vector3(0, 1, 0));
+
+	projMat = Matrix4::Perspective(1.0f, 100.0f, (float)16 / (float)9, 70.0f);
+
 	viewProjMat->ToIdentity();
+	//viewProjPos = viewProjPos + Vector3(0.01*3, -0.01*3, 0);
+	//viewProjMat->SetPositionVector(viewProjPos);
+	//viewProjMat->Rotation(x*90, Vector3(0, 0, 0));
+
+	*viewProjMat = projMat * viewMat;
+
+
 
 	RenderActiveScene();
 
@@ -299,8 +345,8 @@ void	PS4RendererBase::SetRenderBuffer(PS4ScreenBuffer*buffer, bool clearColour, 
 
 void	PS4RendererBase::ClearBuffer(bool colour, bool depth, bool stencil) {
 	if (colour) {
-		//Vector4 defaultClearColour(rand() / (float)RAND_MAX, rand() / (float)RAND_MAX, rand() / (float)RAND_MAX, 1.0f);
-		SonyMath::Vector4 defaultClearColour(0.1f, 0.1f, 0.1f, 1.0f);
+	//	SonyMath::Vector4 defaultClearColour(rand() / (float)RAND_MAX, rand() / (float)RAND_MAX, rand() / (float)RAND_MAX, 1.0f);
+		SonyMath::Vector4 defaultClearColour(0.36f, 0.52f, 0.64f, 1.0f);
 
 
 		SurfaceUtil::clearRenderTarget(*currentGFXContext, &currentPS4Buffer->colourTarget, defaultClearColour);
@@ -318,6 +364,21 @@ void	PS4RendererBase::ClearBuffer(bool colour, bool depth, bool stencil) {
 }
 
 
-void PS4RendererBase::DrawMesh(PS4Mesh& mesh) {
-	defaultMesh->SubmitDraw(*currentGFXContext, Gnm::ShaderStage::kShaderStageVs);
+void PS4RendererBase::DrawMesh(PS4Mesh *mesh) {
+	mesh->SubmitDraw(*currentGFXContext, Gnm::ShaderStage::kShaderStageVs);
+}
+
+void PS4RendererBase::DrawObject(RenderObject* o) {
+	
+	PS4Texture *t = (PS4Texture*)o->getTexture();
+	currentGFXContext->setTextures(Gnm::kShaderStagePs, 0, 1, &t->GetAPITexture());
+	PS4Mesh *m = (PS4Mesh*)o->GetMesh();
+	m->SubmitDraw(*currentGFXContext, Gnm::ShaderStage::kShaderStageVs);
+}
+
+void PS4RendererBase::DrawSphere(PS4Mesh& mesh) {
+	defaultSphere->SubmitDraw(*currentGFXContext, Gnm::ShaderStage::kShaderStageVs);
+
+	//	std::cout << "cube drawn!!!!" << std::endl;
+	
 }

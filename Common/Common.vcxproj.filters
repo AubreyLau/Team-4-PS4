@@ -173,5 +173,8 @@
     <ClInclude Include="TextureLoader.h">
       <Filter>Asset Handling</Filter>
     </ClInclude>
+    <ClInclude Include="MeshLoader.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

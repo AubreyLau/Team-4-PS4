@@ -98,16 +98,20 @@ void ReadIndices(std::ifstream& file, vector<unsigned int>& elements, int numInd
 	}
 }
 
-MeshGeometry::MeshGeometry(const std::string&filename) {
-	primType = GeometryPrimitive::Triangles;
-	std::ifstream file(Assets::MESHDIR + filename);
+ MeshGeometry::MeshGeometry(const std::string&filename) {
+	//std::cout << "using base class!!!";
 
+	primType = GeometryPrimitive::Triangles;
+//	std::ifstream file(Assets::MESHDIR + filename);
+	std::ifstream file(filename, std::ios::binary);
 	std::string filetype;
 	int fileVersion;
 
 	file >> filetype;
 
 	if (filetype != "MeshGeometry") {
+
+		std::cout << filetype << std::endl;
 		std::cout << "File is not a MeshGeometry file!" << std::endl;
 		return;
 	}
@@ -146,6 +150,9 @@ MeshGeometry::MeshGeometry(const std::string&filename) {
 			case GeometryChunkTypes::Indices:	ReadIndices(file, indices, numIndices); break;
 		}
 	}
+
+		std::cout << "Mesh loaded!!!!" << std::endl;
+	
 }
 
 MeshGeometry::~MeshGeometry()

@@ -3,14 +3,18 @@
 #include "../Plugins/PlayStation4/PS4Shader.h"
 #include "RenderObject.h"
 
+
 using namespace NCL;
 using namespace NCL::PS4;
 
 ExampleRenderer::ExampleRenderer(PS4Window* window) : PS4RendererBase(window)
 {
 	rotation = 0.0f;
+	//defaultMesh = MeshGeometry("");
 	defaultObject[0] = new RenderObject((MeshGeometry*)defaultMesh, (ShaderBase*)defaultShader, (TextureBase*)defaultTexture);
-	defaultObject[1] = new RenderObject((MeshGeometry*)defaultMesh, (ShaderBase*)defaultShader, (TextureBase*)defaultTexture);
+
+	defaultObject[1] = new RenderObject((MeshGeometry*)setMesh("/app0/sphere2.msh"), (ShaderBase*)defaultShader, (TextureBase*)myTexture);
+
 }
 
 ExampleRenderer::~ExampleRenderer()
@@ -22,9 +26,13 @@ ExampleRenderer::~ExampleRenderer()
 void ExampleRenderer::Update(float dt)	{
 	rotation += dt;
 
-	defaultObject[0]->SetLocalTransform(Matrix4::Translation(Vector3(-0.4, 0, 0)) * Matrix4::Rotation(rotation, Vector3(0,0,1)));
+	defaultObject[0]->SetLocalTransform(Matrix4::Scale(Vector3(2, 1, 1))*Matrix4::Translation(Vector3(-0.4, 0, 0.3)) * Matrix4::Rotation(rotation, Vector3(0,0,1)));
 
-	defaultObject[1]->SetLocalTransform(Matrix4::Translation(Vector3(0.4, 0, 0)));
+	defaultObject[1]->SetLocalTransform(Matrix4::Scale(Vector3(2, 1,1))*Matrix4::Translation(Vector3(0.4, 0, -0.3)));
+
+	//defaultObject[0]->SetLocalTransform(Matrix4::Scale(Vector3(0.5, 0.5, 0.5))* Matrix4::Translation(Vector3(-10.4, 0, 0)) * Matrix4::Rotation(rotation, Vector3(0, 0, 1)));
+
+	//defaultObject[1]->SetLocalTransform(Matrix4::Scale(Vector3(0.5, 0.5, 0.5))*Matrix4::Translation(Vector3(-10.4, 0, 0)));
 }
 
 void ExampleRenderer::RenderActiveScene() {
@@ -50,5 +58,7 @@ void ExampleRenderer::DrawRenderObject(RenderObject* o) {
 
 	realShader->SubmitShaderSwitch(*currentGFXContext);
 
-	DrawMesh(*defaultMesh);
+	//DrawMesh(myMesh);
+	//DrawCube(*defaultCube);
+	DrawObject(o);
 }

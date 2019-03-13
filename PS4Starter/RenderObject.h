@@ -24,7 +24,12 @@ namespace NCL {
 			Rendering::ShaderBase* GetShader() const {
 				return shader;
 			}
-
+			MeshGeometry* GetMesh() const {
+				return mesh;
+			}
+			Rendering::TextureBase* getTexture() {
+				return *textures;
+			}
 
 		protected:
 			MeshGeometry*	mesh;
