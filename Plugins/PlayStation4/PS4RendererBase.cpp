@@ -75,9 +75,17 @@ PS4Mesh* PS4RendererBase::setMesh(const std::string&filename) {
 }
 
 
-PS4Texture*  PS4RendererBase::SetTexture(const std::string&basicTexture/*, const std::string&bumpMap, const std::string&heightMap*/) {
-	static PS4Texture* t[3];
+PS4Texture*  PS4RendererBase::SetTexture(const std::string&basicTexture, const std::string bumpMap, const std::string heightMap) {
+	// PS4Texture* t[3];
 	t[0] = PS4Texture::LoadTextureFromFile(basicTexture);
+	if (bumpMap!="") {
+		t[1] = PS4Texture::LoadTextureFromFile(bumpMap);
+	}
+
+	if (heightMap != "") {
+		t[2] = PS4Texture::LoadTextureFromFile(heightMap);
+	}
+
 	return *t;
 }
 
@@ -377,10 +385,14 @@ void PS4RendererBase::DrawMesh(PS4Mesh *mesh) {
 
 void PS4RendererBase::DrawObject(RenderObject* o) {
 	
-	PS4Texture *t = (PS4Texture*)o->getTexture();
-	currentGFXContext->setTextures(Gnm::kShaderStagePs, 0, 1, &t->GetAPITexture());
-	PS4Mesh *m = (PS4Mesh*)o->GetMesh();
-	m->SubmitDraw(*currentGFXContext, Gnm::ShaderStage::kShaderStageVs);
+	//PS4Texture *t = (PS4Texture*)o->getBasicTex();
+	////currentGFXContext->setTextures(Gnm::kShaderStagePs, 0, 1, &t[0]->GetAPITexture());
+	////currentGFXContext->setTextures(Gnm::kShaderStagePs, 0, 1, &t->GetAPITexture());
+	
+	currentGFXContext->setTextures(Gnm::kShaderStagePs, 0, 1, &((PS4Texture*)o->getBasicTex())->GetAPITexture());
+	
+	((PS4Mesh*)o->GetMesh())->SubmitDraw(*currentGFXContext, Gnm::ShaderStage::kShaderStageVs);
+
 }
 
 void PS4RendererBase::DrawSphere(PS4Mesh& mesh) {

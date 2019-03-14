@@ -57,6 +57,7 @@ namespace NCL {
 
 			int*		indexBuffer;
 			MeshVertex*	vertexBuffer;
+	
 
 			int	vertexDataSize;
 			int indexDataSize;
