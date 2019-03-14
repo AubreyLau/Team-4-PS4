@@ -10,7 +10,9 @@ namespace NCL {
 			ExampleRenderer(PS4Window* window);
 			~ExampleRenderer();
 
-			void Update(float dt)	 override;
+			/*void Update(float dt)	 override;*/
+			void Update(float dt, float x, float y);
+
 
 		protected:
 			void DrawRenderObject(RenderObject* o);
@@ -20,6 +22,7 @@ namespace NCL {
 
 			float rotation;
 			RenderObject* defaultObject[2];
+
 		};
 	}
 }
