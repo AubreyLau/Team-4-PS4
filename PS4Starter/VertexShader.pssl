@@ -20,6 +20,12 @@ struct VS_OUTPUT
 {
 	float4 Position		: S_POSITION;
 	float2 UV			: TEXCOORD0; 
+	/////
+	float3 LightVec	    : TEXCOORD1;
+	float3 WorldNormal	: TEXCOORD2;
+	float3 WorldEyeVec	: TEXCOORD3;
+
+
 };
 
 VS_OUTPUT main(VS_INPUT Input)
