@@ -21,10 +21,17 @@ RenderObject::~RenderObject()
 
 }
 
-RenderObject::RenderObject(MeshGeometry* m, NCL::Rendering::ShaderBase* s, NCL::Rendering::TextureBase* t) {
+RenderObject::RenderObject(MeshGeometry* m, NCL::Rendering::ShaderBase* s, NCL::Rendering::TextureBase* t,NCL::Rendering::TextureBase* t1,NCL::Rendering::TextureBase* t2) {
 	mesh		= m;
 	shader		= s;
 	textures[0] = t;
+	if (t1) {
+	textures[1] = t1;
+	}
+	if (t2) {
+	textures[2] = t2;
+	}
+
 }
 
 const Maths::Matrix4& RenderObject::GetLocalTransform() const {
