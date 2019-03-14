@@ -1,10 +1,11 @@
 #pragma once
 #include "../../Common/RendererBase.h"
 #include "PS4MemoryAware.h"
-
+#include"../../PS4Starter/RenderObject.h"
 #include <gnm.h>
 #include <gnmx\fetchshaderhelper.h>
-
+#include <fstream>
+#include <string>
 #include <..\samples\sample_code\graphics\api_gnm\toolkit\allocators.h>
 #include <..\samples\sample_code\graphics\api_gnm\toolkit\stack_allocator.h>
 #include <..\samples\sample_code\graphics\api_gnm\toolkit\toolkit.h>
@@ -49,13 +50,16 @@ namespace NCL {
 
 			void	OnWindowResize(int w, int h) override;
 			void	BeginFrame()    override;
-			void	RenderFrame(float x, float y)	override;
+			void	RenderFrame()	override;
 			void	EndFrame()		override;
 
 			void	SwapScreenBuffer();
 			void	SwapCommandBuffer();
 			
-			void	DrawMesh(PS4Mesh& mesh);
+			void	DrawMesh(PS4Mesh* mesh);
+			void	DrawObject(RenderObject* object);
+
+			void	DrawSphere(PS4Mesh& mesh);
 
 		private:
 			void	InitialiseMemoryAllocators();
@@ -93,7 +97,16 @@ namespace NCL {
 			//default data
 			PS4Shader*	defaultShader;
 			PS4Mesh*	defaultMesh;
+			PS4Mesh*	defaultSphere;
+			PS4Mesh*	myMesh;
+			PS4Mesh*    setMesh(const std::string&filename);
 			PS4Texture* defaultTexture;
+			PS4Texture* myTexture;
+			PS4Texture* SetTexture(const std::string&basicTexture, const std::string bumpMap="", const std::string heightMap="");
+			PS4Texture* t[3];
+
+		//void setMesh(const std::string&filename);
+
 
 			//Individual Frames
 			PS4Frame*	frames;

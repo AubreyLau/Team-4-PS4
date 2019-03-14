@@ -15,6 +15,9 @@
     <Filter Include="Textures">
       <UniqueIdentifier>{f2bc8eb6-b244-423a-92cb-29636261ba1e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Mesh">
+      <UniqueIdentifier>{91235905-9d05-4cd6-a08b-7a15dd8790be}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -47,5 +50,18 @@
     <CustomBuild Include="..\Assets\Textures\doge.png">
       <Filter>Textures</Filter>
     </CustomBuild>
+    <CustomBuild Include="test.png">
+      <Filter>Textures</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Cube.msh">
+      <Filter>Mesh</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="brick.png">
+      <Filter>Textures</Filter>
+    </Image>
   </ItemGroup>
 </Project>

@@ -108,6 +108,16 @@
       <Project>{f5be021d-746b-4e66-91de-70481bd3d84a}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Cube.msh" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="brick.png" />
+    <CustomBuild Include="test.png">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">"$(SCE_ORBIS_SDK_DIR)\host_tools\bin\orbis-image2gnf" -i "%(FullPath)" -o "%(ProjectDir)%(Filename).gnf" -f Auto</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">test.gnf</Outputs>
+    </CustomBuild>
+  </ItemGroup>
   <Import Condition="'$(ConfigurationType)' == 'Makefile' and Exists('$(VCTargetsPath)\Platforms\$(Platform)\SCE.Makefile.$(Platform).targets')" Project="$(VCTargetsPath)\Platforms\$(Platform)\SCE.Makefile.$(Platform).targets" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
