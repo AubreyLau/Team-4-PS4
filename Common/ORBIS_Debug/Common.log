@@ -1,3 +1,22 @@
-﻿  RendererBase.cpp
-  Window.cpp
+﻿  MeshGeometry.cpp
+C:\Users\b8052301\Source\Repos\Team-4-PS4\Common\MeshGeometry.cpp(145,11): warning : 5 enumeration values not handled in switch: 'VTex1', 'VWeightValues', 'VWeightIndices'... [-Wswitch]
+                  switch ((GeometryChunkTypes)chunkType) {
+                          ^
+  In file included from C:\Users\b8052301\Source\Repos\Team-4-PS4\Common\MeshGeometry.cpp:6:
+C:\Users\b8052301\Source\Repos\Team-4-PS4\Common/ObjLoader.h(235,13): warning : unused function 'parseTriple' [-Wunused-function]
+  static bool parseTriple(const char **token, int vsize, int vnsize, int vtsize,
+              ^
+C:\Users\b8052301\Source\Repos\Team-4-PS4\Common/ObjLoader.h(418,13): warning : unused function 'exportGroupsToShape' [-Wunused-function]
+  static bool exportGroupsToShape(shape_t *shape,
+              ^
+  3 warnings generated.
+  ObjLoader.cpp
+C:\Users\b8052301\Source\Repos\Team-4-PS4\Common\ObjLoader.cpp(59,6): warning : unused variable 'material' [-Wunused-variable]
+          int material = -1;
+              ^
+  In file included from C:\Users\b8052301\Source\Repos\Team-4-PS4\Common\ObjLoader.cpp:1:
+C:\Users\b8052301\Source\Repos\Team-4-PS4\Common/ObjLoader.h(418,13): warning : unused function 'exportGroupsToShape' [-Wunused-function]
+  static bool exportGroupsToShape(shape_t *shape,
+              ^
+  2 warnings generated.
   Common.vcxproj -> C:\Users\b8052301\Source\Repos\Team-4-PS4\ORBIS\Debug\Common.a

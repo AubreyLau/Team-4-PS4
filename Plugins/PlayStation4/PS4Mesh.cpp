@@ -118,7 +118,9 @@ void	PS4Mesh::UploadToGPU() {
 		memcpy(&vertexBuffer[i].position,	  &positions[i], sizeof(float) * 3);
 		memcpy(&vertexBuffer[i].textureCoord, &texCoords[i], sizeof(float) * 2);
 		memcpy(&vertexBuffer[i].normal,		  &normals[i],   sizeof(float) * 3);
-		memcpy(&vertexBuffer[i].tangent,	  &tangents[i],  sizeof(float) * 3);
+		if (!tangents.empty()) {
+			memcpy(&vertexBuffer[i].tangent, &tangents[i], sizeof(float) * 3);
+		}
 	}
 
 	for (int i = 0; i < GetIndexCount(); ++i) { //Our index buffer might not have the same data size as the source indices?
