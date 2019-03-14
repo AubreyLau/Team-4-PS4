@@ -1,7 +1,7 @@
 #pragma once
 #include "../Common/Matrix4.h"
 #include "../Common/MeshGeometry.h"
-
+#include"../Plugins/PlayStation4/PS4Texture.h"
 class ShaderBase;
 class TextureBase;
 
@@ -16,7 +16,7 @@ namespace NCL {
 			RenderObject();
 			~RenderObject();
 
-			RenderObject(MeshGeometry* m, Rendering::ShaderBase* shader, Rendering::TextureBase* tex);
+			RenderObject(MeshGeometry* m, Rendering::ShaderBase* shader, Rendering::TextureBase* tex, Rendering::TextureBase* bumpTex=nullptr, Rendering::TextureBase* heightTex=nullptr);
 
 			const Maths::Matrix4& GetLocalTransform() const;
 			void	SetLocalTransform(const Maths::Matrix4& mat);
@@ -27,8 +27,28 @@ namespace NCL {
 			MeshGeometry* GetMesh() const {
 				return mesh;
 			}
-			Rendering::TextureBase* getTexture() {
-				return *textures;
+
+			//Texture setters
+			
+			void SetBasicTex(const std::string&Tex) {
+				textures[0] = PS4Texture::LoadTextureFromFile(Tex);
+			}
+			void SetBumpTex(const std::string&Tex) {
+				textures[1] = PS4Texture::LoadTextureFromFile(Tex);
+			}
+			void SetHeightMap(const std::string&Tex) {
+				textures[2] = PS4Texture::LoadTextureFromFile(Tex);
+			}
+			
+			//Texture getters
+			Rendering::TextureBase* getBasicTex() {
+				return textures[0];
+			}
+			Rendering::TextureBase* getBumpTex() {
+				return textures[1];
+			}
+			Rendering::TextureBase* getHeightMap() {
+				return textures[2];
 			}
 
 		protected:
