@@ -391,6 +391,7 @@ void PS4RendererBase::DrawObject(RenderObject* o) {
 	
 	currentGFXContext->setTextures(Gnm::kShaderStagePs, 0, 1, &((PS4Texture*)o->getBasicTex())->GetAPITexture());
 	
+	
 	((PS4Mesh*)o->GetMesh())->SubmitDraw(*currentGFXContext, Gnm::ShaderStage::kShaderStageVs);
 
 }
