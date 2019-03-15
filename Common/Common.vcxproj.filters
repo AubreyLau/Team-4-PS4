@@ -96,6 +96,9 @@
     <ClCompile Include="TextureLoader.cpp">
       <Filter>Asset Handling</Filter>
     </ClCompile>
+    <ClCompile Include="ObjLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -172,6 +175,9 @@
     </ClInclude>
     <ClInclude Include="TextureLoader.h">
       <Filter>Asset Handling</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjLoader.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -4,6 +4,9 @@
 #include "PS4Shader.h"
 #include "PS4Mesh.h"
 #include <gnmx\basegfxcontext.h>
+#include <fstream>
+#include <string>
+
 
 #include <.\graphics\api_gnm\toolkit\allocators.h>
 #include <.\graphics\api_gnm\toolkit\stack_allocator.h>
@@ -25,18 +28,18 @@ sce::Gnmx::Toolkit::IAllocator	gAllocator;
 PS4RendererBase::PS4RendererBase(PS4Window*window)
 	: RendererBase(*window),
 	_MaxCMDBufferCount(3),
-	_bufferCount(3),
-	_GarlicMemory(1024 * 1024 * 512),
-	_OnionMemory(1024 * 1024 * 256)
+	  _bufferCount(3),
+	  _GarlicMemory(1024 * 1024 * 512),
+	  _OnionMemory( 1024 * 1024 * 256)
 {
-	framesSubmitted = 0;
-	currentGPUBuffer = 0;
-	currentScreenBuffer = 0;
-	prevScreenBuffer = 0;
+	framesSubmitted		 = 0;
+	currentGPUBuffer	 = 0;
+	currentScreenBuffer	 = 0;
+	prevScreenBuffer	 = 0;
 
 	std::cerr << "Starting Rich Code!" << std::endl;
 
-	currentGFXContext = nullptr;
+	currentGFXContext	 = nullptr;
 
 	InitialiseMemoryAllocators();
 
@@ -48,14 +51,14 @@ PS4RendererBase::PS4RendererBase(PS4Window*window)
 		"/app0/PixelShader.sb"
 	);
 
-	defaultMesh = PS4Mesh::GenerateTriangle();
-	defaultTexture = PS4Texture::LoadTextureFromFile("/app0/doge.gnf");
+	defaultMesh		= PS4Mesh::GenerateTriangle();
+	defaultSphere = PS4Mesh::GenerateSphere();
+	myMesh = PS4Mesh::GenerateTriangle();
+	defaultTexture	= PS4Texture::LoadTextureFromFile("/app0/doge.gnf");
+	myTexture= PS4Texture::LoadTextureFromFile("/app0/test.gnf");
 
-	viewProjMat = (Matrix4*)onionAllocator->allocate(sizeof(Matrix4), Gnm::kEmbeddedDataAlignment4);
-	*viewProjMat = Matrix4();
-
-	//viewProjMat->SetPositionVector(Vector3(1.5, 100, 100));
-	//viewProjMat->SetScalingVector(Vector3(2, 5, 2));
+	viewProjMat		= (Matrix4*)onionAllocator->allocate(sizeof(Matrix4), Gnm::kEmbeddedDataAlignment4);
+	*viewProjMat	= Matrix4();
 
 	cameraBuffer.initAsConstantBuffer(viewProjMat, sizeof(Matrix4));
 	cameraBuffer.setResourceMemoryType(Gnm::kResourceMemoryTypeRO); // it's a constant buffer, so read-only is OK
@@ -63,10 +66,44 @@ PS4RendererBase::PS4RendererBase(PS4Window*window)
 	EndFrame(); //always swap at least once...
 }
 
-PS4RendererBase::~PS4RendererBase() {
+PS4Mesh* PS4RendererBase::setMesh(const std::string&filename) {
+	
+	defaultSphere = PS4Mesh::GenerateSphere();
+	myMesh = myMesh->GenerateMesh(filename);
+	return myMesh;
+
+}
+
+
+PS4Texture*  PS4RendererBase::SetTexture(const std::string&basicTexture, const std::string bumpMap, const std::string heightMap) {
+	// PS4Texture* t[3];
+	t[0] = PS4Texture::LoadTextureFromFile(basicTexture);
+	if (bumpMap!="") {
+		t[1] = PS4Texture::LoadTextureFromFile(bumpMap);
+	}
+
+	if (heightMap != "") {
+		t[2] = PS4Texture::LoadTextureFromFile(heightMap);
+	}
+
+	return *t;
+}
+
+//void PS4RendererBase::setMesh(const std::string&filename) {
+//	
+//	defaultSphere = PS4Mesh::GenerateSphere();
+//	myMesh = myMesh->GenerateMesh(filename);
+//
+//}
+
+//  "$(SCE_ORBIS_SDK_DIR)\host_tools\bin\orbis-image2gnf" -i "%(FullPath)" -o "%(ProjectDir)%(Filename).gnf" -f Auto
+PS4RendererBase::~PS4RendererBase()	{
 	delete defaultMesh;
 	delete defaultTexture;
+	delete myTexture;
 	delete defaultShader;
+	delete defaultSphere;
+	delete myMesh;
 
 	DestroyGCMRendering();
 	DestroyVideoSystem();
@@ -81,7 +118,7 @@ void	PS4RendererBase::InitialiseVideoSystem() {
 	}
 
 	//Now we can open up the video port
-	videoHandle = sceVideoOutOpen(0, SCE_VIDEO_OUT_BUS_TYPE_MAIN, 0, NULL);
+	videoHandle		= sceVideoOutOpen(0, SCE_VIDEO_OUT_BUS_TYPE_MAIN, 0, NULL);
 
 	SceVideoOutBufferAttribute attribute;
 	sceVideoOutSetBufferAttribute(&attribute,
@@ -115,32 +152,32 @@ void	PS4RendererBase::InitialiseGCMRendering() {
 
 void	PS4RendererBase::InitialiseMemoryAllocators() {
 	stackAllocators[GARLIC].init(SCE_KERNEL_WC_GARLIC, _GarlicMemory);
-	stackAllocators[ONION].init(SCE_KERNEL_WB_ONION, _OnionMemory);
+	stackAllocators[ONION ].init(SCE_KERNEL_WB_ONION , _OnionMemory);
 
 	oAllocator = Gnmx::Toolkit::GetInterface(&stackAllocators[ONION]);
 	gAllocator = Gnmx::Toolkit::GetInterface(&stackAllocators[GARLIC]);
 
-	this->garlicAllocator = &gAllocator;
-	this->onionAllocator = &oAllocator;
+	this->garlicAllocator   = &gAllocator;
+	this->onionAllocator	= &oAllocator;
 	Gnm::registerOwner(&ownerHandle, "PS4RendererBase");
 }
 
 void PS4RendererBase::DestroyMemoryAllocators() {
 	stackAllocators[GARLIC].deinit();
-	stackAllocators[ONION].deinit();
+	stackAllocators[ONION ].deinit();
 }
 
 PS4ScreenBuffer*	PS4RendererBase::GenerateScreenBuffer(uint width, uint height, bool colour, bool depth, bool stencil) {
 	PS4ScreenBuffer* buffer = new PS4ScreenBuffer();
 
-	if (colour) {
+	if (colour) {	
 		Gnm::RenderTargetSpec spec;
 		spec.init();
-		spec.m_width = width;
-		spec.m_height = height;
-		spec.m_numSamples = Gnm::kNumSamples1;
+		spec.m_width		= width;
+		spec.m_height		= height;
+		spec.m_numSamples	= Gnm::kNumSamples1;
 		spec.m_numFragments = Gnm::kNumFragments1;
-		spec.m_colorFormat = Gnm::kDataFormatB8G8R8A8UnormSrgb;
+		spec.m_colorFormat	= Gnm::kDataFormatB8G8R8A8UnormSrgb;	
 
 		GpuAddress::computeSurfaceTileMode(Gnm::GpuMode::kGpuModeBase, &spec.m_colorTileModeHint, GpuAddress::kSurfaceTypeColorTargetDisplayable, spec.m_colorFormat, 1);
 
@@ -163,11 +200,11 @@ PS4ScreenBuffer*	PS4RendererBase::GenerateScreenBuffer(uint width, uint height, 
 	if (depth) {
 		Gnm::DepthRenderTargetSpec spec;
 		spec.init();
-		spec.m_width = width;
-		spec.m_height = height;
-		spec.m_numFragments = Gnm::kNumFragments1;
-		spec.m_zFormat = Gnm::ZFormat::kZFormat32Float;
-		spec.m_stencilFormat = (stencil ? Gnm::kStencil8 : Gnm::kStencilInvalid);
+		spec.m_width			= width;
+		spec.m_height			= height;
+		spec.m_numFragments		= Gnm::kNumFragments1;
+		spec.m_zFormat			= Gnm::ZFormat::kZFormat32Float;
+		spec.m_stencilFormat	= (stencil ? Gnm::kStencil8 : Gnm::kStencilInvalid);
 
 		GpuAddress::computeSurfaceTileMode(Gnm::GpuMode::kGpuModeBase, &spec.m_tileModeHint, GpuAddress::kSurfaceTypeDepthTarget, Gnm::DataFormat::build(spec.m_zFormat), 1);
 
@@ -211,12 +248,15 @@ void	PS4RendererBase::DestroyVideoSystem() {
 	sceVideoOutClose(videoHandle);
 }
 
+
+//
 Maths::Vector3 viewProjPos = Maths::Vector3(0, 0, 3);
 Maths::Matrix4 viewMat = Maths::Matrix4();
 Maths::Matrix4 projMat = Maths::Matrix4();
 
-void PS4RendererBase::RenderFrame(float x, float y) {
-	currentFrame->StartFrame();
+
+void PS4RendererBase::RenderFrame()			{
+	currentFrame->StartFrame();	
 
 	currentGFXContext->waitUntilSafeForRendering(videoHandle, currentGPUBuffer);
 
@@ -244,21 +284,23 @@ void PS4RendererBase::RenderFrame(float x, float y) {
 	trilinearSampler.setMipFilterMode(Gnm::kMipFilterModeLinear);
 
 	currentGFXContext->setTextures(Gnm::kShaderStagePs, 0, 1, &defaultTexture->GetAPITexture());
+
+
 	currentGFXContext->setSamplers(Gnm::kShaderStagePs, 0, 1, &trilinearSampler);
 
-	viewProjPos = viewProjPos + Vector3(0.01*x, -0.01*y, 0);
-
-	//Build ViewMat Way1
+	
 	viewMat = Matrix4::BuildViewMatrix(viewProjPos, Vector3(0, 0, 0), Vector3(0, 1, 0));
-	//viewMat.Rotation(0, Vector3(1, 1, 1));
-
-	//Build ViewMat Way2
-	//viewMat = Matrix4::BuildCameraViewMat(viewProjPos, -90, 0);	
 
 	projMat = Matrix4::Perspective(1.0f, 100.0f, (float)16 / (float)9, 70.0f);
 
 	viewProjMat->ToIdentity();
+	//viewProjPos = viewProjPos + Vector3(0.01*3, -0.01*3, 0);
+	//viewProjMat->SetPositionVector(viewProjPos);
+	//viewProjMat->Rotation(x*90, Vector3(0, 0, 0));
+
 	*viewProjMat = projMat * viewMat;
+
+
 
 	RenderActiveScene();
 
@@ -267,21 +309,21 @@ void PS4RendererBase::RenderFrame(float x, float y) {
 	framesSubmitted++;
 }
 
-void	PS4RendererBase::OnWindowResize(int w, int h) {
+void	PS4RendererBase::OnWindowResize(int w, int h)  {
 
 }
 
-void	PS4RendererBase::BeginFrame() {
+void	PS4RendererBase::BeginFrame()   {
 
 }
 
-void PS4RendererBase::EndFrame() {
+void PS4RendererBase::EndFrame()			{
 	SwapScreenBuffer();
 	SwapCommandBuffer();
 }
 
 void	PS4RendererBase::SwapScreenBuffer() {
-	prevScreenBuffer = currentScreenBuffer;
+	prevScreenBuffer	= currentScreenBuffer;
 	currentScreenBuffer = (currentScreenBuffer + 1) % _bufferCount;
 	sceVideoOutSubmitFlip(videoHandle, prevScreenBuffer, SCE_VIDEO_OUT_FLIP_MODE_VSYNC, 0);
 
@@ -289,19 +331,19 @@ void	PS4RendererBase::SwapScreenBuffer() {
 }
 
 void	PS4RendererBase::SwapCommandBuffer() {
-	if (currentGFXContext) {
+	if (currentGFXContext) {	
 		if (currentGFXContext->submit() != sce::Gnm::kSubmissionSuccess) {
 			std::cerr << "Graphics queue submission failed?" << std::endl;
 		}
 		Gnm::submitDone();
 	}
 
-	currentGPUBuffer = (currentGPUBuffer + 1) % _MaxCMDBufferCount;
-
-	currentFrame = &frames[currentGPUBuffer];
-	currentGFXContext = &currentFrame->GetCommandBuffer();
+	currentGPUBuffer	= (currentGPUBuffer + 1) % _MaxCMDBufferCount;
+	 
+	currentFrame		= &frames[currentGPUBuffer]; 
+	currentGFXContext	= &currentFrame->GetCommandBuffer();
 }
-
+ 
 void	PS4RendererBase::SetRenderBuffer(PS4ScreenBuffer*buffer, bool clearColour, bool clearDepth, bool clearStencil) {
 	currentPS4Buffer = buffer;
 	currentGFXContext->setRenderTargetMask(0xF);
@@ -318,8 +360,8 @@ void	PS4RendererBase::SetRenderBuffer(PS4ScreenBuffer*buffer, bool clearColour, 
 
 void	PS4RendererBase::ClearBuffer(bool colour, bool depth, bool stencil) {
 	if (colour) {
-		//Vector4 defaultClearColour(rand() / (float)RAND_MAX, rand() / (float)RAND_MAX, rand() / (float)RAND_MAX, 1.0f);
-		SonyMath::Vector4 defaultClearColour(0.1f, 0.1f, 0.1f, 1.0f);
+	//	SonyMath::Vector4 defaultClearColour(rand() / (float)RAND_MAX, rand() / (float)RAND_MAX, rand() / (float)RAND_MAX, 1.0f);
+		SonyMath::Vector4 defaultClearColour(0.36f, 0.52f, 0.64f, 1.0f);
 
 
 		SurfaceUtil::clearRenderTarget(*currentGFXContext, &currentPS4Buffer->colourTarget, defaultClearColour);
@@ -337,6 +379,31 @@ void	PS4RendererBase::ClearBuffer(bool colour, bool depth, bool stencil) {
 }
 
 
-void PS4RendererBase::DrawMesh(PS4Mesh& mesh) {
-	defaultMesh->SubmitDraw(*currentGFXContext, Gnm::ShaderStage::kShaderStageVs);
+void PS4RendererBase::DrawMesh(PS4Mesh *mesh) {
+	mesh->SubmitDraw(*currentGFXContext, Gnm::ShaderStage::kShaderStageVs);
+}
+
+void PS4RendererBase::DrawObject(RenderObject* o) {
+	
+	//PS4Texture *t = (PS4Texture*)o->getBasicTex();
+	////currentGFXContext->setTextures(Gnm::kShaderStagePs, 0, 1, &t[0]->GetAPITexture());
+	////currentGFXContext->setTextures(Gnm::kShaderStagePs, 0, 1, &t->GetAPITexture());
+	
+	currentGFXContext->setTextures(Gnm::kShaderStagePs, 0, 2, &((PS4Texture*)o->getBasicTex())->GetAPITexture());
+	currentGFXContext->setTextures(Gnm::kShaderStagePs, 1, 2, &((PS4Texture*)o->getBasicTex())->GetAPITexture());
+
+	if ((PS4Texture*)o->getBumpTex()!=nullptr) {
+		std::cout << "N!!!!!!!!!!!!\n\n\n";
+	currentGFXContext->setTextures(Gnm::kShaderStagePs, 1, 2, &((PS4Texture*)o->getBumpTex())->GetAPITexture());
+	}
+	
+	((PS4Mesh*)o->GetMesh())->SubmitDraw(*currentGFXContext, Gnm::ShaderStage::kShaderStageVs);
+
+}
+
+void PS4RendererBase::DrawSphere(PS4Mesh& mesh) {
+	defaultSphere->SubmitDraw(*currentGFXContext, Gnm::ShaderStage::kShaderStageVs);
+
+	//	std::cout << "cube drawn!!!!" << std::endl;
+	
 }

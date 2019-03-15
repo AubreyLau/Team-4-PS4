@@ -199,6 +199,7 @@
     <ClCompile Include="Matrix4.cpp" />
     <ClCompile Include="MeshGeometry.cpp" />
     <ClCompile Include="Mouse.cpp" />
+    <ClCompile Include="ObjLoader.cpp" />
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="Quaternion.cpp" />
     <ClCompile Include="RendererBase.cpp" />
@@ -223,6 +224,7 @@
     <ClInclude Include="Matrix4.h" />
     <ClInclude Include="MeshGeometry.h" />
     <ClInclude Include="Mouse.h" />
+    <ClInclude Include="ObjLoader.h" />
     <ClInclude Include="Plane.h" />
     <ClInclude Include="Quaternion.h" />
     <ClInclude Include="RendererBase.h" />

@@ -1,17 +1,35 @@
 #include "PS4Mesh.h"
 #include "../../Common/Vector2.h"
 #include "../../Common/Vector3.h"
+#include "../../Common/Vector4.h"
+#include "../../Common/Assets.h"
 
+#include <fstream>
+#include <string>
 #include <.\graphics\api_gnm\toolkit\allocators.h>
 #include <.\graphics\api_gnm\toolkit\stack_allocator.h>
 
+
 using namespace NCL::Maths;
 using namespace NCL::PS4;
-
 PS4Mesh::PS4Mesh()	{
 	indexBuffer		= 0;
 	vertexBuffer	= 0;
 	attributeCount	= 0;
+}
+
+
+PS4Mesh::PS4Mesh(const std::string&filename):MeshGeometry(filename) {
+	
+}
+
+PS4Mesh* PS4Mesh::GenerateMesh(const std::string & filename)
+{
+	PS4Mesh* mesh = new PS4Mesh(filename);
+	mesh->indexType = sce::Gnm::IndexSize::kIndexSize32;
+	mesh->primitiveType = sce::Gnm::PrimitiveType::kPrimitiveTypeTriList;
+	mesh->UploadToGPU();
+	return mesh;
 }
 
 PS4Mesh::~PS4Mesh()	{
@@ -45,6 +63,15 @@ PS4Mesh* PS4Mesh::GenerateQuad() {
 	return mesh;
 }
 
+PS4Mesh* PS4Mesh::GenerateSphere()
+{
+	PS4Mesh* mesh = new PS4Mesh("/app0/sphere2.msh");
+	mesh->indexType = sce::Gnm::IndexSize::kIndexSize32;
+	mesh->primitiveType = sce::Gnm::PrimitiveType::kPrimitiveTypeTriList;
+	mesh->UploadToGPU();
+	return mesh;
+}
+
 PS4Mesh* PS4Mesh::GenerateSinglePoint() {
 	PS4Mesh* mesh = new PS4Mesh();
 
@@ -61,6 +88,7 @@ PS4Mesh* PS4Mesh::GenerateSinglePoint() {
 }
 
 PS4Mesh* PS4Mesh::GenerateTriangle() {
+	
 	PS4Mesh* mesh = new PS4Mesh();
 
 	mesh->indexType		= sce::Gnm::IndexSize::kIndexSize32;
@@ -90,7 +118,9 @@ void	PS4Mesh::UploadToGPU() {
 		memcpy(&vertexBuffer[i].position,	  &positions[i], sizeof(float) * 3);
 		memcpy(&vertexBuffer[i].textureCoord, &texCoords[i], sizeof(float) * 2);
 		memcpy(&vertexBuffer[i].normal,		  &normals[i],   sizeof(float) * 3);
-		memcpy(&vertexBuffer[i].tangent,	  &tangents[i],  sizeof(float) * 3);
+		if (!tangents.empty()) {
+			memcpy(&vertexBuffer[i].tangent, &tangents[i], sizeof(float) * 3);
+		}
 	}
 
 	for (int i = 0; i < GetIndexCount(); ++i) { //Our index buffer might not have the same data size as the source indices?

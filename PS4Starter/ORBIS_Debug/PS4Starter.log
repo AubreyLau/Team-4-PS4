@@ -1,19 +1,7 @@
 ﻿  Performing Custom Build Tools
-  Automatically set output format using source file "C:\Users\b8014851\GitHub\Team-4-PS4\Assets\Textures\doge.png" to : "B8G8R8X8UNormSrgb"
+  Automatically set output format using source file "C:\Users\b8052301\Source\Repos\Team-4-PS4\Assets\Textures\doge.png" to : "B8G8R8X8UNormSrgb"
   Texture descriptors information (version 2):
   
   index) width, height, depth, format            , type        ,      size
       0)   256,    256,     1, B8G8R8X8UNormSrgb , 2d(mips:1)  ,     262144 bytes
-  main.cpp
-  In file included from C:\Users\b8014851\GitHub\Team-4-PS4\PS4Starter\main.cpp:11:
-C:\Users\b8014851\GitHub\Team-4-PS4\PS4Starter/ExampleRenderer.h(14,9): warning : 'NCL::PS4::ExampleRenderer::Update' hides overloaded virtual function [-Woverloaded-virtual]
-                          void Update(float dt, float x, float y);
-                               ^
-  C:\Users\b8014851\GitHub\Team-4-PS4\PS4Starter/../Plugins/PlayStation4/../../Common/RendererBase.h(27,17):  note: hidden overloaded virtual function 'NCL::Rendering::RendererBase::Update' declared here: different number of parameters (1 vs 3)
-                          virtual void Update(float dt) {}
-                                       ^
-C:\Users\b8014851\GitHub\Team-4-PS4\PS4Starter\main.cpp(23,18): warning : unused variable 'soundSystem' [-Wunused-variable]
-          Ps4SoundSystem* soundSystem = new Ps4SoundSystem(8);
-                          ^
-  2 warnings generated.
-  PS4Starter.vcxproj -> C:\Users\b8014851\GitHub\Team-4-PS4\ORBIS_Debug\PS4Starter.elf
+  PS4Starter.vcxproj -> C:\Users\b8052301\Source\Repos\Team-4-PS4\ORBIS_Debug\PS4Starter.elf

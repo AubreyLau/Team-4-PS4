@@ -17,9 +17,14 @@ namespace NCL {
 			public NCL::MeshGeometry, public PS4MemoryAware
 		{
 			friend class PS4RendererBase;
-		public:
+		public:		
+			
+			
+			PS4Mesh(const std::string&filename);
+			PS4Mesh* GenerateMesh(const std::string&filename);
 			static PS4Mesh* GenerateTriangle();
 			static PS4Mesh* GenerateQuad();
+			static PS4Mesh* GenerateSphere();
 			static PS4Mesh* GenerateSinglePoint();
 
 		protected:
@@ -30,7 +35,7 @@ namespace NCL {
 
 		protected:
 			PS4Mesh();
-			PS4Mesh(const std::string&filename);
+
 			~PS4Mesh();
 
 		protected:
@@ -52,6 +57,7 @@ namespace NCL {
 
 			int*		indexBuffer;
 			MeshVertex*	vertexBuffer;
+	
 
 			int	vertexDataSize;
 			int indexDataSize;
