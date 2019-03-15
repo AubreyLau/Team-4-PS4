@@ -23,7 +23,7 @@ namespace NCL {
 
 	class MeshGeometry
 	{
-	public:		
+	public:
 		virtual ~MeshGeometry();
 
 		GeometryPrimitive GetPrimitiveType() const {
@@ -42,12 +42,12 @@ namespace NCL {
 			return indices.size();
 		}
 
-		const vector<Vector3>&		GetPositionData()		const { return positions;	}
-		const vector<Vector2>&		GetTextureCoordData()	const { return texCoords;	}
-		const vector<Vector4>&		GetColourData()			const { return colours;		}
-		const vector<Vector3>&		GetNormalData()			const { return normals;		}
-		const vector<Vector3>&		GetTangentData()		const { return tangents;	}
-		const vector<unsigned int>& GetIndexData()			const { return indices;		}
+		const vector<Vector3>&		GetPositionData()		const { return positions; }
+		const vector<Vector2>&		GetTextureCoordData()	const { return texCoords; }
+		const vector<Vector4>&		GetColourData()			const { return colours; }
+		const vector<Vector3>&		GetNormalData()			const { return normals; }
+		const vector<Vector3>&		GetTangentData()		const { return tangents; }
+		const vector<unsigned int>& GetIndexData()			const { return indices; }
 
 		void SetVertexPositions(const vector<Vector3>& newVerts);
 		void SetVertexTextureCoords(const vector<Vector2>& newTex);

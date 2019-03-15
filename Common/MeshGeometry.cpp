@@ -3,7 +3,6 @@
 #include "Vector2.h"
 #include "Vector3.h"
 #include "Vector4.h"
-#include"ObjLoader.h"
 #include <fstream>
 #include <string>
 
@@ -12,21 +11,21 @@ using namespace Maths;
 
 MeshGeometry::MeshGeometry()
 {
-	primType	= GeometryPrimitive::Triangles;
+	primType = GeometryPrimitive::Triangles;
 }
 
 enum class GeometryChunkTypes {
-	VPositions		= 1,
-	VNormals		= 2,
-	VTangents		= 4,
-	VColors			= 8,
-	VTex0			= 16,
-	VTex1			= 32,
-	VWeightValues	= 64,
-	VWeightIndices	= 128,
-	Indices			= 256,
-	BindPose		= 512,
-	Material		= 1024
+	VPositions = 1,
+	VNormals = 2,
+	VTangents = 4,
+	VColors = 8,
+	VTex0 = 16,
+	VTex1 = 32,
+	VWeightValues = 64,
+	VWeightIndices = 128,
+	Indices = 256,
+	BindPose = 512,
+	Material = 1024
 };
 
 enum class GeometryChunkData {
@@ -98,11 +97,11 @@ void ReadIndices(std::ifstream& file, vector<unsigned int>& elements, int numInd
 	}
 }
 
- MeshGeometry::MeshGeometry(const std::string&filename) {
+MeshGeometry::MeshGeometry(const std::string&filename) {
 	//std::cout << "using base class!!!";
 
 	primType = GeometryPrimitive::Triangles;
-//	std::ifstream file(Assets::MESHDIR + filename);
+	//	std::ifstream file(Assets::MESHDIR + filename);
 	std::ifstream file(filename, std::ios::binary);
 	std::string filetype;
 	int fileVersion;
@@ -127,36 +126,36 @@ void ReadIndices(std::ifstream& file, vector<unsigned int>& elements, int numInd
 		return;
 	}
 
-	int numMeshes	= 0; //read
+	int numMeshes = 0; //read
 	int numVertices = 0; //read
-	int numIndices	= 0; //read
-	int numChunks   = 0; //read
+	int numIndices = 0; //read
+	int numChunks = 0; //read
 
 	file >> numMeshes;
 	file >> numVertices;
 	file >> numIndices;
 	file >> numChunks;
-	
+
 	for (int i = 0; i < numChunks; ++i) {
 		int chunkType = (int)GeometryChunkTypes::VPositions;
 
 		file >> chunkType;
 
 		switch ((GeometryChunkTypes)chunkType) {
-			case GeometryChunkTypes::VPositions:ReadTextFloats(file, positions, numVertices);  break;
-			case GeometryChunkTypes::VColors:	ReadTextFloats(file, colours, numVertices);  break;
-			case GeometryChunkTypes::VNormals:	ReadTextFloats(file, normals, numVertices);  break;
-			case GeometryChunkTypes::VTangents:	ReadTextFloats(file, tangents, numVertices);  break;
-			case GeometryChunkTypes::VTex0:		ReadTextFloats(file, texCoords, numVertices);  break;
+		case GeometryChunkTypes::VPositions:ReadTextFloats(file, positions, numVertices);  break;
+		case GeometryChunkTypes::VColors:	ReadTextFloats(file, colours, numVertices);  break;
+		case GeometryChunkTypes::VNormals:	ReadTextFloats(file, normals, numVertices);  break;
+		case GeometryChunkTypes::VTangents:	ReadTextFloats(file, tangents, numVertices);  break;
+		case GeometryChunkTypes::VTex0:		ReadTextFloats(file, texCoords, numVertices);  break;
 			//case GeometryChunkTypes::VTex1:ReadTextFloats(file, positions, numVertices);  break;
 			//case GeometryChunkTypes::VWeightValues:		ReadTextFloats(file, positions, numVertices);  break;
 			//case GeometryChunkTypes::VWeightIndices:	ReadTextFloats(file, positions, numVertices);  break;
-			case GeometryChunkTypes::Indices:	ReadIndices(file, indices, numIndices); break;
+		case GeometryChunkTypes::Indices:	ReadIndices(file, indices, numIndices); break;
 		}
 	}
 
-		std::cout << "Mesh loaded!!!!" << std::endl;
-	
+	std::cout << "Mesh loaded!!!!" << std::endl;
+
 }
 
 MeshGeometry::~MeshGeometry()

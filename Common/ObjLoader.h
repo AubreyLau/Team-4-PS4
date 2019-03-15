@@ -19,6 +19,8 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
+#include "MeshGeometry.h"
+
 #define IS_SPACE(x) (((x) == ' ') || ((x) == '\t'))
 #define IS_DIGIT(x) \
   (static_cast<unsigned int>((x) - '0') < static_cast<unsigned int>(10))
@@ -351,17 +353,6 @@ static inline bool parseVertexWithColor(real_t *x, real_t *y, real_t *z,
 	return found_color;
 }
 
-//typedef struct {
-//	std::vector<index_t> indices;
-//	std::vector<unsigned char> num_face_vertices;  // The number of vertices per
-//												   // face. 3 = polygon, 4 = quad,
-//												   // ... Up to 255.
-//	std::vector<int> material_ids;                 // per-face material ID
-//	std::vector<unsigned int> smoothing_group_ids;  // per-face smoothing group
-//													// ID(0 = off. positive value
-//													// = group id)
-//	std::vector<tag_t> tags;                        // SubD tag
-//} mesh_t;
 
 typedef struct {
 	std::vector<int> indices;  // pairs of indices for lines
@@ -681,17 +672,28 @@ static bool exportGroupsToShape(shape_t *shape,
 }
 
 typedef struct {
-  std::vector<real_t> vertices;   // 'v'
-  std::vector<real_t> normals;    // 'vn'
-  std::vector<real_t> texcoords;  // 'vt'
-  std::vector<real_t> colors;     // extension: vertex colors
+	std::vector<real_t> vertices;   // 'v'
+	std::vector<real_t> normals;    // 'vn'
+	std::vector<real_t> texcoords;  // 'vt'
+	std::vector<real_t> colors;     // extension: vertex colors
 } attrib_t;
 
 
 class ObjLoader
 {
 public:
-	ObjLoader(const std::string&filename, attrib_t *attrib, std::vector<shape_t> *shapes);
+	ObjLoader(const std::string&filename, /*attrib_t *attrib, */std::vector<shape_t> *shapes);
 	~ObjLoader();
+	//
+	attrib_t* getAttrib() {
+		return attrib;
+	}
+	void setAttrib( * msh) {
+		//
+	}
+private:
+	//
+	attrib_t* attrib;
+	
 };
 

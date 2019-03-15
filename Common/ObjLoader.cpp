@@ -35,7 +35,7 @@ static std::istream &safeGetline(std::istream &is, std::string &t) {
 }
 
 
-ObjLoader::ObjLoader(const std::string&filename, attrib_t *attrib, std::vector<shape_t> *shapes)
+ObjLoader::ObjLoader(const std::string&filename,/* attrib_t *attrib,*/ std::vector<shape_t> *shapes)
 {
 
 	std::ifstream inStream(filename, std::ios::binary);
