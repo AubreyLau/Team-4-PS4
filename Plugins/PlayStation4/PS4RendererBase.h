@@ -50,7 +50,7 @@ namespace NCL {
 
 			void	OnWindowResize(int w, int h) override;
 			void	BeginFrame()    override;
-			void	RenderFrame(float x, float y)	override;
+			void	RenderFrame()	override;
 			void	EndFrame()		override;
 
 			void	SwapScreenBuffer();

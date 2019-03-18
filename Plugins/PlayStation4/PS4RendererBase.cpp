@@ -255,7 +255,7 @@ Maths::Matrix4 viewMat = Maths::Matrix4();
 Maths::Matrix4 projMat = Maths::Matrix4();
 
 
-void PS4RendererBase::RenderFrame(float x, float y)			{
+void PS4RendererBase::RenderFrame()			{
 	currentFrame->StartFrame();	
 
 	currentGFXContext->waitUntilSafeForRendering(videoHandle, currentGPUBuffer);
@@ -289,24 +289,17 @@ void PS4RendererBase::RenderFrame(float x, float y)			{
 	currentGFXContext->setSamplers(Gnm::kShaderStagePs, 0, 1, &trilinearSampler);
 
 	
-	viewProjPos = viewProjPos + Vector3(0.01*x, -0.01*y, 0);
-
-	//Build ViewMat Way1
 	viewMat = Matrix4::BuildViewMatrix(viewProjPos, Vector3(0, 0, 0), Vector3(0, 1, 0));
-	//viewMat.Rotation(0, Vector3(1, 1, 1));
-
-	//Build ViewMat Way2
-	//viewMat = Matrix4::BuildCameraViewMat(viewProjPos, -90, 0);	
 
 	projMat = Matrix4::Perspective(1.0f, 100.0f, (float)16 / (float)9, 70.0f);
 
 	viewProjMat->ToIdentity();
-
 	//viewProjPos = viewProjPos + Vector3(0.01*3, -0.01*3, 0);
 	//viewProjMat->SetPositionVector(viewProjPos);
 	//viewProjMat->Rotation(x*90, Vector3(0, 0, 0));
 
 	*viewProjMat = projMat * viewMat;
+
 
 
 	RenderActiveScene();
@@ -396,13 +389,8 @@ void PS4RendererBase::DrawObject(RenderObject* o) {
 	////currentGFXContext->setTextures(Gnm::kShaderStagePs, 0, 1, &t[0]->GetAPITexture());
 	////currentGFXContext->setTextures(Gnm::kShaderStagePs, 0, 1, &t->GetAPITexture());
 	
-	currentGFXContext->setTextures(Gnm::kShaderStagePs, 0, 2, &((PS4Texture*)o->getBasicTex())->GetAPITexture());
-	currentGFXContext->setTextures(Gnm::kShaderStagePs, 1, 2, &((PS4Texture*)o->getBasicTex())->GetAPITexture());
-
-	if ((PS4Texture*)o->getBumpTex()!=nullptr) {
-		std::cout << "N!!!!!!!!!!!!\n\n\n";
-	currentGFXContext->setTextures(Gnm::kShaderStagePs, 1, 2, &((PS4Texture*)o->getBumpTex())->GetAPITexture());
-	}
+	currentGFXContext->setTextures(Gnm::kShaderStagePs, 0, 1, &((PS4Texture*)o->getBasicTex())->GetAPITexture());
+	
 	
 	((PS4Mesh*)o->GetMesh())->SubmitDraw(*currentGFXContext, Gnm::ShaderStage::kShaderStageVs);
 

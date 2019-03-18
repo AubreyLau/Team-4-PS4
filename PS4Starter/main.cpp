@@ -25,7 +25,7 @@ int main(void) {
 	while (true) {
 		input.Poll();
 
-		/*renderer.Update(2);
+		renderer.Update(2);
 		renderer.Render();
 	
 		if (input.GetButton(0)) {
@@ -34,25 +34,7 @@ int main(void) {
 	
 		if (input.GetButton(1)) {
 			return 1;
-		}*/
-
-		if (input.GetButton(0)) {
-			std::cout << "Triangle BUTTON" << std::endl;
 		}
-
-		if (input.GetButton(1)) {
-			return 1;
-		}
-
-		float x_axis0 = input.GetAxis(0).x;
-		float y_axis0 = input.GetAxis(0).y;
-
-		float x_axis1 = input.GetAxis(1).x;
-		float y_axis1 = input.GetAxis(1).y;
-
-		renderer.Update(2, x_axis0, y_axis0);
-		renderer.Render(x_axis1, y_axis1);
-
 	}
 	
 	return 1;

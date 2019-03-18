@@ -3,7 +3,7 @@
 #include "Vector2.h"
 #include "Vector3.h"
 #include "Vector4.h"
-#include"ObjLoader.h"
+
 #include <fstream>
 #include <string>
 
@@ -113,10 +113,6 @@ void ReadIndices(std::ifstream& file, vector<unsigned int>& elements, int numInd
 
 		std::cout << filetype << std::endl;
 		std::cout << "File is not a MeshGeometry file!" << std::endl;
-
-		//
-
-
 		return;
 	}
 

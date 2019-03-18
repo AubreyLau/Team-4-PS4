@@ -45,17 +45,10 @@ namespace NCL {
 				return textures[0];
 			}
 			Rendering::TextureBase* getBumpTex() {
-				if (textures[1]) {
-					return textures[1];
-				}
-				else return nullptr;
-			
+				return textures[1];
 			}
 			Rendering::TextureBase* getHeightMap() {
-				if (textures[2]) {
-					return textures[2];
-				}
-				else return nullptr;
+				return textures[2];
 			}
 
 		protected:
