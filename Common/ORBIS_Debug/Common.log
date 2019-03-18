@@ -1,10 +1,1 @@
-﻿  ObjLoader.cpp
-C:\Users\b8052301\Source\Repos\Team-4-PS4\Common\ObjLoader.cpp(65,6): warning : unused variable 'material' [-Wunused-variable]
-          int material = -1;
-              ^
-  In file included from C:\Users\b8052301\Source\Repos\Team-4-PS4\Common\ObjLoader.cpp:1:
-C:\Users\b8052301\Source\Repos\Team-4-PS4\Common/ObjLoader.h(411,13): warning : unused function 'exportGroupsToShape' [-Wunused-function]
-  static bool exportGroupsToShape(shape_t *shape,
-              ^
-  2 warnings generated.
-  Common.vcxproj -> C:\Users\b8052301\Source\Repos\Team-4-PS4\ORBIS\Debug\Common.a
+﻿
