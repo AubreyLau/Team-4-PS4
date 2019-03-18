@@ -1,1 +1,19 @@
-﻿  Common.vcxproj -> C:\Users\b8052301\Source\Repos\Team-4-PS4\ORBIS\Debug\Common.a
+﻿  MeshGeometry.cpp
+C:\Users\b8052301\Source\Repos\Team-4-PS4\Common\MeshGeometry.cpp(144,11): warning : 5 enumeration values not handled in switch: 'VTex1', 'VWeightValues', 'VWeightIndices'... [-Wswitch]
+                  switch ((GeometryChunkTypes)chunkType) {
+                          ^
+  1 warning generated.
+  Mouse.cpp
+  Plane.cpp
+  Quaternion.cpp
+  RendererBase.cpp
+  ShaderBase.cpp
+  SimpleFont.cpp
+  TextureBase.cpp
+  TextureLoader.cpp
+  TextureWriter.cpp
+  Win32Keyboard.cpp
+  Win32Mouse.cpp
+  Win32Window.cpp
+  Window.cpp
+  Common.vcxproj -> C:\Users\b8052301\Source\Repos\Team-4-PS4\ORBIS\Debug\Common.a

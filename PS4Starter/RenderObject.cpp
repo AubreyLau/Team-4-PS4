@@ -28,9 +28,11 @@ RenderObject::RenderObject(MeshGeometry* m, NCL::Rendering::ShaderBase* s, NCL::
 	if (t1) {
 	textures[1] = t1;
 	}
+	else textures[1] = nullptr;
 	if (t2) {
 	textures[2] = t2;
 	}
+	else textures[2] = nullptr;
 
 }
 
