@@ -1,5 +1,7 @@
 #pragma once
 #include "../Plugins/PlayStation4/PS4RendererBase.h"
+#include"../Common/ObjLoader.h"
+#include"../Plugins/PlayStation4/PS4Mesh.h"
 
 namespace NCL {
 	namespace PS4 {
@@ -17,7 +19,9 @@ namespace NCL {
 			//void RenderFrame()		 override;
 			void RenderActiveScene() override;
 
+			ObjLoader* l;
 
+			PS4Mesh* msh;
 			float rotation;
 			RenderObject* defaultObject[2];
 		};

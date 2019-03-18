@@ -9,6 +9,7 @@
 using namespace NCL;
 using namespace Maths;
 
+
 MeshGeometry::MeshGeometry()
 {
 	primType = GeometryPrimitive::Triangles;
@@ -33,6 +34,8 @@ enum class GeometryChunkData {
 	dShort, //Translate from -32k to 32k to a float
 	dByte,	//Translate from -128 to 127 to a float
 };
+
+
 
 void* ReadVertexData(GeometryChunkData dataType, GeometryChunkTypes chunkType, int numVertices) {
 	int numElements = 3;

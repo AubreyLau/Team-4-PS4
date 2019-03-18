@@ -28,6 +28,8 @@
 
 typedef float real_t;
 
+
+
 typedef struct {
 	std::string name;
 
@@ -678,22 +680,40 @@ typedef struct {
 	std::vector<real_t> colors;     // extension: vertex colors
 } attrib_t;
 
+typedef struct {
+	std::vector<NCL::Vector3>		positions;
+	std::vector<NCL::Vector2>		texCoords;
+	std::vector<NCL::Vector4>	colours;
+	std::vector<NCL::Vector3>	normals;
+	std::vector<NCL::Vector3>	tangents;
+}attrib_n;
+
+
 
 class ObjLoader
 {
 public:
-	ObjLoader(const std::string&filename, /*attrib_t *attrib, */std::vector<shape_t> *shapes);
+	ObjLoader();
 	~ObjLoader();
 	//
 	attrib_t* getAttrib() {
 		return attrib;
 	}
-	void setAttrib( * msh) {
+	
+	void loadOBJ(const std::string&filename /*attrib_t *attrib, *//*std::vector<shape_t> *shapes*/);
+	void setAttrib(NCL::MeshGeometry & msh) {
 		//
+		
+		msh.SetVertexPositions(attrib_mesh->positions);
+		msh.SetVertexColours(attrib_mesh->colours);
+		msh.SetVertexNormals(attrib_mesh->normals);
+		msh.SetVertexTextureCoords(attrib_mesh->texCoords);
 	}
 private:
 	//
-	attrib_t* attrib;
+	attrib_t* attrib;	
+	attrib_n* attrib_mesh;
+
 	
 };
 

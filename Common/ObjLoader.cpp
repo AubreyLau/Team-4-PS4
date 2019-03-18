@@ -35,7 +35,7 @@ static std::istream &safeGetline(std::istream &is, std::string &t) {
 }
 
 
-ObjLoader::ObjLoader(const std::string&filename,/* attrib_t *attrib,*/ std::vector<shape_t> *shapes)
+void ObjLoader::loadOBJ(const std::string&filename/* attrib_t *attrib,*/ /*std::vector<shape_t> *shapes*/)
 {
 
 	std::ifstream inStream(filename, std::ios::binary);
@@ -48,6 +48,12 @@ ObjLoader::ObjLoader(const std::string&filename,/* attrib_t *attrib,*/ std::vect
 	std::vector<face_t> faceGroup;
 	std::vector<int> lineGroup;
 	std::string name;
+
+	//////
+	std::vector<NCL::Vector3>		v2;
+	std::vector<NCL::Vector2>		vt2;
+//	std::vector<NCL::Vector4>	vc2;
+	std::vector<NCL::Vector3>	vn2;
 
 
 	shape_t shape;
@@ -106,10 +112,22 @@ ObjLoader::ObjLoader(const std::string&filename,/* attrib_t *attrib,*/ std::vect
 			v.push_back(y);
 			v.push_back(z);
 
+			//!!
+			v2.emplace_back(x, y, z);
+
+
+
+
+
+
+
 			if (found_all_colors /*|| default_vcols_fallback*/) {
 				vc.push_back(r);
 				vc.push_back(g);
 				vc.push_back(b);
+
+				//!!
+			//	vc2.emplace_back(r, g, b);
 			}
 
 			continue;
@@ -123,6 +141,10 @@ ObjLoader::ObjLoader(const std::string&filename,/* attrib_t *attrib,*/ std::vect
 			vn.push_back(x);
 			vn.push_back(y);
 			vn.push_back(z);
+
+
+			//!!
+			vn2.emplace_back(x, y, z);
 			continue;
 		}
 
@@ -133,6 +155,8 @@ ObjLoader::ObjLoader(const std::string&filename,/* attrib_t *attrib,*/ std::vect
 			parseReal2(&x, &y, &token);
 			vt.push_back(x);
 			vt.push_back(y);
+			//!!
+			vt2.emplace_back(x, y);
 			continue;
 		}
 
@@ -491,10 +515,11 @@ ObjLoader::ObjLoader(const std::string&filename,/* attrib_t *attrib,*/ std::vect
 		// line.
 		// we also add `shape` to `shapes` when `shape.mesh` has already some
 		// faces(indices)
-		if (shape.mesh.indices.size()) {
-			shapes->push_back(shape);
-		}
+		//if (shape.mesh.indices.size()) {
+		//	shapes->push_back(shape);
+		//}
 		faceGroup.clear();  // for safety
+
 
 
 		attrib->vertices.swap(v);
@@ -502,8 +527,11 @@ ObjLoader::ObjLoader(const std::string&filename,/* attrib_t *attrib,*/ std::vect
 		attrib->texcoords.swap(vt);
 		attrib->colors.swap(vc);
 
-
-
+		attrib_mesh->positions.swap(v2);
+	//	attrib_mesh->colours.swap(vc2);
+		attrib_mesh->texCoords.swap(vt2);
+		attrib_mesh->normals.swap(vn2);
+		
 
 
 
@@ -512,6 +540,10 @@ ObjLoader::ObjLoader(const std::string&filename,/* attrib_t *attrib,*/ std::vect
 		std::cout << "Mesh loaded!!!!" << std::endl;
 
 	}
+}
+
+ObjLoader::ObjLoader()
+{
 }
 
 ObjLoader::~ObjLoader()

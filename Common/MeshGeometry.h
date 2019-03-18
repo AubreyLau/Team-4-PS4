@@ -20,7 +20,6 @@ namespace NCL {
 		TriangleStrip,
 		Patches
 	};
-
 	class MeshGeometry
 	{
 	public:
@@ -64,6 +63,8 @@ namespace NCL {
 		void RecalculateTangents();
 
 		virtual void UploadToGPU() = 0;
+
+
 
 	protected:
 		MeshGeometry();
