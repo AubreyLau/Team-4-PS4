@@ -16,7 +16,7 @@ ExampleRenderer::ExampleRenderer(PS4Window* window) : PS4RendererBase(window)
 	defaultObject[0] = new RenderObject((MeshGeometry*)setMesh("/app0/hellknight.msh"), (ShaderBase*)defaultShader, (TextureBase*)defaultTexture);
 
 	defaultObject[1] = new RenderObject((MeshGeometry*)setMesh("/app0/sphere2.msh"), (ShaderBase*)defaultShader, (TextureBase*)defaultTexture);
-//	defaultObject[1]->SetBasicTex("/app0/test.gnf");
+	defaultObject[1]->SetBasicTex("/app0/test.gnf");
 //	defaultObject[1]->SetBumpTex("/app0/test.gnf");
 //	defaultObject[0]->SetBumpTex("/app0/test.gnf");
 

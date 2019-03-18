@@ -1,5 +1,4 @@
-﻿  PS4Mesh.cpp
-  PS4RendererBase.cpp
+﻿  PS4RendererBase.cpp
 C:\Users\b8052301\Source\Repos\Team-4-PS4\Plugins\PlayStation4\PS4RendererBase.cpp(187,9): warning : unused variable 'a' [-Wunused-variable]
                           bool a = true;
                                ^

@@ -390,10 +390,10 @@ void PS4RendererBase::DrawObject(RenderObject* o) {
 	////currentGFXContext->setTextures(Gnm::kShaderStagePs, 0, 1, &t->GetAPITexture());
 	
 	currentGFXContext->setTextures(Gnm::kShaderStagePs, 0, 2, &((PS4Texture*)o->getBasicTex())->GetAPITexture());
-	currentGFXContext->setTextures(Gnm::kShaderStagePs, 1, 2, &((PS4Texture*)o->getBasicTex())->GetAPITexture());
+	//currentGFXContext->setTextures(Gnm::kShaderStagePs, 1, 2, &((PS4Texture*)o->getBasicTex())->GetAPITexture());
 
 	if ((PS4Texture*)o->getBumpTex()!=nullptr) {
-		std::cout << "N!!!!!!!!!!!!\n\n\n";
+	
 	currentGFXContext->setTextures(Gnm::kShaderStagePs, 1, 2, &((PS4Texture*)o->getBumpTex())->GetAPITexture());
 	}
 	
