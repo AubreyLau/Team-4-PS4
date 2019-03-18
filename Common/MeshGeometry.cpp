@@ -3,6 +3,7 @@
 #include "Vector2.h"
 #include "Vector3.h"
 #include "Vector4.h"
+
 #include <fstream>
 #include <string>
 
@@ -115,10 +116,6 @@ MeshGeometry::MeshGeometry(const std::string&filename) {
 
 		std::cout << filetype << std::endl;
 		std::cout << "File is not a MeshGeometry file!" << std::endl;
-
-		//
-
-
 		return;
 	}
 
