@@ -787,7 +787,7 @@ public:
 
 			parseVertexWithColor(&x, &y, &z, &r, &g, &b, &token);
 
-			(attrib_mesh->positions).push_back(NCL::Maths::Vector3(1,2,3));
+	//		(attrib_mesh->positions).push_back(NCL::Maths::Vector3(1,2,3));
 				
 				//v.push_back(x);
 				//v.push_back(y);
