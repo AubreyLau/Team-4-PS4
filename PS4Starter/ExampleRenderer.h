@@ -21,6 +21,11 @@ namespace NCL {
 
 			float rotation;
 			RenderObject* defaultObject[2];
+
+
+
+			/*MO TEST*/
+			RenderObject* CUBE;
 		};
 	}
 }

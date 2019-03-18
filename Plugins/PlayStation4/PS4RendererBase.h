@@ -120,6 +120,11 @@ namespace NCL {
 			PS4ScreenBuffer*		currentPS4Buffer;  //Pointer to whichever buffer we're currently using...
 			Gnmx::GnmxGfxContext*	currentGFXContext;
 			PS4Frame*				currentFrame;
+
+
+
+			/*Mo test*/
+			PS4Shader*	testShader;
 		};
 	}
 }

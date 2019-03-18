@@ -51,6 +51,12 @@ PS4RendererBase::PS4RendererBase(PS4Window*window)
 		"/app0/PixelShader.sb"
 	);
 
+	/*Mo test*/
+	/*testShader = PS4Shader::GenerateShader(
+		"/app0/testVS.sb",
+		"/app0/testPS.sb"
+	);*/
+
 	defaultMesh		= PS4Mesh::GenerateTriangle();
 	defaultSphere = PS4Mesh::GenerateSphere();
 	myMesh = PS4Mesh::GenerateTriangle();
@@ -263,6 +269,9 @@ void PS4RendererBase::RenderFrame(float x, float y)			{
 	SetRenderBuffer(currentPS4Buffer, true, true, true);
 
 	defaultShader->SubmitShaderSwitch(*currentGFXContext);
+	/*mo test*/
+
+	testShader->SubmitShaderSwitch(*currentGFXContext);
 
 	//Primitive Setup State
 	Gnm::PrimitiveSetup primitiveSetup;

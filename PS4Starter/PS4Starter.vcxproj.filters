@@ -39,14 +39,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <OrbisWavePsslc Include="PixelShader.pssl">
-      <Filter>Shaders</Filter>
-    </OrbisWavePsslc>
-    <OrbisWavePsslc Include="VertexShader.pssl">
-      <Filter>Shaders</Filter>
-    </OrbisWavePsslc>
-  </ItemGroup>
-  <ItemGroup>
     <CustomBuild Include="..\Assets\Textures\doge.png">
       <Filter>Textures</Filter>
     </CustomBuild>
@@ -63,5 +55,13 @@
     <Image Include="brick.png">
       <Filter>Textures</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <OrbisWavePsslc Include="VertexShader.pssl">
+      <Filter>Shaders</Filter>
+    </OrbisWavePsslc>
+    <OrbisWavePsslc Include="PixelShader.pssl">
+      <Filter>Shaders</Filter>
+    </OrbisWavePsslc>
   </ItemGroup>
 </Project>
