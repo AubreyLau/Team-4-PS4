@@ -21,7 +21,8 @@ namespace NCL {
 			
 			
 			PS4Mesh(const std::string&filename);
-			PS4Mesh* GenerateMesh(const std::string&filename);
+			PS4Mesh* GenerateMesh(const std::string&filename);	
+			PS4Mesh* GenerateOBJ(const std::string&filename);
 			static PS4Mesh* GenerateTriangle();
 			static PS4Mesh* GenerateQuad();
 			static PS4Mesh* GenerateSphere();

@@ -688,6 +688,40 @@ typedef struct {
 	std::vector<NCL::Vector3>	tangents;
 }attrib_n;
 
+static std::istream &safeGetline(std::istream &is, std::string &t) {
+	t.clear();
+
+	// The characters in the stream are read one-by-one using a std::streambuf.
+	// That is faster than reading them one-by-one using the std::istream.
+	// Code that uses streambuf this way must be guarded by a sentry object.
+	// The sentry object performs various tasks,
+	// such as thread synchronization and updating the stream state.
+
+	std::istream::sentry se(is, true);
+	std::streambuf *sb = is.rdbuf();
+
+	if (se) {
+		for (;;) {
+			int c = sb->sbumpc();
+			switch (c) {
+			case '\n':
+				return is;
+			case '\r':
+				if (sb->sgetc() == '\n') sb->sbumpc();
+				return is;
+			case EOF:
+				// Also handle the case when the last line has no line ending
+				if (t.empty()) is.setstate(std::ios::eofbit);
+				return is;
+			default:
+				t += static_cast<char>(c);
+			}
+		}
+	}
+
+	return is;
+}
+
 
 
 class ObjLoader
@@ -696,11 +730,86 @@ public:
 	ObjLoader();
 	~ObjLoader();
 	//
-	attrib_t* getAttrib() {
-		return attrib;
+	//attrib_t* getAttrib() {
+	//	return attrib;
+	//}
+	//
+	void loadOBJ(const std::string&filename /*attrib_t *attrib, *//*std::vector<shape_t> *shapes*/) {
+		if (filename == "") {
+			return;
+		}
+
+		std::ifstream inStream(filename, std::ios::binary);
+		std::cout << "using obj loader!!!\n\n\n";
+
+
+		size_t line_num = 0;
+		std::string linebuf;
+
+		while (inStream.peek() != -1) {
+			safeGetline(inStream, linebuf);
+
+			line_num++;
+
+			// Trim newline '\r\n' or '\n'
+			if (linebuf.size() > 0) {
+				if (linebuf[linebuf.size() - 1] == '\n')
+					linebuf.erase(linebuf.size() - 1);
+			}
+			if (linebuf.size() > 0) {
+				if (linebuf[linebuf.size() - 1] == '\r')
+					linebuf.erase(linebuf.size() - 1);
+			}
+
+			// Skip if empty line.
+			if (linebuf.empty()) {
+				continue;
+			}
+
+			// Skip leading space.
+
+			const char *token = linebuf.c_str();
+			token += strspn(token, " \t");
+
+
+
+
+			assert(token);
+			if (token[0] == '\0') continue;  // empty line
+
+			if (token[0] == '#') continue;  // comment line
+
+			// vertex
+			if (token[0] == 'v' && IS_SPACE((token[1]))) {
+				token += 2;
+				real_t x, y, z;
+				real_t r, g, b;
+
+			parseVertexWithColor(&x, &y, &z, &r, &g, &b, &token);
+
+			(attrib_mesh->positions).push_back(NCL::Maths::Vector3(1,2,3));
+				
+				//v.push_back(x);
+				//v.push_back(y);
+				//v.push_back(z);
+
+				//if (found_all_colors /*|| default_vcols_fallback*/) {
+				//	vc.push_back(r);
+				//	vc.push_back(g);
+				//	vc.push_back(b);
+				//}
+
+				continue;
+			}
+
+
+
+
+		}
+
+
+
 	}
-	
-	void loadOBJ(const std::string&filename /*attrib_t *attrib, *//*std::vector<shape_t> *shapes*/);
 	void setAttrib(NCL::MeshGeometry & msh) {
 		//
 		

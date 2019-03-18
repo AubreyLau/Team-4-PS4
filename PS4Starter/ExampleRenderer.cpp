@@ -18,12 +18,12 @@ ExampleRenderer::ExampleRenderer(PS4Window* window) : PS4RendererBase(window)
 
 	defaultObject[1] = new RenderObject((MeshGeometry*)setMesh("/app0/sphere2.msh"), (ShaderBase*)defaultShader, (TextureBase*)defaultTexture);
 	defaultObject[1]->SetBasicTex("/app0/test.gnf");
-	defaultObject[1]->SetBumpTex("/app0/test.gnf");
-	defaultObject[0]->SetBumpTex("/app0/test.gnf");
+//	defaultObject[1]->SetBumpTex("/app0/test.gnf");
+//	defaultObject[0]->SetBumpTex("/app0/test.gnf");
 
 
-	//l->loadOBJ("/app0/bunny.obj");
-	//l->setAttrib(*msh);
+	l->loadOBJ("/app0/bunny.obj");
+//	l->setAttrib(*msh);
 	
 //	defaultObject[0] = new RenderObject((MeshGeometry*)msh, (ShaderBase*)defaultShader, (TextureBase*)defaultTexture);
 

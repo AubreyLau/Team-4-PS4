@@ -32,6 +32,16 @@ PS4Mesh* PS4Mesh::GenerateMesh(const std::string & filename)
 	return mesh;
 }
 
+PS4Mesh* PS4Mesh::GenerateOBJ(const std::string & filename)
+{
+	PS4Mesh* mesh = new PS4Mesh(filename);
+	mesh->indexType = sce::Gnm::IndexSize::kIndexSize32;
+	mesh->primitiveType = sce::Gnm::PrimitiveType::kPrimitiveTypeTriList;
+	mesh->UploadToGPU();
+	return mesh;
+}
+
+
 PS4Mesh::~PS4Mesh()	{
 	delete[] attributeBuffers;
 }
