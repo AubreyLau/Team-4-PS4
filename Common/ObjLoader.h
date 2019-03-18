@@ -734,10 +734,15 @@ public:
 	//	return attrib;
 	//}
 	//
+	
 	void loadOBJ(const std::string&filename /*attrib_t *attrib, *//*std::vector<shape_t> *shapes*/) {
+
+		v = new  std::vector<NCL::Vector3>();
 		if (filename == "") {
 			return;
 		}
+	//	std::vector<NCL::Vector3>	v;
+
 
 		std::ifstream inStream(filename, std::ios::binary);
 		std::cout << "using obj loader!!!\n\n\n";
@@ -786,12 +791,17 @@ public:
 				real_t r, g, b;
 
 			parseVertexWithColor(&x, &y, &z, &r, &g, &b, &token);
+			NCL::Maths::Vector3 temp;
+     		 temp.x=x;
+			 temp.y = y;
+			 temp.z = z;	
 
-	//		(attrib_mesh->positions).push_back(NCL::Maths::Vector3(1,2,3));
-				
-				//v.push_back(x);
-				//v.push_back(y);
-				//v.push_back(z);
+		//	 std::cout << "\nx,y,z=" << x << y << z << "\n";
+			
+
+			v->push_back(temp);
+			// std::cout << "\nx,y,z=" <<temp.x << temp.y << temp.z << "\n";
+
 
 				//if (found_all_colors /*|| default_vcols_fallback*/) {
 				//	vc.push_back(r);
@@ -800,6 +810,9 @@ public:
 				//}
 
 				continue;
+
+
+
 			}
 
 
@@ -807,7 +820,9 @@ public:
 
 		}
 
+		
 
+	
 
 	}
 	void setAttrib(NCL::MeshGeometry & msh) {
@@ -822,6 +837,8 @@ private:
 	//
 	attrib_t* attrib;	
 	attrib_n* attrib_mesh;
+	//NCL::Maths::Vector3 temp;
+	 std::vector<NCL::Vector3>* v;
 
 	
 };

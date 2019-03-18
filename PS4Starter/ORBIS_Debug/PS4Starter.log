@@ -4,12 +4,6 @@
   
   index) width, height, depth, format            , type        ,      size
       0)   256,    256,     1, B8G8R8X8UNormSrgb , 2d(mips:1)  ,     262144 bytes
-  Performing Custom Build Tools
-  Automatically set output format using source file "C:\Users\b8052301\Source\Repos\Team-4-PS4\PS4Starter\test.png" to : "B8G8R8X8UNormSrgb"
-  Texture descriptors information (version 2):
-  
-  index) width, height, depth, format            , type        ,      size
-      0)  1500,   1500,     1, B8G8R8X8UNormSrgb , 2d(mips:1)  ,    9048064 bytes
   ExampleRenderer.cpp
   In file included from C:\Users\b8052301\Source\Repos\Team-4-PS4\PS4Starter\ExampleRenderer.cpp:1:
   In file included from C:\Users\b8052301\Source\Repos\Team-4-PS4\PS4Starter/ExampleRenderer.h:3:
@@ -20,7 +14,6 @@ C:\Users\b8052301\Source\Repos\Team-4-PS4\PS4Starter/../Common/ObjLoader.h(411,1
   static bool exportGroupsToShape(shape_t *shape,
               ^
   2 warnings generated.
-  RenderObject.cpp
   main.cpp
 C:\Users\b8052301\Source\Repos\Team-4-PS4\PS4Starter\main.cpp(23,18): warning : unused variable 'soundSystem' [-Wunused-variable]
           Ps4SoundSystem* soundSystem = new Ps4SoundSystem(8);
