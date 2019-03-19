@@ -1,6 +1,4 @@
 ﻿  InputBase.cpp
-  main.cpp
-  Ps4AudioEmitter.cpp
   PS4AudioSource.cpp
   PS4AudioSystem.cpp
   PS4ComputeShader.cpp
@@ -23,7 +21,9 @@ C:\Users\b8052301\Source\Repos\Team-4-PS4\Plugins\PlayStation4\PS4Shader.cpp(113
   1 warning generated.
   PS4Sound.cpp
   PS4SoundEmitter.cpp
-  Ps4SoundSystem.cpp
   PS4Texture.cpp
   PS4Window.cpp
+  Ps4AudioEmitter.cpp
+  Ps4SoundSystem.cpp
+  main.cpp
   PlayStation4.vcxproj -> C:\Users\b8052301\Source\Repos\Team-4-PS4\ORBIS\Debug\PlayStation4.a
