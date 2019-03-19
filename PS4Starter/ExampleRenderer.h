@@ -25,6 +25,7 @@ namespace NCL {
 			PS4Mesh* msh;
 			float rotation;
 			RenderObject* defaultObject[2];
+
 		};
 	}
 }
