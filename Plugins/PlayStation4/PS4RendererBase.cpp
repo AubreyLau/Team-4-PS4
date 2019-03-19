@@ -57,6 +57,18 @@ PS4RendererBase::PS4RendererBase(PS4Window*window)
 	defaultTexture	= PS4Texture::LoadTextureFromFile("/app0/doge.gnf");
 	myTexture= PS4Texture::LoadTextureFromFile("/app0/test.gnf");
 
+
+	/*mo test*/
+	skyboxMeshUp = PS4Mesh::GenerateQuadUp();
+	skyboxMeshDown = PS4Mesh::GenerateQuadDown();
+	skyboxMeshFront = PS4Mesh::GenerateQuadFront();
+	skyboxMeshBack = PS4Mesh::GenerateQuadBack();
+	skyboxMeshLeft = PS4Mesh::GenerateQuadLeft();
+	skyboxMeshRight = PS4Mesh::GenerateQuadRight();
+	/*mo test*/
+
+
+
 	viewProjMat		= (Matrix4*)onionAllocator->allocate(sizeof(Matrix4), Gnm::kEmbeddedDataAlignment4);
 	*viewProjMat	= Matrix4();
 
@@ -249,11 +261,13 @@ void	PS4RendererBase::DestroyVideoSystem() {
 }
 
 
-//
-Maths::Vector3 viewProjPos = Maths::Vector3(0, 0, 3);
+//zhou
+//Maths::Vector3 viewProjPos = Maths::Vector3(0, 0, 3);
+Maths::Vector3 viewProjPos = Maths::Vector3(0, 0, 1);
+Maths::Vector3 lookatjPos = Maths::Vector3(0, 0, 0);
 Maths::Matrix4 viewMat = Maths::Matrix4();
 Maths::Matrix4 projMat = Maths::Matrix4();
-
+float rotateAngle = 0;
 
 void PS4RendererBase::RenderFrame(float x, float y)			{
 	currentFrame->StartFrame();	
@@ -289,9 +303,16 @@ void PS4RendererBase::RenderFrame(float x, float y)			{
 	currentGFXContext->setSamplers(Gnm::kShaderStagePs, 0, 1, &trilinearSampler);
 
 	viewProjPos = viewProjPos + Vector3(0.1*x, -0.1 * y, 0);
+	
+	lookatjPos = lookatjPos + Vector3(0.1*x, -0.1 * y, 0);
 
 	//Build ViewMat Way1
-	viewMat = Matrix4::BuildViewMatrix(viewProjPos, Vector3(0, 0, 0), Vector3(0, 1, 0));
+	viewMat = Matrix4::BuildViewMatrix(viewProjPos, lookatjPos, Vector3(0, 1, 0));
+	CameraPos = viewProjPos;
+	rotateAngle = rotateAngle + 9 * x;
+	//viewMat = viewMat*viewMat.Rotation(90, Vector3(0, 1, 0));
+	//viewMat = viewMat * viewMat.Rotation(rotateAngle, Vector3(0, 0, 1));
+
 
 	//Build ViewMat Way2
 	//viewMat = Matrix4::BuildCameraViewMat(viewProjPos, -90, 0);	
