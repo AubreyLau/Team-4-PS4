@@ -19,7 +19,8 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
-#include "MeshGeometry.h"
+//#include "MeshGeometry.h"
+//#include"../Plugins/PlayStation4/PS4MemoryAware.h"
 
 #define IS_SPACE(x) (((x) == ' ') || ((x) == '\t'))
 #define IS_DIGIT(x) \
@@ -724,122 +725,163 @@ static std::istream &safeGetline(std::istream &is, std::string &t) {
 
 
 
-class ObjLoader
-{
-public:
-	ObjLoader();
-	~ObjLoader();
-	//
-	//attrib_t* getAttrib() {
-	//	return attrib;
-	//}
-	//
-	
-	void loadOBJ(const std::string&filename /*attrib_t *attrib, *//*std::vector<shape_t> *shapes*/) {
-
-		v = new  std::vector<NCL::Vector3>();
-		if (filename == "") {
-			return;
-		}
-	//	std::vector<NCL::Vector3>	v;
-
-
-		std::ifstream inStream(filename, std::ios::binary);
-		std::cout << "using obj loader!!!\n\n\n";
-
-
-		size_t line_num = 0;
-		std::string linebuf;
-
-		while (inStream.peek() != -1) {
-			safeGetline(inStream, linebuf);
-
-			line_num++;
-
-			// Trim newline '\r\n' or '\n'
-			if (linebuf.size() > 0) {
-				if (linebuf[linebuf.size() - 1] == '\n')
-					linebuf.erase(linebuf.size() - 1);
-			}
-			if (linebuf.size() > 0) {
-				if (linebuf[linebuf.size() - 1] == '\r')
-					linebuf.erase(linebuf.size() - 1);
-			}
-
-			// Skip if empty line.
-			if (linebuf.empty()) {
-				continue;
-			}
-
-			// Skip leading space.
-
-			const char *token = linebuf.c_str();
-			token += strspn(token, " \t");
 
 
 
 
-			assert(token);
-			if (token[0] == '\0') continue;  // empty line
 
-			if (token[0] == '#') continue;  // comment line
 
-			// vertex
-			if (token[0] == 'v' && IS_SPACE((token[1]))) {
-				token += 2;
-				real_t x, y, z;
-				real_t r, g, b;
 
-			parseVertexWithColor(&x, &y, &z, &r, &g, &b, &token);
-			NCL::Maths::Vector3 temp;
-     		 temp.x=x;
-			 temp.y = y;
-			 temp.z = z;	
 
-		//	 std::cout << "\nx,y,z=" << x << y << z << "\n";
+
+
+namespace NCL {
+	namespace PS4 {
+	//	using namespace sce;
+		class ObjLoader
+		//	:public NCL::MeshGeometry, public PS4MemoryAware
+
+
+		{
+		public:
+			ObjLoader() {
 			
 
-			v->push_back(temp);
-			// std::cout << "\nx,y,z=" <<temp.x << temp.y << temp.z << "\n";
+			};
+			~ObjLoader() {
+			
+			};
+			//
+			//attrib_t* getAttrib() {
+			//	return attrib;
+			//}
+			//
+
+			void loadOBJ(const std::string&filename /*attrib_t *attrib, *//*std::vector<shape_t> *shapes*/) {
+
+				//v.clear();
+			//	positions.clear();
+				std::vector<NCL::Vector3> p;
+				positions=p;
 
 
-				//if (found_all_colors /*|| default_vcols_fallback*/) {
-				//	vc.push_back(r);
-				//	vc.push_back(g);
-				//	vc.push_back(b);
-				//}
+				if (filename == "") {
+					return;
+				}
+				//	std::vector<NCL::Vector3>	v;
 
-				continue;
+
+				std::ifstream inStream(filename, std::ios::binary);
+				std::cout << "using obj loader!!!\n\n\n";
+
+
+				size_t line_num = 0;
+				std::string linebuf;
+
+				while (inStream.peek() != -1) {
+					safeGetline(inStream, linebuf);
+
+					line_num++;
+
+					// Trim newline '\r\n' or '\n'
+					if (linebuf.size() > 0) {
+						if (linebuf[linebuf.size() - 1] == '\n')
+							linebuf.erase(linebuf.size() - 1);
+					}
+					if (linebuf.size() > 0) {
+						if (linebuf[linebuf.size() - 1] == '\r')
+							linebuf.erase(linebuf.size() - 1);
+					}
+
+					// Skip if empty line.
+					if (linebuf.empty()) {
+						continue;
+					}
+
+					// Skip leading space.
+
+					const char *token = linebuf.c_str();
+					token += strspn(token, " \t");
+
+
+
+
+					assert(token);
+					if (token[0] == '\0') continue;  // empty line
+
+					if (token[0] == '#') continue;  // comment line
+
+					// vertex
+					if (token[0] == 'v' && IS_SPACE((token[1]))) {
+						token += 2;
+						real_t x, y, z;
+						real_t r, g, b;
+
+						parseVertexWithColor(&x, &y, &z, &r, &g, &b, &token);
+						NCL::Maths::Vector3 temp;
+						temp.x = x;
+						temp.y = y;
+						temp.z = z;
+						
+						//	 std::cout << "\nx,y,z=" << x << y << z << "\n";
+
+					positions.push_back(temp);
+				//	positions.emplace_back(temp);
+							// std::cout << "\nx,y,z=" <<temp.x << temp.y << temp.z << "\n";
+
+
+								//if (found_all_colors /*|| default_vcols_fallback*/) {
+								//	vc.push_back(r);
+								//	vc.push_back(g);
+								//	vc.push_back(b);
+								//}
+
+						continue;
+
+
+
+					}
+
+
+
+
+				}
+
+
 
 
 
 			}
+			void setAttrib(NCL::MeshGeometry & msh) {
+				//
+
+				msh.SetVertexPositions(attrib_mesh->positions);
+				msh.SetVertexColours(attrib_mesh->colours);
+				msh.SetVertexNormals(attrib_mesh->normals);
+				msh.SetVertexTextureCoords(attrib_mesh->texCoords);
+			}
+
+			vector<Vector3> getPosition() {
+				return positions;
+			}
+
+		private:
+			//
+			attrib_t* attrib;
+			attrib_n* attrib_mesh;
+			//NCL::Maths::Vector3 temp;
+		//	 std::vector<NCL::Vector3>* v;
+			GeometryPrimitive	primType;
+			vector<Vector3>		positions;
+
+			vector<Vector2>		texCoords;
+			vector<Vector4>		colours;
+			vector<Vector3>		normals;
+			vector<Vector3>		tangents;
+			vector<unsigned int>	indices;
 
 
-
-
-		}
-
-		
-
-	
+		};
 
 	}
-	void setAttrib(NCL::MeshGeometry & msh) {
-		//
-		
-		msh.SetVertexPositions(attrib_mesh->positions);
-		msh.SetVertexColours(attrib_mesh->colours);
-		msh.SetVertexNormals(attrib_mesh->normals);
-		msh.SetVertexTextureCoords(attrib_mesh->texCoords);
-	}
-private:
-	//
-	attrib_t* attrib;	
-	attrib_n* attrib_mesh;
-	//NCL::Maths::Vector3 temp;
-	 std::vector<NCL::Vector3>* v;
-
-	
-};
-
+}
