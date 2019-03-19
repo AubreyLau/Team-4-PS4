@@ -126,6 +126,18 @@ Matrix4 Matrix4::BuildViewMatrix(const Vector3 &from, const Vector3 &lookingAt, 
 	return m*r;
 }
 
+/*
+Generates a view matrix for the camera's viewpoint. This matrix can be sent
+straight to the shader...it's already an 'inverse camera' matrix.
+*/
+Matrix4 Matrix4::BuildCameraViewMatrix(Vector3 position, float pitch, float yaw) {
+	//Why do a complicated matrix inversion, when we can just generate the matrix
+	//using the negative values ;). The matrix multiplication order is important!
+	return	Matrix4::Rotation(-pitch, Vector3(1, 0, 0)) *
+		Matrix4::Rotation(-yaw, Vector3(0, 1, 0)) *
+		Matrix4::Translation(-position);
+};
+
 Matrix4 Matrix4::Rotation(float degrees, const Vector3 &inaxis)	 {
 	Matrix4 m;
 

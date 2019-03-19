@@ -39,13 +39,14 @@ ExampleRenderer::~ExampleRenderer()
 	delete defaultObject[1];
 	
 }
-
-void ExampleRenderer::Update(float dt)	{
+Maths::Vector3 obj1Trans = Maths::Vector3(0.4, 0, -0.3);
+void ExampleRenderer::Update(float dt, float x, float y) {
 	rotation += dt;
 
 	defaultObject[0]->SetLocalTransform(Matrix4::Scale(Vector3(0.0000001, 0.0000001, 0.0000001))*Matrix4::Translation(Vector3(-0.4, 0, 0.3)) * Matrix4::Rotation(rotation, Vector3(0,0,1)));
 
-	defaultObject[1]->SetLocalTransform(Matrix4::Scale(Vector3(1, 1,1))*Matrix4::Translation(Vector3(0.4, 0, -0.3)));
+	obj1Trans = obj1Trans + Vector3(0.01*x, -0.01*y, 0);
+	defaultObject[1]->SetLocalTransform(Matrix4::Scale(Vector3(1, 1,1))*Matrix4::Translation(obj1Trans));
 
 	//defaultObject[0]->SetLocalTransform(Matrix4::Scale(Vector3(0.5, 0.5, 0.5))* Matrix4::Translation(Vector3(-10.4, 0, 0)) * Matrix4::Rotation(rotation, Vector3(0, 0, 1)));
 

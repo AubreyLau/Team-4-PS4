@@ -255,7 +255,7 @@ Maths::Matrix4 viewMat = Maths::Matrix4();
 Maths::Matrix4 projMat = Maths::Matrix4();
 
 
-void PS4RendererBase::RenderFrame()			{
+void PS4RendererBase::RenderFrame(float x, float y)			{
 	currentFrame->StartFrame();	
 
 	currentGFXContext->waitUntilSafeForRendering(videoHandle, currentGPUBuffer);
@@ -288,8 +288,13 @@ void PS4RendererBase::RenderFrame()			{
 
 	currentGFXContext->setSamplers(Gnm::kShaderStagePs, 0, 1, &trilinearSampler);
 
-	
+	viewProjPos = viewProjPos + Vector3(0.1*x, -0.1 * y, 0);
+
+	//Build ViewMat Way1
 	viewMat = Matrix4::BuildViewMatrix(viewProjPos, Vector3(0, 0, 0), Vector3(0, 1, 0));
+
+	//Build ViewMat Way2
+	//viewMat = Matrix4::BuildCameraViewMat(viewProjPos, -90, 0);	
 
 	projMat = Matrix4::Perspective(1.0f, 100.0f, (float)16 / (float)9, 70.0f);
 
