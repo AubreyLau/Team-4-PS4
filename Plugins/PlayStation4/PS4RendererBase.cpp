@@ -37,7 +37,7 @@ PS4RendererBase::PS4RendererBase(PS4Window*window)
 	currentScreenBuffer	 = 0;
 	prevScreenBuffer	 = 0;
 
-	std::cerr << "Starting Rich Code!" << std::endl;
+	std::cerr << "Starting Team4 Code!" << std::endl;
 
 	currentGFXContext	 = nullptr;
 
@@ -73,6 +73,14 @@ PS4Mesh* PS4RendererBase::setMesh(const std::string&filename) {
 	return myMesh;
 
 }
+
+PS4Mesh* PS4RendererBase::setOBJ(const std::string&filename) {
+
+	myMesh = myMesh->GenerateOBJ(filename);
+	return myMesh;
+
+}
+
 
 
 PS4Texture*  PS4RendererBase::SetTexture(const std::string&basicTexture, const std::string bumpMap, const std::string heightMap) {
