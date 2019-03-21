@@ -26,7 +26,7 @@ VS_OUTPUT main(VS_INPUT Input)
 {
 	VS_OUTPUT Output; 
 
-	Output.Position = mul(mul(modelMatrix,camMatrix), float4(Input.Position.xyz, 1));
+	Output.Position = mul(mul(camMatrix,modelMatrix), float4(Input.Position.xyz, 1));
 	//Output.Color = Input.Color;
 	Output.UV = Input.UV;
 

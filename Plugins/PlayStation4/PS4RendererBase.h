@@ -121,6 +121,32 @@ namespace NCL {
 			PS4ScreenBuffer*		currentPS4Buffer;  //Pointer to whichever buffer we're currently using...
 			Gnmx::GnmxGfxContext*	currentGFXContext;
 			PS4Frame*				currentFrame;
+
+
+			/*MO TEST*/
+
+			PS4Mesh* skyboxMeshUp;
+			PS4Mesh* skyboxMeshDown;
+			PS4Mesh* skyboxMeshFront;
+			PS4Mesh* skyboxMeshBack;
+			PS4Mesh* skyboxMeshLeft;
+			PS4Mesh* skyboxMeshRight;
+
+			Vector3 CameraPos;
+			Vector3 CameraPosChange;
+			PS4Shader*	skyboxShader;
+
+			PS4Texture* SkyboxTextureUp;
+			PS4Texture* SkyboxTextureDown;
+			PS4Texture* SkyboxTextureLeft;
+			PS4Texture* SkyboxTextureRight;
+			PS4Texture* SkyboxTextureFront;
+			PS4Texture* SkyboxTextureBack;
+
+
+			PS4Mesh* floorMesh;
+			PS4Texture* floorTexture;
+			/*MO TEST*/
 		};
 	}
 }

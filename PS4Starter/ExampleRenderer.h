@@ -25,6 +25,19 @@ namespace NCL {
 			PS4Mesh* msh;
 			float rotation;
 			RenderObject* defaultObject[2];
+
+			/*Mo test*/
+			RenderObject* skybox[6];
+			RenderObject* ball;
+		/*	RenderObject* test1;
+			RenderObject* test2;
+			RenderObject* test3;
+			RenderObject* test4;
+			RenderObject* test5;
+			RenderObject* test6;*/
+			RenderObject* floor;
+			Vector3 changePos;
+
 		};
 	}
 }

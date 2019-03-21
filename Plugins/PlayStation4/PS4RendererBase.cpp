@@ -25,6 +25,12 @@ using namespace NCL::PS4;
 sce::Gnmx::Toolkit::IAllocator	oAllocator;
 sce::Gnmx::Toolkit::IAllocator	gAllocator;
 
+
+Maths::Vector3 viewProjPos = Maths::Vector3(0, 0, 0);
+Maths::Matrix4 viewMat = Maths::Matrix4();
+Maths::Matrix4 projMat = Maths::Matrix4();
+Maths::Vector3 lookAtPos = Maths::Vector3(0, 0, -0.25);
+
 PS4RendererBase::PS4RendererBase(PS4Window*window)
 	: RendererBase(*window),
 	_MaxCMDBufferCount(3),
@@ -59,6 +65,29 @@ PS4RendererBase::PS4RendererBase(PS4Window*window)
 
 	viewProjMat		= (Matrix4*)onionAllocator->allocate(sizeof(Matrix4), Gnm::kEmbeddedDataAlignment4);
 	*viewProjMat	= Matrix4();
+
+	/*mo test*/
+	skyboxShader = PS4Shader::GenerateShader(
+		"/app0/SkyboxVertexShader.sb",
+		"/app0/PixelShader.sb"
+	);
+	SkyboxTextureUp = PS4Texture::LoadTextureFromFile("/app0/up.gnf");
+	SkyboxTextureDown = PS4Texture::LoadTextureFromFile("/app0/down.gnf");
+	SkyboxTextureLeft = PS4Texture::LoadTextureFromFile("/app0/left.gnf");
+	SkyboxTextureRight = PS4Texture::LoadTextureFromFile("/app0/right.gnf");
+	SkyboxTextureFront = PS4Texture::LoadTextureFromFile("/app0/front.gnf");
+	SkyboxTextureBack = PS4Texture::LoadTextureFromFile("/app0/back.gnf");
+	floorTexture = PS4Texture::LoadTextureFromFile("/app0/doge.gnf");
+	CameraPos = viewProjPos;
+	skyboxMeshUp = PS4Mesh::GenerateQuadUp();
+	skyboxMeshDown = PS4Mesh::GenerateQuadDown();
+	skyboxMeshFront = PS4Mesh::GenerateQuadFront();
+	skyboxMeshBack = PS4Mesh::GenerateQuadBack();
+	skyboxMeshLeft = PS4Mesh::GenerateQuadLeft();
+	skyboxMeshRight = PS4Mesh::GenerateQuadRight();
+	floorMesh = PS4Mesh::GenerateFloor();
+	/*mo test*/
+
 
 	cameraBuffer.initAsConstantBuffer(viewProjMat, sizeof(Matrix4));
 	cameraBuffer.setResourceMemoryType(Gnm::kResourceMemoryTypeRO); // it's a constant buffer, so read-only is OK
@@ -257,11 +286,6 @@ void	PS4RendererBase::DestroyVideoSystem() {
 }
 
 
-//
-Maths::Vector3 viewProjPos = Maths::Vector3(0, 0, 3);
-Maths::Matrix4 viewMat = Maths::Matrix4();
-Maths::Matrix4 projMat = Maths::Matrix4();
-
 
 void PS4RendererBase::RenderFrame(float x, float y)			{
 	currentFrame->StartFrame();	
@@ -296,15 +320,24 @@ void PS4RendererBase::RenderFrame(float x, float y)			{
 
 	currentGFXContext->setSamplers(Gnm::kShaderStagePs, 0, 1, &trilinearSampler);
 
-	viewProjPos = viewProjPos + Vector3(0.1*x, -0.1 * y, 0);
+	//viewProjPos = viewProjPos + Vector3(0.1*x, -0.1 * y, 0);
 
 	//Build ViewMat Way1
-	viewMat = Matrix4::BuildViewMatrix(viewProjPos, Vector3(0, 0, 0), Vector3(0, 1, 0));
+//	viewMat = Matrix4::BuildViewMatrix(viewProjPos, Vector3(0, 0, 0), Vector3(0, 1, 0));
 
 	//Build ViewMat Way2
 	//viewMat = Matrix4::BuildCameraViewMat(viewProjPos, -90, 0);	
 
-	projMat = Matrix4::Perspective(1.0f, 100.0f, (float)16 / (float)9, 70.0f);
+
+
+	/*Mo test*/
+	CameraPos = viewProjPos + Vector3(0.01*x, -0.01* y, 0);
+	CameraPosChange = Vector3(0.1*x, -0.1* y, 0);
+	viewMat = viewMat * Matrix4::BuildCameraViewMatrix(CameraPos, 10 * x, y);
+	/*Mo test*/
+
+
+	projMat = Matrix4::Perspective(1.0f, 4000.0f, (float)16 / (float)9, 90.0f);
 
 	viewProjMat->ToIdentity();
 	//viewProjPos = viewProjPos + Vector3(0.01*3, -0.01*3, 0);
