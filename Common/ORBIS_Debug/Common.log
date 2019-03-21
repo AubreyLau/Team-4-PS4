@@ -1,12 +1,19 @@
 ﻿  Camera.cpp
+  Maths.cpp
+  Matrix2.cpp
   Matrix3.cpp
-C:\Users\b8052301\Source\Repos\Team-4-PS4\Common\Matrix3.cpp(121,9): warning : unused variable 'phi2' [-Wunused-variable]
-                  float phi2 = Maths::RadiansToDegrees(atan2(values[1] / cost2, values[0] / cost2));
-                        ^
 C:\Users\b8052301\Source\Repos\Team-4-PS4\Common\Matrix3.cpp(118,9): warning : unused variable 'psi2' [-Wunused-variable]
                   float psi2 = Maths::RadiansToDegrees(atan2(values[5] / cost2, values[8] / cost2));
                         ^
+C:\Users\b8052301\Source\Repos\Team-4-PS4\Common\Matrix3.cpp(121,9): warning : unused variable 'phi2' [-Wunused-variable]
+                  float phi2 = Maths::RadiansToDegrees(atan2(values[1] / cost2, values[0] / cost2));
+                        ^
   2 warnings generated.
+  Matrix4.cpp
+C:\Users\b8052301\Source\Repos\Team-4-PS4\Common\Matrix4.cpp(198,14): warning : expression result unused [-Wunused-value]
+          mat.values[0];
+          ~~~~~~~~~~ ~^
+  1 warning generated.
   MeshGeometry.cpp
   In file included from C:\Users\b8052301\Source\Repos\Team-4-PS4\Common\MeshGeometry.cpp:9:
 C:\Users\b8052301\Source\Repos\Team-4-PS4\Common/../Common/ObjLoader.h(240,13): warning : unused function 'parseTriple' [-Wunused-function]
@@ -22,5 +29,17 @@ C:\Users\b8052301\Source\Repos\Team-4-PS4\Common/../Common/ObjLoader.h(954,22): 
                           GeometryPrimitive       primType;
                                                   ^
   4 warnings generated.
+  Mouse.cpp
+  Plane.cpp
   Quaternion.cpp
+  RendererBase.cpp
+  ShaderBase.cpp
+  SimpleFont.cpp
+  TextureBase.cpp
+  TextureLoader.cpp
+  TextureWriter.cpp
+  Win32Keyboard.cpp
+  Win32Mouse.cpp
+  Win32Window.cpp
+  Window.cpp
   Common.vcxproj -> C:\Users\b8052301\Source\Repos\Team-4-PS4\ORBIS\Debug\Common.a
