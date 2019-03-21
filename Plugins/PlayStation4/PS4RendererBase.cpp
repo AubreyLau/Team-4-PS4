@@ -285,7 +285,7 @@ void	PS4RendererBase::DestroyVideoSystem() {
 	sceVideoOutClose(videoHandle);
 }
 
-
+float pitch_total = 0;
 
 void PS4RendererBase::RenderFrame(float x, float y)			{
 	currentFrame->StartFrame();	
@@ -333,7 +333,37 @@ void PS4RendererBase::RenderFrame(float x, float y)			{
 	/*Mo test*/
 	CameraPos = viewProjPos + Vector3(0.01*x, -0.01* y, 0);
 	CameraPosChange = Vector3(0.1*x, -0.1* y, 0);
-	viewMat = viewMat * Matrix4::BuildCameraViewMatrix(CameraPos, 10 * x, y);
+
+	/*float pitch = 10 * x;
+	float yaw = y;*/
+
+
+
+	float pitch = y;
+	float yaw = x;
+	//float yaw = 0;
+	
+	pitch_total = pitch_total + pitch;
+	if (pitch_total > 0.0f) 
+	{
+		pitch_total = pitch_total - pitch;
+		pitch = 0.0f;
+	}
+
+	if (pitch_total < -89.0f)
+	{
+		pitch_total = pitch_total - pitch;
+		pitch = 0.0f;
+	}
+	
+
+	//Pitch&yaw test
+	/*printf("Pitch is %f\n", y);
+	printf("Pitch_total is %f\n", pitch_total);*/
+	//printf("Yaw is %f\n", x);
+	//Pitch&yaw test
+
+	viewMat = viewMat * Matrix4::BuildCameraViewMatrix(CameraPos, pitch, yaw);
 	/*Mo test*/
 
 
