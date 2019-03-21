@@ -20,6 +20,9 @@ struct VS_OUTPUT
 {
 	float4 Position		: S_POSITION;
 	float2 UV			: TEXCOORD0; 
+	float3 Normal		: TEXCOORD1;//new
+	float3 Tangent		: TEXCOORD2;//new
+	float3 binormal ;//new
 };
 
 VS_OUTPUT main(VS_INPUT Input)
@@ -29,6 +32,10 @@ VS_OUTPUT main(VS_INPUT Input)
 	Output.Position = mul(mul(camMatrix,modelMatrix), float4(Input.Position.xyz, 1));
 	//Output.Color = Input.Color;
 	Output.UV = Input.UV;
+
+
+	//matrix normalMatrix = transpose ( inverse ( modelMatrix ));
+	Output.Normal = normalize (normalMatrix *  normalize (Input.Normal ));
 
 	return Output;
 }
