@@ -17,7 +17,7 @@ ExampleRenderer::ExampleRenderer(PS4Window* window) : PS4RendererBase(window)
 	skybox[3] = new RenderObject(skyboxMeshFront, (ShaderBase*)skyboxShader, (TextureBase*)SkyboxTextureFront);
 	skybox[4] = new RenderObject(skyboxMeshUp, (ShaderBase*)skyboxShader, (TextureBase*)SkyboxTextureUp);
 	skybox[5] = new RenderObject(skyboxMeshDown, (ShaderBase*)skyboxShader, (TextureBase*)SkyboxTextureDown);
-	ball = new RenderObject((MeshGeometry*)setMesh("/app0/sphere2.msh"), (ShaderBase*)skyboxShader, (TextureBase*)myTexture);
+	ball = new RenderObject((MeshGeometry*)setMesh("/app0/sphere.obj"), (ShaderBase*)skyboxShader, (TextureBase*)myTexture);
 	floor = new RenderObject(floorMesh, (ShaderBase*)skyboxShader, (TextureBase*)floorTexture);
 	changePos = Vector3(0,0,0);
 	/*Mo test- skybox*/
@@ -27,7 +27,7 @@ ExampleRenderer::ExampleRenderer(PS4Window* window) : PS4RendererBase(window)
 //	defaultObject[0] = new RenderObject((MeshGeometry*)setMesh("/app0/RobotHead.msh"), (ShaderBase*)defaultShader, (TextureBase*)defaultTexture);
 
 
-//	defaultObject[1] = new RenderObject((MeshGeometry*)setMesh("/app0/sphere2.msh"), (ShaderBase*)defaultShader, (TextureBase*)defaultTexture);
+//	defaultObject[1] = new RenderObject((MeshGeometry*)setMesh("/app0/cube.obj"), (ShaderBase*)defaultShader, (TextureBase*)defaultTexture);
 //	defaultObject[1]->SetBasicTex("/app0/test.gnf");
 //	defaultObject[1]->SetBumpTex("/app0/test.gnf");
 //	defaultObject[0]->SetBumpTex("/app0/test.gnf");
