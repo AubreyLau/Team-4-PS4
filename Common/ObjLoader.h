@@ -745,11 +745,12 @@ namespace NCL {
 		{
 		public:
 			ObjLoader() {
-			
-
+				n = nullptr;
+				
+//	n = new Vector3();
 			};
 			~ObjLoader() {
-			
+				delete[] n;
 			};
 			//
 			//attrib_t* getAttrib() {
@@ -763,7 +764,7 @@ namespace NCL {
 			//	positions.clear();
 				std::vector<NCL::Vector3> p;
 				positions=p;
-
+			
 
 				if (filename == "") {
 					return;
@@ -838,8 +839,6 @@ namespace NCL {
 
 						continue;
 
-
-
 					}
 
 
@@ -856,23 +855,20 @@ namespace NCL {
 						indices.push_back(y-1);
 						indices.push_back(z-1);
 
-
-
-					//	positions.push_back(temp);
-						//	positions.emplace_back(temp);
-									// std::cout << "\nx,y,z=" <<temp.x << temp.y << temp.z << "\n";
-
-
-										//if (found_all_colors /*|| default_vcols_fallback*/) {
-										//	vc.push_back(r);
-										//	vc.push_back(g);
-										//	vc.push_back(b);
-										//}
 						numIndices += 3;
 						continue;
 
+					}
 
 
+
+					// texcoord
+					if (token[0] == 'v' && token[1] == 't' && IS_SPACE((token[2]))) {
+						token += 3;
+						real_t x, y;
+						parseReal2(&x, &y, &token);
+						texCoords.push_back(Vector2(x,y));
+						continue;
 					}
 
 
@@ -906,18 +902,28 @@ namespace NCL {
 			}		
 			vector<Vector3> getNormals() {
 				return normals;
+			}		
+			vector<Vector2> getTexcood() {
+				return texCoords;
 			}
 			void normalGenerator() {
+			//	vector<Vector3> normals;
 			//	if (indices[numIndices]) { // Generate per - vertex normals
+				n = new Vector3[numvertices];
+				for (int i = 0; i < numvertices; ++i) {
+					n[i] = Vector3();
+				}
 					for (int i = 0; i < numIndices; i += 3) {
 						unsigned int a = indices[i];
 						unsigned int b = indices[i + 1];
 						unsigned int c = indices[i + 2];
 						Vector3 normal = Vector3::Cross(
 							(positions[b] - positions[a]), (positions[c] - positions[a]));
-						//normals[a] += normal;
-						//normals[b] += normal;
-						//normals[c] += normal;
+						normal.Normalise();
+				
+						n[a] = normal;
+						n[b] = normal;
+						n[c] = normal;
 					}
 			//	}
 				//else { //just a list of triangles , so generate face normals
@@ -933,7 +939,7 @@ namespace NCL {
 
 				//}
 				for (int i = 0; i < numvertices; ++i) {
-			//		normals[i].Normalise();
+					normals.push_back(n[i]) ;
 				}
 			}
 			void tangentGenerator() {
@@ -953,6 +959,7 @@ namespace NCL {
 			vector<Vector2>		texCoords;
 			vector<Vector4>		colours;
 			vector<Vector3>		normals;
+			Vector3*		n;
 			vector<Vector3>		tangents;
 			vector<unsigned int>	indices;
 

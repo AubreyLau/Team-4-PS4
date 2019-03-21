@@ -168,8 +168,7 @@ MeshGeometry::MeshGeometry(const std::string&filename) {
 	this->SetVertexPositions(l.getPosition());
 	this->SetVertexIndices(l.getIndices());
 	this->SetVertexNormals(l.getNormals());
-
-
+	this->SetVertexTextureCoords(l.getTexcood());
 }
 
 
