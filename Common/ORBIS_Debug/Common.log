@@ -6,10 +6,10 @@ C:\Users\b8052301\Source\Repos\Team-4-PS4\Common/../Common/ObjLoader.h(240,13): 
 C:\Users\b8052301\Source\Repos\Team-4-PS4\Common/../Common/ObjLoader.h(412,13): warning : unused function 'exportGroupsToShape' [-Wunused-function]
   static bool exportGroupsToShape(shape_t *shape,
               ^
-C:\Users\b8052301\Source\Repos\Team-4-PS4\Common/../Common/ObjLoader.h(870,14): warning : private field 'attrib' is not used [-Wunused-private-field]
+C:\Users\b8052301\Source\Repos\Team-4-PS4\Common/../Common/ObjLoader.h(944,14): warning : private field 'attrib' is not used [-Wunused-private-field]
                           attrib_t* attrib;
                                     ^
-C:\Users\b8052301\Source\Repos\Team-4-PS4\Common/../Common/ObjLoader.h(874,22): warning : private field 'primType' is not used [-Wunused-private-field]
+C:\Users\b8052301\Source\Repos\Team-4-PS4\Common/../Common/ObjLoader.h(948,22): warning : private field 'primType' is not used [-Wunused-private-field]
                           GeometryPrimitive       primType;
                                                   ^
   4 warnings generated.

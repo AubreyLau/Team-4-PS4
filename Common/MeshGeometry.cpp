@@ -160,33 +160,15 @@ void ReadIndices(std::ifstream& file, vector<unsigned int>& elements, int numInd
 
 
 
-
-
-
 MeshGeometry::MeshGeometry(const std::string&filename) {
-	//std::cout << "using base class!!!";
 
 	primType = GeometryPrimitive::Triangles;
-	//ObjLoader l();
-
 	NCL::PS4::ObjLoader l;
-	l.loadOBJ("/app0/bunny.obj");
-
+	l.loadOBJ(filename);
 	this->SetVertexPositions(l.getPosition());
-//	this->SetVertexNormals(l.getPosition());
-	this->SetVertexTangents(l.getPosition());
-	this->SetVertexIndices({ 0, 1, 2 });
+	this->SetVertexIndices(l.getIndices());
+	this->SetVertexNormals(l.getNormals());
 
-
-//	this->SetVertexPositions({ Vector3(0.0f, 0.5f, 0.0f), Vector3(0.5f, -0.5f, 0.0f), Vector3(-0.5f, -0.5f, 0.0f) });
-////	this->SetVertexTextureCoords({ Vector2(0.5f, 0.0f) , Vector2(1.0f, 1.0f), Vector2(0.0f, 1.0f) });
-//	this->SetVertexNormals({ Vector3(0, 0, 1),Vector3(0, 0, 1), Vector3(0, 0, 1) });
-//	this->SetVertexTangents({ Vector3(1, 0, 0), Vector3(1, 0, 0), Vector3(1, 0, 0) });
-//	this->SetVertexIndices({ 0, 1, 2 });
-//
-
-
-	//std::cout << "\n\n\n bunnnny loaded!!!!" << std::endl;
 
 }
 
@@ -202,6 +184,11 @@ void	MeshGeometry::TransformVertices(const Matrix4& byMatrix) {
 }
 
 void	MeshGeometry::RecalculateNormals() {
+
+
+
+
+
 
 }
 

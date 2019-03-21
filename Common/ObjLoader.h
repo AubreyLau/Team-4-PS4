@@ -824,7 +824,7 @@ namespace NCL {
 						temp.z = z;
 						
 						//	 std::cout << "\nx,y,z=" << x << y << z << "\n";
-
+						numvertices++;
 					positions.push_back(temp);
 				//	positions.emplace_back(temp);
 							// std::cout << "\nx,y,z=" <<temp.x << temp.y << temp.z << "\n";
@@ -844,11 +844,47 @@ namespace NCL {
 
 
 
+					if (token[0] == 'f' && IS_SPACE((token[1]))) {
+						token += 2;
+						real_t x, y, z;
+						real_t r, g, b;
+						
+						parseVertexWithColor(&x, &y, &z, &r, &g, &b, &token);
+						
+						//	 std::cout << "\nx,y,z=" << x << y << z << "\n";
+						indices.push_back(x-1);
+						indices.push_back(y-1);
+						indices.push_back(z-1);
+
+
+
+					//	positions.push_back(temp);
+						//	positions.emplace_back(temp);
+									// std::cout << "\nx,y,z=" <<temp.x << temp.y << temp.z << "\n";
+
+
+										//if (found_all_colors /*|| default_vcols_fallback*/) {
+										//	vc.push_back(r);
+										//	vc.push_back(g);
+										//	vc.push_back(b);
+										//}
+						numIndices += 3;
+						continue;
+
+
+
+					}
+
+
+
+
+
+
 
 				}
 
 
-
+				normalGenerator();
 
 
 			}
@@ -865,6 +901,44 @@ namespace NCL {
 				return positions;
 			}
 
+			vector<unsigned int> getIndices() {
+				return indices;
+			}		
+			vector<Vector3> getNormals() {
+				return normals;
+			}
+			void normalGenerator() {
+			//	if (indices[numIndices]) { // Generate per - vertex normals
+					for (int i = 0; i < numIndices; i += 3) {
+						unsigned int a = indices[i];
+						unsigned int b = indices[i + 1];
+						unsigned int c = indices[i + 2];
+						Vector3 normal = Vector3::Cross(
+							(positions[b] - positions[a]), (positions[c] - positions[a]));
+						//normals[a] += normal;
+						//normals[b] += normal;
+						//normals[c] += normal;
+					}
+			//	}
+				//else { //just a list of triangles , so generate face normals
+				//	for (GLuint i = 0; i < numVertices; i += 3) {
+				//		Vector3 & a = vertices[i];
+				//		Vector3 & b = vertices[i + 1];
+				//		Vector3 & c = vertices[i + 2];
+				//		Vector3 normal = Vector3::Cross(b - a, c - a);
+				//		normals[i] = normal;
+				//		normals[i + 1] = normal;
+				//		normals[i + 2] = normal;
+				//	}
+
+				//}
+				for (int i = 0; i < numvertices; ++i) {
+			//		normals[i].Normalise();
+				}
+			}
+			void tangentGenerator() {
+
+			}
 		private:
 			//
 			attrib_t* attrib;
@@ -873,6 +947,8 @@ namespace NCL {
 		//	 std::vector<NCL::Vector3>* v;
 			GeometryPrimitive	primType;
 			vector<Vector3>		positions;
+			int numIndices = 0;
+			int numvertices = 0;
 
 			vector<Vector2>		texCoords;
 			vector<Vector4>		colours;
