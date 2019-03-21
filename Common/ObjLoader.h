@@ -19,7 +19,8 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
-#include "MeshGeometry.h"
+//#include "MeshGeometry.h"
+//#include"../Plugins/PlayStation4/PS4MemoryAware.h"
 
 #define IS_SPACE(x) (((x) == ' ') || ((x) == '\t'))
 #define IS_DIGIT(x) \
@@ -724,122 +725,246 @@ static std::istream &safeGetline(std::istream &is, std::string &t) {
 
 
 
-class ObjLoader
-{
-public:
-	ObjLoader();
-	~ObjLoader();
-	//
-	//attrib_t* getAttrib() {
-	//	return attrib;
-	//}
-	//
-	
-	void loadOBJ(const std::string&filename /*attrib_t *attrib, *//*std::vector<shape_t> *shapes*/) {
-
-		v = new  std::vector<NCL::Vector3>();
-		if (filename == "") {
-			return;
-		}
-	//	std::vector<NCL::Vector3>	v;
 
 
-		std::ifstream inStream(filename, std::ios::binary);
-		std::cout << "using obj loader!!!\n\n\n";
 
 
-		size_t line_num = 0;
-		std::string linebuf;
 
-		while (inStream.peek() != -1) {
-			safeGetline(inStream, linebuf);
 
-			line_num++;
 
-			// Trim newline '\r\n' or '\n'
-			if (linebuf.size() > 0) {
-				if (linebuf[linebuf.size() - 1] == '\n')
-					linebuf.erase(linebuf.size() - 1);
+
+
+
+namespace NCL {
+	namespace PS4 {
+		//	using namespace sce;
+		class ObjLoader
+			//	:public NCL::MeshGeometry, public PS4MemoryAware
+
+
+		{
+		public:
+			ObjLoader() {
+				n = nullptr;
+
+				//	n = new Vector3();
+			};
+			~ObjLoader() {
+				delete[] n;
+			};
+			//
+			//attrib_t* getAttrib() {
+			//	return attrib;
+			//}
+			//
+
+			void loadOBJ(const std::string&filename /*attrib_t *attrib, *//*std::vector<shape_t> *shapes*/) {
+
+				//v.clear();
+			//	positions.clear();
+				std::vector<NCL::Vector3> p;
+				positions = p;
+
+
+				if (filename == "") {
+					return;
+				}
+				//	std::vector<NCL::Vector3>	v;
+
+
+				std::ifstream inStream(filename, std::ios::binary);
+				std::cout << "using obj loader!!!\n\n\n";
+
+
+				size_t line_num = 0;
+				std::string linebuf;
+
+				while (inStream.peek() != -1) {
+					safeGetline(inStream, linebuf);
+
+					line_num++;
+
+					// Trim newline '\r\n' or '\n'
+					if (linebuf.size() > 0) {
+						if (linebuf[linebuf.size() - 1] == '\n')
+							linebuf.erase(linebuf.size() - 1);
+					}
+					if (linebuf.size() > 0) {
+						if (linebuf[linebuf.size() - 1] == '\r')
+							linebuf.erase(linebuf.size() - 1);
+					}
+
+					// Skip if empty line.
+					if (linebuf.empty()) {
+						continue;
+					}
+
+					// Skip leading space.
+
+					const char *token = linebuf.c_str();
+					token += strspn(token, " \t");
+
+
+
+
+					assert(token);
+					if (token[0] == '\0') continue;  // empty line
+
+					if (token[0] == '#') continue;  // comment line
+
+					// vertex
+					if (token[0] == 'v' && IS_SPACE((token[1]))) {
+						token += 2;
+						real_t x, y, z;
+						real_t r, g, b;
+
+						parseVertexWithColor(&x, &y, &z, &r, &g, &b, &token);
+						NCL::Maths::Vector3 temp;
+						temp.x = x;
+						temp.y = y;
+						temp.z = z;
+
+						//	 std::cout << "\nx,y,z=" << x << y << z << "\n";
+						numvertices++;
+						positions.push_back(temp);
+						//	positions.emplace_back(temp);
+									// std::cout << "\nx,y,z=" <<temp.x << temp.y << temp.z << "\n";
+
+
+										//if (found_all_colors /*|| default_vcols_fallback*/) {
+										//	vc.push_back(r);
+										//	vc.push_back(g);
+										//	vc.push_back(b);
+										//}
+
+						continue;
+
+					}
+
+
+
+					if (token[0] == 'f' && IS_SPACE((token[1]))) {
+						token += 2;
+						real_t x, y, z;
+						real_t r, g, b;
+
+						parseVertexWithColor(&x, &y, &z, &r, &g, &b, &token);
+
+						//	 std::cout << "\nx,y,z=" << x << y << z << "\n";
+						indices.push_back(x - 1);
+						indices.push_back(y - 1);
+						indices.push_back(z - 1);
+
+						numIndices += 3;
+						continue;
+
+					}
+
+
+
+					// texcoord
+					if (token[0] == 'v' && token[1] == 't' && IS_SPACE((token[2]))) {
+						token += 3;
+						real_t x, y;
+						parseReal2(&x, &y, &token);
+						texCoords.push_back(Vector2(x, y));
+						continue;
+					}
+
+
+
+
+
+
+
+				}
+
+
+				normalGenerator();
+
+
 			}
-			if (linebuf.size() > 0) {
-				if (linebuf[linebuf.size() - 1] == '\r')
-					linebuf.erase(linebuf.size() - 1);
+			void setAttrib(NCL::MeshGeometry & msh) {
+				//
+
+				msh.SetVertexPositions(attrib_mesh->positions);
+				msh.SetVertexColours(attrib_mesh->colours);
+				msh.SetVertexNormals(attrib_mesh->normals);
+				msh.SetVertexTextureCoords(attrib_mesh->texCoords);
 			}
 
-			// Skip if empty line.
-			if (linebuf.empty()) {
-				continue;
+			vector<Vector3> getPosition() {
+				return positions;
 			}
 
-			// Skip leading space.
+			vector<unsigned int> getIndices() {
+				return indices;
+			}
+			vector<Vector3> getNormals() {
+				return normals;
+			}
+			vector<Vector2> getTexcood() {
+				return texCoords;
+			}
+			void normalGenerator() {
+				//	vector<Vector3> normals;
+				//	if (indices[numIndices]) { // Generate per - vertex normals
+				n = new Vector3[numvertices];
+				for (int i = 0; i < numvertices; ++i) {
+					n[i] = Vector3();
+				}
+				for (int i = 0; i < numIndices; i += 3) {
+					unsigned int a = indices[i];
+					unsigned int b = indices[i + 1];
+					unsigned int c = indices[i + 2];
+					Vector3 normal = Vector3::Cross(
+						(positions[b] - positions[a]), (positions[c] - positions[a]));
+					normal.Normalise();
 
-			const char *token = linebuf.c_str();
-			token += strspn(token, " \t");
+					n[a] = normal;
+					n[b] = normal;
+					n[c] = normal;
+				}
+				//	}
+					//else { //just a list of triangles , so generate face normals
+					//	for (GLuint i = 0; i < numVertices; i += 3) {
+					//		Vector3 & a = vertices[i];
+					//		Vector3 & b = vertices[i + 1];
+					//		Vector3 & c = vertices[i + 2];
+					//		Vector3 normal = Vector3::Cross(b - a, c - a);
+					//		normals[i] = normal;
+					//		normals[i + 1] = normal;
+					//		normals[i + 2] = normal;
+					//	}
 
-
-
-
-			assert(token);
-			if (token[0] == '\0') continue;  // empty line
-
-			if (token[0] == '#') continue;  // comment line
-
-			// vertex
-			if (token[0] == 'v' && IS_SPACE((token[1]))) {
-				token += 2;
-				real_t x, y, z;
-				real_t r, g, b;
-
-			parseVertexWithColor(&x, &y, &z, &r, &g, &b, &token);
-			NCL::Maths::Vector3 temp;
-     		 temp.x=x;
-			 temp.y = y;
-			 temp.z = z;	
-
-		//	 std::cout << "\nx,y,z=" << x << y << z << "\n";
-			
-
-			v->push_back(temp);
-			// std::cout << "\nx,y,z=" <<temp.x << temp.y << temp.z << "\n";
-
-
-				//if (found_all_colors /*|| default_vcols_fallback*/) {
-				//	vc.push_back(r);
-				//	vc.push_back(g);
-				//	vc.push_back(b);
-				//}
-
-				continue;
-
-
+					//}
+				for (int i = 0; i < numvertices; ++i) {
+					normals.push_back(n[i]);
+				}
+			}
+			void tangentGenerator() {
 
 			}
+		private:
+			//
+			attrib_t* attrib;
+			attrib_n* attrib_mesh;
+			//NCL::Maths::Vector3 temp;
+		//	 std::vector<NCL::Vector3>* v;
+			GeometryPrimitive	primType;
+			vector<Vector3>		positions;
+			int numIndices = 0;
+			int numvertices = 0;
+
+			vector<Vector2>		texCoords;
+			vector<Vector4>		colours;
+			vector<Vector3>		normals;
+			Vector3*		n;
+			vector<Vector3>		tangents;
+			vector<unsigned int>	indices;
 
 
-
-
-		}
-
-		
-
-	
+		};
 
 	}
-	void setAttrib(NCL::MeshGeometry & msh) {
-		//
-		
-		msh.SetVertexPositions(attrib_mesh->positions);
-		msh.SetVertexColours(attrib_mesh->colours);
-		msh.SetVertexNormals(attrib_mesh->normals);
-		msh.SetVertexTextureCoords(attrib_mesh->texCoords);
-	}
-private:
-	//
-	attrib_t* attrib;	
-	attrib_n* attrib_mesh;
-	//NCL::Maths::Vector3 temp;
-	 std::vector<NCL::Vector3>* v;
-
-	
-};
-
+}
