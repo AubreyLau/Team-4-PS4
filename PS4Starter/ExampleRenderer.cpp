@@ -25,9 +25,25 @@ ExampleRenderer::ExampleRenderer(PS4Window* window) : PS4RendererBase(window)
 //	defaultObject[0] = new RenderObject((MeshGeometry*)msh, (ShaderBase*)defaultShader, (TextureBase*)defaultTexture);
 //	defaultObject[1] = new RenderObject((MeshGeometry*)setMesh("/app0/sphere2.msh"), (ShaderBase*)defaultShader, (TextureBase*)SetTexture("/app0/test.gnf"));
 
+	////skybox = new RenderObject((MeshGeometry*)setMesh("/app0/RobotHead.msh"), (ShaderBase*)defaultShader, (TextureBase*)defaultTexture);
+	/*test1 = new RenderObject(skyboxMeshBack, (ShaderBase*)defaultShader, (TextureBase*)defaultTexture);
+	test2 = new RenderObject(skyboxMeshLeft, (ShaderBase*)defaultShader, (TextureBase*)defaultTexture);
+	test3 = new RenderObject(skyboxMeshRight, (ShaderBase*)defaultShader, (TextureBase*)defaultTexture);
+	test4 = new RenderObject(skyboxMeshFront, (ShaderBase*)defaultShader, (TextureBase*)defaultTexture);
+	test5 = new RenderObject(skyboxMeshUp, (ShaderBase*)defaultShader, (TextureBase*)defaultTexture);
+	test6 = new RenderObject(skyboxMeshDown, (ShaderBase*)defaultShader, (TextureBase*)defaultTexture);*/
+//	SkyboxPos =CameraPos;
+	SkyboxPos = Vector3(-50, -50, -50);
 
-
-
+	test1 = new RenderObject(skyboxMeshBack, (ShaderBase*)skyboxShader, (TextureBase*)SkyboxTextureBack);
+	test2 = new RenderObject(skyboxMeshLeft, (ShaderBase*)skyboxShader, (TextureBase*)SkyboxTextureLeft);
+	test3 = new RenderObject(skyboxMeshRight, (ShaderBase*)skyboxShader, (TextureBase*)SkyboxTextureRight);
+	test4 = new RenderObject(skyboxMeshFront, (ShaderBase*)skyboxShader, (TextureBase*)SkyboxTextureFront);
+	test5 = new RenderObject(skyboxMeshUp, (ShaderBase*)skyboxShader, (TextureBase*)SkyboxTextureUp);
+	test6 = new RenderObject(skyboxMeshDown, (ShaderBase*)skyboxShader, (TextureBase*)SkyboxTextureDown);
+	skybox = new RenderObject((MeshGeometry*)setMesh("/app0/sphere2.msh"), (ShaderBase*)skyboxShader, (TextureBase*)myTexture);
+	floor = new RenderObject(floorMesh, (ShaderBase*)skyboxShader, (TextureBase*)floorTexture);
+	//skybox->SetBumpTex("/app0/test.gnf");
 
 }
 
@@ -37,7 +53,7 @@ ExampleRenderer::~ExampleRenderer()
 	delete defaultObject[1];
 	
 }
-Maths::Vector3 obj1Trans = Maths::Vector3(0.4, 0, -0.3);
+Maths::Vector3 obj1Trans = Maths::Vector3(0.4, 0, 0);
 void ExampleRenderer::Update(float dt, float x, float y) {
 	/*rotation += dt;
 
@@ -51,8 +67,47 @@ void ExampleRenderer::Update(float dt, float x, float y) {
 	//defaultObject[1]->SetLocalTransform(Matrix4::Scale(Vector3(0.5, 0.5, 0.5))*Matrix4::Translation(Vector3(-10.4, 0, 0)));
 
 
+	//test1->SetLocalTransform(Matrix4::Scale(Vector3(0.5, 0.5, 0.5)));
+	//test2->SetLocalTransform(Matrix4::Scale(Vector3(0.5, 0.5, 0.5)));
+	//test3->SetLocalTransform(Matrix4::Scale(Vector3(0.5, 0.5, 0.5)));
+	//test4->SetLocalTransform(Matrix4::Scale(Vector3(0.5, 0.5, 0.5)));
+	//test5->SetLocalTransform(Matrix4::Scale(Vector3(0.5, 0.5, 0.5)));
+	//test6->SetLocalTransform(Matrix4::Scale(Vector3(0.5, 0.5, 0.5)));
+	//
+	//SkyboxPos = SkyboxPos + Vector3(-CameraPosChange.x, -CameraPosChange.y, -CameraPosChange.z);
+	SkyboxPos = SkyboxPos + Vector3(0.1*x, 0, -0.1*y);
+	////SkyboxPos = SkyboxPos +CameraPosChange;
+	//SkyboxPos = SkyboxPos + CameraPosChange;
+	//SkyboxPos = SkyboxPos + CameraPosChange;
+
+	/*Vector3 TestPosChange = Vector3(0.01*x, -0.01* y, 0);
+	SkyboxPos = SkyboxPos + TestPosChange;*/
+
+	std::cout << "***********************************************" << std::endl;
+	std::cout << "Renderer CameraPos" << CameraPos << std::endl;
+	std::cout << "***********************************************" << std::endl;
+	//test1->SetLocalTransform(Matrix4::Translation(CameraPos));
+	//test2->SetLocalTransform(Matrix4::Translation(CameraPos));
+	//test3->SetLocalTransform(Matrix4::Translation(CameraPos));
+	//test4->SetLocalTransform(Matrix4::Translation(CameraPos));
+	//test5->SetLocalTransform(Matrix4::Translation(CameraPos));
+	//test6->SetLocalTransform(Matrix4::Translation(CameraPos));
 
 
+
+	//
+	//std::cout << "***********************************************"  << std::endl;
+	//std::cout << "Renderer CameraPos" << CameraPos << std::endl;
+	//std::cout << "Renderer Camera Change" << CameraPosChange << std::endl;
+	//std::cout << "Renderer SkyboxPos" << SkyboxPos << std::endl;
+	//Matrix4 a = test1->GetLocalTransform();
+	//std::cout<< "Renderer SkyboxPos" << a << std::endl;
+	//std::cout << "***********************************************" << std::endl;
+
+
+	//obj1Trans = obj1Trans + Vector3(0.01*x, -0.01*y, 0);
+	
+	skybox->SetLocalTransform(Matrix4::Translation(SkyboxPos));
 
 }
 
@@ -60,6 +115,20 @@ void ExampleRenderer::RenderActiveScene() {
 	/*DrawRenderObject(defaultObject[0]);
 	DrawRenderObject(defaultObject[1]);*/
 
+	DrawRenderObject(test1);
+	DrawRenderObject(test2);
+	DrawRenderObject(test3);
+	DrawRenderObject(test4);
+	DrawRenderObject(test5);
+	DrawRenderObject(test6);
+	DrawRenderObject(skybox);
+	DrawRenderObject(floor);
+	/*DrawSkybox(test1);
+	DrawSkybox(test2);
+	DrawSkybox(test3);
+	DrawSkybox(test4);
+	DrawSkybox(test5);
+	DrawSkybox(test6);*/
 
 
 
@@ -80,6 +149,30 @@ void ExampleRenderer::DrawRenderObject(RenderObject* o) {
 
 	currentGFXContext->setConstantBuffers(Gnm::kShaderStageVs, objIndex, 1, &constantBuffer);
 	currentGFXContext->setConstantBuffers(Gnm::kShaderStageVs, camIndex, 1, &cameraBuffer);
+
+	realShader->SubmitShaderSwitch(*currentGFXContext);
+
+	//DrawMesh(myMesh);
+	//DrawCube(*defaultCube);
+	DrawObject(o);
+}
+
+
+void ExampleRenderer::DrawSkybox(RenderObject* o) {
+	Matrix4* transformMat = (Matrix4*)currentGFXContext->allocateFromCommandBuffer(sizeof(Matrix4), Gnm::kEmbeddedDataAlignment4);
+	*transformMat = o->GetLocalTransform();
+
+	Gnm::Buffer constantBuffer;
+	constantBuffer.initAsConstantBuffer(transformMat, sizeof(Matrix4));
+	constantBuffer.setResourceMemoryType(Gnm::kResourceMemoryTypeRO); // it's a constant buffer, so read-only is OK
+
+	PS4Shader* realShader = (PS4Shader*)o->GetShader();
+
+	int objIndex = realShader->GetConstantBuffer("ShaderConstants");
+	int camIndex = realShader->GetConstantBuffer("CameraData");
+
+	currentGFXContext->setConstantBuffers(Gnm::kShaderStageVs, objIndex, 1, &constantBuffer);
+	//currentGFXContext->setConstantBuffers(Gnm::kShaderStageVs, camIndex,2, &cameraBuffer);
 
 	realShader->SubmitShaderSwitch(*currentGFXContext);
 

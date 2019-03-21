@@ -63,6 +63,9 @@
       <EditAndContinue>true</EditAndContinue>
       <AdditionalDependencies>Common.a;PlayStation4.a;libSceDbgVideoOut_stub_weak.a;libSceVideoOut_stub_weak.a;libSceGnm_debug.a;libSceGnmx_debug.a;libSceGpuAddress.a;libSceGnmDriver_stub_weak.a;libSceShaderBinary.a;libSceGnf_debug.a;libScePad_stub_weak.a;libSceUserService_stub_weak.a;libSceSysmodule_stub_weak.a;libSceNgs2_stub_weak.a;libSceAudioOut_stub_weak.a;-lSceAudio3d_stub_weak;toolkit_debug.a;$(GnmAdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <OrbisWavePsslc>
+      <OutputFileName>$(OutDir)../PS4Starter/%(FileName).sb</OutputFileName>
+    </OrbisWavePsslc>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ORBIS'">
     <ClCompile>
@@ -90,8 +93,16 @@
     <OrbisWavePsslc Include="PixelShader.pssl">
       <Profile Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">sce_ps_orbis</Profile>
     </OrbisWavePsslc>
+    <OrbisWavePsslc Include="SkyboxVertexShader.pssl">
+      <Profile Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">sce_vs_vs_orbis</Profile>
+      <Profile Condition="'$(Configuration)|$(Platform)'=='Release|ORBIS'">sce_vs_vs_orbis</Profile>
+    </OrbisWavePsslc>
     <OrbisWavePsslc Include="VertexShader.pssl">
       <Profile Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">sce_vs_vs_orbis</Profile>
+    </OrbisWavePsslc>
+    <OrbisWavePsslc Include="VertexShader1.pssl">
+      <Profile Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">sce_vs_vs_orbis</Profile>
+      <Profile Condition="'$(Configuration)|$(Platform)'=='Release|ORBIS'">sce_vs_vs_orbis</Profile>
     </OrbisWavePsslc>
   </ItemGroup>
   <ItemGroup>
@@ -112,11 +123,36 @@
     <None Include="Cube.msh" />
   </ItemGroup>
   <ItemGroup>
+    <CustomBuild Include="..\Assets\Textures\back.jpg">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">"$(SCE_ORBIS_SDK_DIR)\host_tools\bin\orbis-image2gnf" -i "%(FullPath)" -o "%(ProjectDir)%(Filename).gnf" -f Auto</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">back.gnf;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\Assets\Textures\down.jpg">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">"$(SCE_ORBIS_SDK_DIR)\host_tools\bin\orbis-image2gnf" -i "%(FullPath)" -o "%(ProjectDir)%(Filename).gnf" -f Auto</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">down.gnf</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\Assets\Textures\front.jpg">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">"$(SCE_ORBIS_SDK_DIR)\host_tools\bin\orbis-image2gnf" -i "%(FullPath)" -o "%(ProjectDir)%(Filename).gnf" -f Auto</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">front.gnf</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\Assets\Textures\left.jpg">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">"$(SCE_ORBIS_SDK_DIR)\host_tools\bin\orbis-image2gnf" -i "%(FullPath)" -o "%(ProjectDir)%(Filename).gnf" -f Auto</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">left.gnf</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\Assets\Textures\right.jpg">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">"$(SCE_ORBIS_SDK_DIR)\host_tools\bin\orbis-image2gnf" -i "%(FullPath)" -o "%(ProjectDir)%(Filename).gnf" -f Auto</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">right.gnf</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\Assets\Textures\up.jpg">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">"$(SCE_ORBIS_SDK_DIR)\host_tools\bin\orbis-image2gnf" -i "%(FullPath)" -o "%(ProjectDir)%(Filename).gnf" -f Auto</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">up.gnf</Outputs>
+    </CustomBuild>
     <Image Include="brick.png" />
     <CustomBuild Include="test.png">
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">"$(SCE_ORBIS_SDK_DIR)\host_tools\bin\orbis-image2gnf" -i "%(FullPath)" -o "%(ProjectDir)%(Filename).gnf" -f Auto</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">test.gnf</Outputs>
     </CustomBuild>
+    <Image Include="doge.jpg" />
   </ItemGroup>
   <Import Condition="'$(ConfigurationType)' == 'Makefile' and Exists('$(VCTargetsPath)\Platforms\$(Platform)\SCE.Makefile.$(Platform).targets')" Project="$(VCTargetsPath)\Platforms\$(Platform)\SCE.Makefile.$(Platform).targets" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

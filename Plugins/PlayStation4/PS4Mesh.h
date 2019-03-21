@@ -26,6 +26,21 @@ namespace NCL {
 			static PS4Mesh* GenerateQuad();
 			static PS4Mesh* GenerateSphere();
 			static PS4Mesh* GenerateSinglePoint();
+			/*mo test*/
+			/*static PS4Mesh* GenerateQuadLeft();
+			static PS4Mesh* GenerateQuadRight();
+			static PS4Mesh* GenerateQuadFront();
+			static PS4Mesh* GenerateQuadBack();
+			static PS4Mesh* GenerateQuadDown();
+			static PS4Mesh* GenerateQuadUp();*/
+			static PS4Mesh* GenerateQuadLeft();
+			static PS4Mesh* GenerateQuadRight();
+			static PS4Mesh* GenerateQuadFront();
+			static PS4Mesh* GenerateQuadBack();
+			static PS4Mesh* GenerateQuadDown();
+			static PS4Mesh* GenerateQuadUp();
+			static PS4Mesh* GenerateFloor();
+			/*mo test*/
 
 		protected:
 			void	SubmitPreDraw(Gnmx::GnmxGfxContext& cmdList, Gnm::ShaderStage stage);
@@ -64,6 +79,10 @@ namespace NCL {
 
 			sce::Gnm::Buffer*	attributeBuffers;
 			int					attributeCount;
+
+
+
+
 		};
 	}
 }

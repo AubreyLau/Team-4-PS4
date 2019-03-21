@@ -74,7 +74,7 @@ namespace NCL {
 			//'up' as the...up axis (pointing towards the top of the screen)
 			static Matrix4 BuildViewMatrix(const Vector3 &from, const Vector3 &lookingAt, const Vector3 up = Vector3(0, 1, 0));
 			
-			Matrix4 BuildCameraViewMatrix(Vector3 position, float pitch, float yaw);
+			static Matrix4 BuildCameraViewMatrix(Vector3 position, float pitch, float yaw);
 			
 			Matrix4 Inverse() const;
 

@@ -45,12 +45,36 @@
     <OrbisWavePsslc Include="VertexShader.pssl">
       <Filter>Shaders</Filter>
     </OrbisWavePsslc>
+    <OrbisWavePsslc Include="SkyboxVertexShader.pssl">
+      <Filter>Shaders</Filter>
+    </OrbisWavePsslc>
+    <OrbisWavePsslc Include="VertexShader1.pssl">
+      <Filter>Shaders</Filter>
+    </OrbisWavePsslc>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\Assets\Textures\doge.png">
       <Filter>Textures</Filter>
     </CustomBuild>
     <CustomBuild Include="test.png">
+      <Filter>Textures</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\Assets\Textures\back.jpg">
+      <Filter>Textures</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\Assets\Textures\down.jpg">
+      <Filter>Textures</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\Assets\Textures\front.jpg">
+      <Filter>Textures</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\Assets\Textures\left.jpg">
+      <Filter>Textures</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\Assets\Textures\right.jpg">
+      <Filter>Textures</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\Assets\Textures\up.jpg">
       <Filter>Textures</Filter>
     </CustomBuild>
   </ItemGroup>
@@ -61,6 +85,9 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="brick.png">
+      <Filter>Textures</Filter>
+    </Image>
+    <Image Include="doge.jpg">
       <Filter>Textures</Filter>
     </Image>
   </ItemGroup>

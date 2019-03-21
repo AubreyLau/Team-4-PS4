@@ -32,12 +32,16 @@ int main(void) {
 		if (input.GetButton(1)) {
 			return 1;
 		}
-		float x_axis0 = input.GetAxis(0).x;
-		float y_axis0 = input.GetAxis(0).y;
+		float x_axis0 = input.GetAxis(0).x- 0.00392163;
+		//std::cout << "x_axis1" << x_axis0 <<std::endl;
+		float y_axis0 = input.GetAxis(0).y- 0.00392163;
+		//std::cout << "y_axis1" << y_axis0 <<std::endl;
 
-		float x_axis1 = input.GetAxis(1).x;
-		float y_axis1 = input.GetAxis(1).y;
+		float x_axis1 = input.GetAxis(1).x- 0.00392163;
+		float y_axis1 = input.GetAxis(1).y - 0.00392163;
+		//std::cout << "x_axis1" << x_axis1 <<std::endl;
 
+		//renderer.Update(2, x_axis1, y_axis1);
 		renderer.Update(2, x_axis0, y_axis0);
 		renderer.Render(x_axis1, y_axis1);
 	}
