@@ -155,3 +155,221 @@ void PS4Mesh::SubmitDraw(Gnmx::GnmxGfxContext& cmdList, Gnm::ShaderStage stage) 
 	cmdList.setIndexSize(indexType);
 	cmdList.drawIndex(GetIndexCount(), indexBuffer);
 } 
+
+
+
+/*Mo test*/
+
+
+
+Vector3 min = Vector3(-0.5f, -0.5f, -0.5f);
+/* x=0 √*/
+PS4Mesh * PS4Mesh::GenerateQuadLeft()
+{
+	PS4Mesh* mesh = new PS4Mesh();
+
+	mesh->indexType = sce::Gnm::IndexSize::kIndexSize32;
+	mesh->primitiveType = sce::Gnm::PrimitiveType::kPrimitiveTypeTriStrip;
+	mesh->SetVertexPositions({ (Vector3(0.0f, 0.0f, 1.0f) + min) * 2000 ,  (Vector3(0.0f, 0.0f, 0.0f) + min) * 2000 , (Vector3(0.0f, 1.0f, 1.0f) + min) * 2000,(Vector3(0.0f, 1.0f, 0.0f) + min) * 2000 });
+	//	mesh->SetVertexPositions({ Vector3(-0.5f, -0.5f, 0.5f),  Vector3(-0.5f, -0.5f, -0.5f), Vector3(-0.5f, 0.5f, 0.5f),Vector3(-0.5f, 0.5f, -0.5f) });
+
+		//	mesh->SetVertexTextureCoords({ Vector2(0.0f,  1.0f),Vector2(0.0f, 0.0f) ,Vector2(1.0f, 1.0f), Vector2(1.0f,  0.0f) });//倒着的
+	mesh->SetVertexTextureCoords({ Vector2(0.0f, 1.0f) ,Vector2(1.0f, 1.0f) ,Vector2(0.0f, 0.0f), Vector2(1.0f, 0.0f) });
+	std::vector<Vector3> normals;
+	std::vector<Vector3> tangents;
+	std::vector<unsigned int> indices;
+
+	for (int i = 0; i < 4; ++i) {
+		normals.emplace_back(Vector3(1, 0, 0));
+		tangents.emplace_back(Vector3(0, 0, 1));
+
+		indices.emplace_back(i);
+	}
+
+	mesh->SetVertexNormals(normals);
+	mesh->SetVertexTangents(tangents);
+	mesh->SetVertexIndices(indices);
+
+	mesh->UploadToGPU();
+	return mesh;
+}
+
+/* x = 1 √*/
+PS4Mesh * PS4Mesh::GenerateQuadRight()
+{
+	PS4Mesh* mesh = new PS4Mesh();
+
+	mesh->indexType = sce::Gnm::IndexSize::kIndexSize32;
+	mesh->primitiveType = sce::Gnm::PrimitiveType::kPrimitiveTypeTriStrip;
+
+	mesh->SetVertexPositions({ (Vector3(1.0f, 0.0f, 1.0f) + min) * 2000 , (Vector3(1.0f, 0.0f, 0.0f) + min) * 2000 , (Vector3(1.0f, 1.0f, 1.0f) + min) * 2000 ,(Vector3(1.0f, 1.0f, 0.0f) + min) * 2000 });
+
+	mesh->SetVertexTextureCoords({ Vector2(1.0f, 1.0f),Vector2(0.0f,  1.0f),Vector2(1.0f,  0.0f), Vector2(0.0f, 0.0f) });
+	std::vector<Vector3> normals;
+	std::vector<Vector3> tangents;
+	std::vector<unsigned int> indices;
+
+	for (int i = 0; i < 4; ++i) {
+		normals.emplace_back(Vector3(-1, 0, 0));
+		tangents.emplace_back(Vector3(0, 0, 1));
+
+		indices.emplace_back(i);
+	}
+
+	mesh->SetVertexNormals(normals);
+	mesh->SetVertexTangents(tangents);
+	mesh->SetVertexIndices(indices);
+
+	mesh->UploadToGPU();
+	return mesh;
+}
+
+/*z=1 √*/
+PS4Mesh * PS4Mesh::GenerateQuadFront()
+{
+	PS4Mesh* mesh = new PS4Mesh();
+
+	mesh->indexType = sce::Gnm::IndexSize::kIndexSize32;
+	mesh->primitiveType = sce::Gnm::PrimitiveType::kPrimitiveTypeTriStrip;
+
+	mesh->SetVertexPositions({ (Vector3(0.0f, 1.0f, 1.0f) + min) * 2000 ,  (Vector3(0.0f, 0.0f, 1.0f) + min) * 2000 , (Vector3(1.0f, 1.0f, 1.0f) + min) * 2000 ,(Vector3(1.0f, 0.0f, 1.0f) + min) * 2000 });
+	mesh->SetVertexTextureCoords({ Vector2(1.0f,  0.0f),Vector2(1.0f, 1.0f) ,Vector2(0.0f, 0.0f), Vector2(0.0f,  1.0f) });
+	std::vector<Vector3> normals;
+	std::vector<Vector3> tangents;
+	std::vector<unsigned int> indices;
+
+	for (int i = 0; i < 4; ++i) {
+		normals.emplace_back(Vector3(0, 0, -1));
+		tangents.emplace_back(Vector3(1, 0, 0));
+
+		indices.emplace_back(i);
+	}
+
+	mesh->SetVertexNormals(normals);
+	mesh->SetVertexTangents(tangents);
+	mesh->SetVertexIndices(indices);
+
+	mesh->UploadToGPU();
+	return mesh;
+}
+
+/* z=0 √ */
+PS4Mesh * PS4Mesh::GenerateQuadBack()
+{
+	PS4Mesh* mesh = new PS4Mesh();
+
+	mesh->indexType = sce::Gnm::IndexSize::kIndexSize32;
+	mesh->primitiveType = sce::Gnm::PrimitiveType::kPrimitiveTypeTriStrip;
+
+	mesh->SetVertexPositions({ (Vector3(0.0f, 1.0f, 0.0f) + min) * 2000 ,  (Vector3(0.0f, 0.0f, 0.0f) + min) * 2000 ,(Vector3(1.0f, 1.0f, 0.0f) + min) * 2000 ,(Vector3(1.0f, 0.0f, 0.0f) + min) * 2000 });
+
+	mesh->SetVertexTextureCoords({ Vector2(0.0f, 0.0f),Vector2(0.0f,  1.0f), Vector2(1.0f,  0.0f) ,Vector2(1.0f, 1.0f) });
+	std::vector<Vector3> normals;
+	std::vector<Vector3> tangents;
+	std::vector<unsigned int> indices;
+
+	for (int i = 0; i < 4; ++i) {
+		normals.emplace_back(Vector3(0, 0, 1));
+		tangents.emplace_back(Vector3(1, 0, 0));
+
+		indices.emplace_back(i);
+	}
+
+	mesh->SetVertexNormals(normals);
+	mesh->SetVertexTangents(tangents);
+	mesh->SetVertexIndices(indices);
+
+	mesh->UploadToGPU();
+	return mesh;
+}
+
+/* y=0 */
+PS4Mesh * PS4Mesh::GenerateQuadDown()
+{
+	PS4Mesh* mesh = new PS4Mesh();
+
+	mesh->indexType = sce::Gnm::IndexSize::kIndexSize32;
+	mesh->primitiveType = sce::Gnm::PrimitiveType::kPrimitiveTypeTriStrip;
+
+	mesh->SetVertexPositions({ (Vector3(0.0f, 0.0f, 1.0f) + min) * 2000, (Vector3(0.0f, 0.0f, 0.0f) + min) * 2000 , (Vector3(1.0f, 0.0f, 1.0f) + min) * 2000  ,(Vector3(1.0f, 0.0f, 0.0f) + min) * 2000 });
+
+	mesh->SetVertexTextureCoords({ Vector2(1.0f, 1.0f),Vector2(0.0f,  1.0f),Vector2(1.0f,  0.0f), Vector2(0.0f, 0.0f) });
+	std::vector<Vector3> normals;
+	std::vector<Vector3> tangents;
+	std::vector<unsigned int> indices;
+
+	for (int i = 0; i < 4; ++i) {
+		normals.emplace_back(Vector3(0, 1, 0));
+		tangents.emplace_back(Vector3(1, 0, 0));
+
+		indices.emplace_back(i);
+	}
+
+	mesh->SetVertexNormals(normals);
+	mesh->SetVertexTangents(tangents);
+	mesh->SetVertexIndices(indices);
+
+	mesh->UploadToGPU();
+	return mesh;
+}
+
+/*y=1*/
+PS4Mesh * PS4Mesh::GenerateQuadUp()
+{
+	PS4Mesh* mesh = new PS4Mesh();
+
+	mesh->indexType = sce::Gnm::IndexSize::kIndexSize32;
+	mesh->primitiveType = sce::Gnm::PrimitiveType::kPrimitiveTypeTriStrip;
+
+	mesh->SetVertexPositions({ (Vector3(0.0f, 1.0f, 1.0f) + min) * 2000  ,  (Vector3(0.0f, 1.0f, 0.0f) + min) * 2000,(Vector3(1.0f, 1.0f, 1.0f) + min) * 2000 ,(Vector3(1.0f, 1.0f, 0.0f) + min) * 2000 });
+
+	mesh->SetVertexTextureCoords({ Vector2(1.0f,  0.0f),Vector2(1.0f, 1.0f) ,Vector2(0.0f, 0.0f), Vector2(0.0f,  1.0f) });
+	std::vector<Vector3> normals;
+	std::vector<Vector3> tangents;
+	std::vector<unsigned int> indices;
+
+	for (int i = 0; i < 4; ++i) {
+		normals.emplace_back(Vector3(0, -1, 0));
+		tangents.emplace_back(Vector3(1, 0, 0));
+
+		indices.emplace_back(i);
+	}
+
+	mesh->SetVertexNormals(normals);
+	mesh->SetVertexTangents(tangents);
+	mesh->SetVertexIndices(indices);
+
+	mesh->UploadToGPU();
+	return mesh;
+}
+PS4Mesh * PS4Mesh::GenerateFloor()
+{
+	PS4Mesh* mesh = new PS4Mesh();
+
+	mesh->indexType = sce::Gnm::IndexSize::kIndexSize32;
+	mesh->primitiveType = sce::Gnm::PrimitiveType::kPrimitiveTypeTriStrip;
+
+	mesh->SetVertexPositions({ (Vector3(0.0f, 0.0f, 1.0f) + min) * 200, (Vector3(0.0f, 0.0f, 0.0f) + min) * 200 , (Vector3(1.0f, 0.0f, 1.0f) + min) * 200  ,(Vector3(1.0f, 0.0f, 0.0f) + min) * 200 });
+
+	mesh->SetVertexTextureCoords({ Vector2(1.0f,  0.0f),Vector2(1.0f, 1.0f) ,Vector2(0.0f, 0.0f), Vector2(0.0f,  1.0f) });
+	std::vector<Vector3> normals;
+	std::vector<Vector3> tangents;
+	std::vector<unsigned int> indices;
+
+	for (int i = 0; i < 4; ++i) {
+		normals.emplace_back(Vector3(0, 1, 0));
+		tangents.emplace_back(Vector3(1, 0, 0));
+
+		indices.emplace_back(i);
+	}
+
+	mesh->SetVertexNormals(normals);
+	mesh->SetVertexTangents(tangents);
+	mesh->SetVertexIndices(indices);
+
+	mesh->UploadToGPU();
+	return mesh;
+}
+
+
+/*Mo test*/

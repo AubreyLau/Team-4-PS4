@@ -45,6 +45,9 @@
     <OrbisWavePsslc Include="VertexShader.pssl">
       <Filter>Shaders</Filter>
     </OrbisWavePsslc>
+    <OrbisWavePsslc Include="SkyboxVertexShader.pssl">
+      <Filter>Shaders</Filter>
+    </OrbisWavePsslc>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\Assets\Textures\doge.png">
