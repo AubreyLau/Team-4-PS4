@@ -8,6 +8,7 @@
 #include <string>
 #include <.\graphics\api_gnm\toolkit\allocators.h>
 #include <.\graphics\api_gnm\toolkit\stack_allocator.h>
+#include"../../Common/Light.h"
 
 
 using namespace NCL::Maths;
@@ -75,7 +76,7 @@ PS4Mesh* PS4Mesh::GenerateQuad() {
 
 PS4Mesh* PS4Mesh::GenerateSphere()
 {
-	PS4Mesh* mesh = new PS4Mesh("/app0/sphere2.msh");
+	PS4Mesh* mesh = new PS4Mesh("/app0/sphere.obj");
 	mesh->indexType = sce::Gnm::IndexSize::kIndexSize32;
 	mesh->primitiveType = sce::Gnm::PrimitiveType::kPrimitiveTypeTriList;
 	mesh->UploadToGPU();
@@ -95,6 +96,21 @@ PS4Mesh* PS4Mesh::GenerateSinglePoint() {
 
 	mesh->UploadToGPU();
 	return mesh;
+}
+
+PS4Mesh* PS4Mesh::GenerateLight(Light l) {
+	/*PS4Mesh* mesh = new PS4Mesh();
+
+	mesh->indexType = sce::Gnm::IndexSize::kIndexSize32;
+	mesh->primitiveType = sce::Gnm::PrimitiveType::kPrimitiveTypePointList;
+
+	mesh->SetVertexPositions();
+	mesh->SetVertexNormals({ Vector3(0, 0, 1) });
+	mesh->SetVertexTangents({ Vector3(1, 0, 0) });
+	mesh->SetVertexIndices({ 0 });
+
+	mesh->UploadToGPU();
+	return mesh;*/
 }
 
 PS4Mesh* PS4Mesh::GenerateTriangle() {

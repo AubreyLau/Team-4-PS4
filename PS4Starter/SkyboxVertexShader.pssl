@@ -13,12 +13,19 @@ struct VS_INPUT
 	float2 UV			: TEXCOORD0;
 	float3 Normal		: TEXCOORD1;
 	float3 Tangent		: TEXCOORD2;
+	float3 lightPos;
+	float3 cameraPos;
 };
 
 struct VS_OUTPUT
 {
 	float4 Position		: S_POSITION;
 	float2 UV			: TEXCOORD0; 
+	float3 vN;//new
+	float3 vT;
+	float3 binormal ;//new
+	float3 lightPos;
+	float3 cameraDir;
 };
 
 VS_OUTPUT main(VS_INPUT Input)
@@ -29,6 +36,15 @@ VS_OUTPUT main(VS_INPUT Input)
 Output.Position = mul(mul(camMatrix,modelMatrix), float4(Input.Position.xyz, 1));
 	//Output.Color = Input.Color;
 	Output.UV = Input.UV;
+
+	Output.cameraDir = normalize(Input.cameraPos.xyz - Output.Position.xyz);
+	float3 incident = normalize(Input.Position-Input.cameraPos);
+	float3 vN = normalize(mul(float4(Input.Normal,0), mul(camMatrix,modelMatrix)).xyz);
+    float3 vT = normalize(mul(float4(Input.Tangent,0), mul(camMatrix,modelMatrix)).xyz);
+	Output.lightPos = Input.lightPos;
+//	matrix normalMatrix = transpose ( inverse ( modelMatrix ));
+
+
 
 	return Output;
 }

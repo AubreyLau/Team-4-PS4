@@ -176,5 +176,8 @@
     <ClInclude Include="MeshLoader.h">
       <Filter>Rendering</Filter>
     </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -8,11 +8,13 @@ Texture2D colorMap : register( t0 );
 
 struct VS_OUTPUT
 {
-		float4 Position		: S_POSITION;
+	float4 Position		: S_POSITION;
 	float2 UV			: TEXCOORD0; 
-	float3 Normal		: TEXCOORD1; //new
-	float3 Tangent		: TEXCOORD2; //new
+	float3 vN;//new
+	float3 vT;
 	float3 binormal ;//new
+	float3 lightPos;
+	float3 cameraDir;
 };
 
 float4 main(VS_OUTPUT In) : S_TARGET_OUTPUT

@@ -8,6 +8,7 @@
 #include <..\samples\sample_code\graphics\api_gnm\toolkit\allocators.h>
 #include <..\samples\sample_code\graphics\api_gnm\toolkit\stack_allocator.h>
 #include <gnm\dataformats.h>
+#include"../../Common/Light.h"
 
 
 namespace NCL {
@@ -27,6 +28,12 @@ namespace NCL {
 			static PS4Mesh* GenerateQuad();
 			static PS4Mesh* GenerateSphere();
 			static PS4Mesh* GenerateSinglePoint();
+			
+
+
+			/*light test*/
+			static PS4Mesh* GenerateLight(Light l);
+
 
 
 			/*mo test*/
