@@ -38,6 +38,10 @@ int main(void) {
 		float x_axis1 = input.GetAxis(1).x - 0.00392163;
 		float y_axis1 = input.GetAxis(1).y - 0.00392163;
 
+		/*std::cout << "x value is" << x_axis1 << std::endl;
+
+		std::cout << "y value is" << y_axis1 << std::endl;*/
+
 		renderer.Update(2, x_axis0, y_axis0);
 		renderer.Render(x_axis1, y_axis1);
 	}

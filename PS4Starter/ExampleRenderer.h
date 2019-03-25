@@ -36,7 +36,7 @@ namespace NCL {
 			RenderObject* test5;
 			RenderObject* test6;*/
 			RenderObject* floor;
-			Vector3 changePos;
+			//Vector3 changePos;
 
 
 			RenderObject* test;

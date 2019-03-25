@@ -13,6 +13,9 @@
 
 #include "../../Common/Matrix4.h"
 
+#include <math.h> 
+#define PI 3.14159265
+
 using namespace sce::Vectormath::Scalar::Aos;
 
 namespace SonyMath = sce::Vectormath::Scalar::Aos;
@@ -26,7 +29,7 @@ sce::Gnmx::Toolkit::IAllocator	oAllocator;
 sce::Gnmx::Toolkit::IAllocator	gAllocator;
 
 
-Maths::Vector3 viewProjPos = Maths::Vector3(0, 0, 0);
+Maths::Vector3 viewProjPos = Maths::Vector3(0, 0, 2);
 Maths::Matrix4 viewMat = Maths::Matrix4();
 Maths::Matrix4 projMat = Maths::Matrix4();
 Maths::Vector3 lookAtPos = Maths::Vector3(0, 0, -0.25);
@@ -82,6 +85,8 @@ PS4RendererBase::PS4RendererBase(PS4Window*window)
 	SkyboxTextureBack = PS4Texture::LoadTextureFromFile("/app0/back.gnf");
 	floorTexture = PS4Texture::LoadTextureFromFile("/app0/doge.gnf");
 	CameraPos = viewProjPos;
+	
+
 	skyboxMeshUp = PS4Mesh::GenerateQuadUp();
 	skyboxMeshDown = PS4Mesh::GenerateQuadDown();
 	skyboxMeshFront = PS4Mesh::GenerateQuadFront();
@@ -333,26 +338,42 @@ void PS4RendererBase::RenderFrame(float x, float y)			{
 	//viewMat = Matrix4::BuildCameraViewMat(viewProjPos, -90, 0);	
 
 	float pitch = -y;
+	//float pitch = 0;
 	float yaw = x;
+	//float yaw = 0;
 
 	/*Mo test*/
 	
 	
 	
 	pitch_total = pitch_total + pitch;
-	if (pitch_total > 0.0f) 
+
+	std::cout << pitch_total << std::endl;
+	if (pitch_total > 30.0f) 
 	{
 		pitch_total = pitch_total - pitch;
 		pitch = 0.0f;
 	}
 
-	if (pitch_total < -89.0f)
+	if (pitch_total < -25.0f)
 	{
 		pitch_total = pitch_total - pitch;
 		pitch = 0.0f;
 	}
 	
 	yaw_total = yaw_total + yaw;
+
+	if (yaw_total > 30.0f)
+	{
+		yaw_total = yaw_total - yaw;
+		yaw = 0.0f;
+	}
+
+	if (yaw_total < -30.0f)
+	{
+		yaw_total = yaw_total - yaw;
+		yaw = 0.0f;
+	}
 
 	//Pitch&yaw test
 	/*printf("Pitch is %f\n", y);
@@ -362,6 +383,24 @@ void PS4RendererBase::RenderFrame(float x, float y)			{
 
 	//viewMat = viewMat * Matrix4::BuildCameraViewMatrix(CameraPos, pitch, yaw);
 	//CameraPos = viewProjPos + Vector3(0.01*x, -0.01* y, 0);
+	//std::cout << "Change Pos is " << changePos << std::endl;
+	CameraPos = changePos + Vector3(0, 0, 2);
+
+	double pitch_sin = sin(pitch_total*PI / 180);
+	double pitch_cos = cos(pitch_total*PI / 180);
+	
+	double yaw_sin = sin(yaw_total*PI / 180);
+	double yaw_cos = cos(yaw_total*PI / 180);
+
+	CameraPos = CameraPos + Vector3(0, 2 * (1 - pitch_cos), 2 * pitch_sin);
+	/*if (yaw_cos < 0) {
+		CameraPos = CameraPos + Vector3(2 * yaw_sin, 0, 2 * (1 + yaw_cos));
+	}
+	else{*/
+		CameraPos = CameraPos + Vector3(2 * yaw_sin, 0, 2 * (1 - yaw_cos));
+	//}
+	
+
 	viewMat = Matrix4::BuildCameraViewMatrix(CameraPos, pitch_total, yaw_total);
 	/*Mo test*/
 
