@@ -26,13 +26,11 @@ sce::Gnmx::Toolkit::IAllocator	oAllocator;
 sce::Gnmx::Toolkit::IAllocator	gAllocator;
 
 
-Maths::Vector3 viewProjPos = Maths::Vector3(0, 0, 0);
+Maths::Vector3 viewProjPos = Maths::Vector3(0, 0, 5);
 Maths::Matrix4 viewMat = Maths::Matrix4();
 Maths::Matrix4 projMat = Maths::Matrix4();
 Maths::Vector3 lookAtPos = Maths::Vector3(0, 0, -0.25);
 
-#define max(a,b)    (((a) > (b)) ? (a) : (b))
-#define min(a,b)    (((a) < (b)) ? (a) : (b))
 
 PS4RendererBase::PS4RendererBase(PS4Window*window)
 	: RendererBase(*window),
@@ -332,15 +330,14 @@ void PS4RendererBase::RenderFrame(float x, float y)			{
 	//Build ViewMat Way2
 	//viewMat = Matrix4::BuildCameraViewMat(viewProjPos, -90, 0);	
 
-	float pitch = -y;
+	float pitch = y;
 	float yaw = x;
 
 	/*Mo test*/
 	
 	
-	
 	pitch_total = pitch_total + pitch;
-	if (pitch_total > 0.0f) 
+	/*if (pitch_total > 0.0f) 
 	{
 		pitch_total = pitch_total - pitch;
 		pitch = 0.0f;
@@ -350,7 +347,7 @@ void PS4RendererBase::RenderFrame(float x, float y)			{
 	{
 		pitch_total = pitch_total - pitch;
 		pitch = 0.0f;
-	}
+	}*/
 	
 	yaw_total = yaw_total + yaw;
 

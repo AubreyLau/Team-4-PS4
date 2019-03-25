@@ -14,6 +14,7 @@ namespace NCL {
 
 			//void Update(float dt)	 override;
 			void Update(float dt, float x, float y);
+			Vector3 changePos;
 
 		protected:
 			void DrawRenderObject(RenderObject* o);
@@ -36,7 +37,6 @@ namespace NCL {
 			RenderObject* test5;
 			RenderObject* test6;*/
 			RenderObject* floor;
-			Vector3 changePos;
 
 
 			RenderObject* test;

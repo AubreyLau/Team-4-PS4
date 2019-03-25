@@ -154,6 +154,8 @@ namespace NCL {
 			float yaw ;
 
 			float yaw_total;
+
+			Vector3 ballPosition;
 			/*MO TEST*/
 		};
 	}
