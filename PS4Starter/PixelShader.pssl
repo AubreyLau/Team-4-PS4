@@ -3,13 +3,13 @@ SamplerState samp0 : register(s0);
 //SamplerState samp1 : register(s1);
 
 Texture2D colorMap : register( t0 );
-//Texture2D colorMap2 : register( t1 );
+Texture2D colorMap2 : register( t1 );
 
 
 struct VS_OUTPUT
 {
 	float4 Position		: S_POSITION;
-	float2 UV			: TEXCOORD0; 
+	float2 UV			: TEXCOORD0;
 	float3 vN;//new
 	float3 vT;
 	float3 binormal ;//new
@@ -20,7 +20,7 @@ struct VS_OUTPUT
 float4 main(VS_OUTPUT In) : S_TARGET_OUTPUT
 {
 	float4 test = colorMap.Sample(samp0, In.UV.xy);
-	// test = colorMap2.Sample(samp1, In.UV.xy);
+	 test = colorMap2.Sample(samp0, In.UV.xy);
 
 	return test;
-}  
+}

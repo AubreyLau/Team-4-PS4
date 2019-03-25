@@ -47,6 +47,11 @@ typedef struct {
 } index_t;
 
 
+std::map<std::string, int> material_map;
+int material = -1;
+int greatest_v_idx = -1;
+int greatest_vn_idx = -1;
+int greatest_vt_idx = -1;
 typedef struct {
 	std::vector<index_t> indices;
 	std::vector<unsigned char> num_face_vertices;  // The number of vertices per
@@ -870,6 +875,93 @@ namespace NCL {
 						texCoords.push_back(Vector2(x, y));
 						continue;
 					}
+
+
+	//				 use mtl
+	//if ((0 == strncmp(token, "usemtl", 6)) && IS_SPACE((token[6]))) {
+	//    token += 7;
+	//    std::stringstream ss;
+	//    ss << token;
+	//    std::string namebuf = ss.str();
+
+	//    int newMaterialId = -1;
+	//    if (material_map.find(namebuf) != material_map.end()) {
+	//	    newMaterialId = material_map[namebuf];
+	//    }
+	//    else {
+	//	     { error!! material not found }
+	//    }
+
+	//    if (newMaterialId != material) {
+	//	     Create per-face material. Thus we don't add `shape` to `shapes` at
+	//	     this time.
+	//	     just clear `faceGroup` after `exportGroupsToShape()` call.
+	//	    exportGroupsToShape(&shape, faceGroup, lineGroup, tags, material, name,
+	//	  	  /*triangulate*/ true, v);
+	//	    faceGroup.clear();
+	//	    material = newMaterialId;
+	//    }
+
+	//    continue;
+	//}
+
+
+
+
+	// load mtl
+	//if ((0 == strncmp(token, "mtllib", 6)) && IS_SPACE((token[6]))) {
+	//    if (readMatFn) {
+	//	    token += 7;
+
+	//	    std::vector<std::string> filenames;
+	//	    SplitString(std::string(token), ' ', filenames);
+
+	//	    if (filenames.empty()) {
+	//	  	  if (warn) {
+	//	  		  std::stringstream ss;
+	//	  		  ss << "Looks like empty filename for mtllib. Use default "
+	//	  			  "material (line "
+	//	  			  << line_num << ".)\n";
+
+	//	  		  (*warn) += ss.str();
+	//	  	  }
+	//	    }
+	//	    else {
+	//	  	  bool found = false;
+	//	  	  for (size_t s = 0; s < filenames.size(); s++) {
+	//	  		  std::string warn_mtl;
+	//	  		  std::string err_mtl;
+	//	  		  bool ok = (*readMatFn)(filenames[s].c_str(), materials,
+	//	  			  &material_map, &warn_mtl, &err_mtl);
+	//	  		  if (warn && (!warn_mtl.empty())) {
+	//	  			  (*warn) += warn_mtl;
+	//	  		  }
+
+	//	  		  if (err && (!err_mtl.empty())) {
+	//	  			  (*err) += err_mtl;
+	//	  		  }
+
+	//	  		  if (ok) {
+	//	  			  found = true;
+	//	  			  break;
+	//	  		  }
+	//	  	  }
+
+	//	  	  if (!found) {
+	//	  		  if (warn) {
+	//	  			  (*warn) +=
+	//	  				  "Failed to load material file(s). Use default "
+	//	  				  "material.\n";
+	//	  		  }
+	//	  	  }
+	//	    }
+	//    }
+
+	//    continue;
+	//}
+
+
+
 
 
 

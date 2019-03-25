@@ -17,7 +17,8 @@ ExampleRenderer::ExampleRenderer(PS4Window* window) : PS4RendererBase(window)
 	skybox[3] = new RenderObject(skyboxMeshFront, (ShaderBase*)skyboxShader, (TextureBase*)SkyboxTextureFront);
 	skybox[4] = new RenderObject(skyboxMeshUp, (ShaderBase*)skyboxShader, (TextureBase*)SkyboxTextureUp);
 	skybox[5] = new RenderObject(skyboxMeshDown, (ShaderBase*)skyboxShader, (TextureBase*)SkyboxTextureDown);
-	ball = new RenderObject((MeshGeometry*)setMesh("/app0/bunny.obj"), (ShaderBase*)skyboxShader, (TextureBase*)myTexture); //Now we replace mshs by objs. try sphere.obj/ cube.obj/ building10.obj /star3.obj .
+	ball = new RenderObject((MeshGeometry*)setMesh("/app0/sphere.obj"), (ShaderBase*)skyboxShader, (TextureBase*)myTexture, (TextureBase*)defaultTexture); //Now we replace mshs by objs. try sphere.obj/ cube.obj/ building10.obj /star3.obj .
+	//ball->SetBumpTex((TextureBase*)defaultTexture);
 	floor = new RenderObject(floorMesh, (ShaderBase*)skyboxShader, (TextureBase*)floorTexture);
 	changePos = Vector3(0,0,0);
 	/*Mo test- skybox*/
