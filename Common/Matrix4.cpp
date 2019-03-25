@@ -139,8 +139,11 @@ Matrix4 Matrix4::BuildCameraViewMatrix(Vector3 position, float pitch, float yaw)
 	if (pitch < -89.0f)
 		pitch = -89.0f;*/
 
+	//return	Matrix4::Rotation(-pitch, Vector3(1, 0, 0)) *
+	//	Matrix4::Rotation(-yaw, Vector3(0, 1, 0)) *
+	//	Matrix4::Translation(-position);
 	return	Matrix4::Rotation(-pitch, Vector3(1, 0, 0)) *
-		Matrix4::Rotation(-yaw, Vector3(0, 1, 0)) *
+		Matrix4::Rotation(yaw, Vector3(0, 1, 0)) *
 		Matrix4::Translation(-position);
 };
 

@@ -1,48 +1,9 @@
-﻿  InputBase.cpp
-  PS4AudioSource.cpp
-  PS4AudioSystem.cpp
-  PS4ComputeShader.cpp
-  PS4Frame.cpp
-  PS4Input.cpp
-  PS4MemoryAware.cpp
-  PS4Mesh.cpp
-C:\Users\b8052301\Source\Repos\Team-4-PS4\Plugins\PlayStation4\PS4Mesh.cpp(129,8): warning : reference cannot be bound to dereferenced null pointer in well-defined C++ code; pointer may be assumed to always convert to true [-Wundefined-bool-conversion]
-                  if (&texCoords[0]) {
-                  ~~   ^~~~~~~~~~~~
-  C:\Program Files (x86)\SCE\ORBIS SDKs\6.000\target\include\vector(1266,12):  note: 'operator[]' returns a reference
-          reference operator[](size_type _Pos)
-                    ^
-C:\Users\b8052301\Source\Repos\Team-4-PS4\Plugins\PlayStation4\PS4Mesh.cpp(132,8): warning : reference cannot be bound to dereferenced null pointer in well-defined C++ code; pointer may be assumed to always convert to true [-Wundefined-bool-conversion]
-                  if (&normals[0]) {
-                  ~~   ^~~~~~~~~~
-  C:\Program Files (x86)\SCE\ORBIS SDKs\6.000\target\include\vector(1266,12):  note: 'operator[]' returns a reference
-          reference operator[](size_type _Pos)
-                    ^
-C:\Users\b8052301\Source\Repos\Team-4-PS4\Plugins\PlayStation4\PS4Mesh.cpp(135,8): warning : reference cannot be bound to dereferenced null pointer in well-defined C++ code; pointer may be assumed to always convert to true [-Wundefined-bool-conversion]
-                  if (&tangents[0]) {
-                  ~~   ^~~~~~~~~~~
-  C:\Program Files (x86)\SCE\ORBIS SDKs\6.000\target\include\vector(1266,12):  note: 'operator[]' returns a reference
-          reference operator[](size_type _Pos)
-                    ^
-  3 warnings generated.
-  PS4RendererBase.cpp
-C:\Users\b8052301\Source\Repos\Team-4-PS4\Plugins\PlayStation4\PS4RendererBase.cpp(224,9): warning : unused variable 'a' [-Wunused-variable]
+﻿  PS4RendererBase.cpp
+C:\Users\b8022172\Source\Repos\Team-4-PS42\Plugins\PlayStation4\PS4RendererBase.cpp(228,9): warning : unused variable 'a' [-Wunused-variable]
                           bool a = true;
                                ^
-C:\Users\b8052301\Source\Repos\Team-4-PS4\Plugins\PlayStation4\PS4RendererBase.cpp(253,9): warning : unused variable 'a' [-Wunused-variable]
+C:\Users\b8022172\Source\Repos\Team-4-PS42\Plugins\PlayStation4\PS4RendererBase.cpp(257,9): warning : unused variable 'a' [-Wunused-variable]
                           bool a = true;
                                ^
   2 warnings generated.
-  PS4Shader.cpp
-C:\Users\b8052301\Source\Repos\Team-4-PS4\Plugins\PlayStation4\PS4Shader.cpp(113,8): warning : unused variable 'a' [-Wunused-variable]
-                  bool a = true;
-                       ^
-  1 warning generated.
-  PS4Sound.cpp
-  PS4SoundEmitter.cpp
-  PS4Texture.cpp
-  PS4Window.cpp
-  Ps4AudioEmitter.cpp
-  Ps4SoundSystem.cpp
-  main.cpp
-  PlayStation4.vcxproj -> C:\Users\b8052301\Source\Repos\Team-4-PS4\ORBIS\Debug\PlayStation4.a
+  PlayStation4.vcxproj -> C:\Users\b8022172\Source\Repos\Team-4-PS42\ORBIS\Debug\PlayStation4.a

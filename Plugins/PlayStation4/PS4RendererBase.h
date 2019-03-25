@@ -146,6 +146,14 @@ namespace NCL {
 
 			PS4Mesh* floorMesh;
 			PS4Texture* floorTexture;
+
+			PS4Mesh* testMesh;
+
+
+			float pitch ;
+			float yaw ;
+
+			float yaw_total;
 			/*MO TEST*/
 		};
 	}
