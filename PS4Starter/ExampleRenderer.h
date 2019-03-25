@@ -38,6 +38,9 @@ namespace NCL {
 			RenderObject* floor;
 			Vector3 changePos;
 
+
+			RenderObject* test;
+
 		};
 	}
 }

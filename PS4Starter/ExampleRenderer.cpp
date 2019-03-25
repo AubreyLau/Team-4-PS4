@@ -17,9 +17,11 @@ ExampleRenderer::ExampleRenderer(PS4Window* window) : PS4RendererBase(window)
 	skybox[3] = new RenderObject(skyboxMeshFront, (ShaderBase*)skyboxShader, (TextureBase*)SkyboxTextureFront);
 	skybox[4] = new RenderObject(skyboxMeshUp, (ShaderBase*)skyboxShader, (TextureBase*)SkyboxTextureUp);
 	skybox[5] = new RenderObject(skyboxMeshDown, (ShaderBase*)skyboxShader, (TextureBase*)SkyboxTextureDown);
-	ball = new RenderObject((MeshGeometry*)setMesh("/app0/bunny.obj"), (ShaderBase*)skyboxShader, (TextureBase*)myTexture); //Now we replace msh by obj. try sphere.obj/ cube.obj/ building10.obj /star3.obj .
+	ball = new RenderObject((MeshGeometry*)setMesh("/app0/sphere.obj"), (ShaderBase*)skyboxShader, (TextureBase*)myTexture); //Now we replace msh by obj. try sphere.obj/ cube.obj/ building10.obj /star3.obj .
 	floor = new RenderObject(floorMesh, (ShaderBase*)skyboxShader, (TextureBase*)floorTexture);
 	changePos = Vector3(0,0,0);
+
+	test = new RenderObject((MeshGeometry*)setMesh("/app0/sphere.obj"), (ShaderBase*)skyboxShader, (TextureBase*)defaultTexture);
 	/*Mo test- skybox*/
 //	rotation = 0.0f;
 	//defaultMesh = MeshGeometry("");
@@ -76,6 +78,7 @@ void ExampleRenderer::Update(float dt, float x, float y) {
 	changePos= changePos+Vector3(0.1*x, 0, -0.1*y);
 
 	ball->SetLocalTransform(Matrix4::Translation(changePos));
+	test->SetLocalTransform(Matrix4::Translation(changePos));
 }
 
 void ExampleRenderer::RenderActiveScene() {
@@ -88,7 +91,8 @@ void ExampleRenderer::RenderActiveScene() {
 	DrawRenderObject(skybox[4]);
 	DrawRenderObject(skybox[5]);
 	DrawRenderObject(ball);
-	DrawRenderObject(floor);
+	//DrawRenderObject(floor);
+	DrawRenderObject(test);
 }
 
 void ExampleRenderer::DrawRenderObject(RenderObject* o) {

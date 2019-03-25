@@ -97,6 +97,10 @@
     <OrbisWavePsslc Include="VertexShader.pssl">
       <Profile Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">sce_vs_vs_orbis</Profile>
     </OrbisWavePsslc>
+    <OrbisWavePsslc Include="VertexShader1.pssl">
+      <Profile Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">sce_vs_vs_orbis</Profile>
+      <Profile Condition="'$(Configuration)|$(Platform)'=='Release|ORBIS'">sce_vs_vs_orbis</Profile>
+    </OrbisWavePsslc>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\Assets\Textures\doge.png">

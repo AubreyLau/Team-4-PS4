@@ -31,6 +31,9 @@ Maths::Matrix4 viewMat = Maths::Matrix4();
 Maths::Matrix4 projMat = Maths::Matrix4();
 Maths::Vector3 lookAtPos = Maths::Vector3(0, 0, -0.25);
 
+#define max(a,b)    (((a) > (b)) ? (a) : (b))
+#define min(a,b)    (((a) < (b)) ? (a) : (b))
+
 PS4RendererBase::PS4RendererBase(PS4Window*window)
 	: RendererBase(*window),
 	_MaxCMDBufferCount(3),
@@ -86,6 +89,7 @@ PS4RendererBase::PS4RendererBase(PS4Window*window)
 	skyboxMeshLeft = PS4Mesh::GenerateQuadLeft();
 	skyboxMeshRight = PS4Mesh::GenerateQuadRight();
 	floorMesh = PS4Mesh::GenerateFloor();
+	testMesh = PS4Mesh::GenerateSphere();
 	/*mo test*/
 
 
@@ -328,20 +332,12 @@ void PS4RendererBase::RenderFrame(float x, float y)			{
 	//Build ViewMat Way2
 	//viewMat = Matrix4::BuildCameraViewMat(viewProjPos, -90, 0);	
 
-
+	float pitch = -y;
+	float yaw = x;
 
 	/*Mo test*/
-	CameraPos = viewProjPos + Vector3(0.01*x, -0.01* y, 0);
-	CameraPosChange = Vector3(0.1*x, -0.1* y, 0);
-
-	/*float pitch = 10 * x;
-	float yaw = y;*/
-
-
-
-	float pitch = y;
-	float yaw = x;
-	//float yaw = 0;
+	
+	
 	
 	pitch_total = pitch_total + pitch;
 	if (pitch_total > 0.0f) 
@@ -356,6 +352,7 @@ void PS4RendererBase::RenderFrame(float x, float y)			{
 		pitch = 0.0f;
 	}
 	
+	yaw_total = yaw_total + yaw;
 
 	//Pitch&yaw test
 	/*printf("Pitch is %f\n", y);
@@ -363,7 +360,9 @@ void PS4RendererBase::RenderFrame(float x, float y)			{
 	//printf("Yaw is %f\n", x);
 	//Pitch&yaw test
 
-	viewMat = viewMat * Matrix4::BuildCameraViewMatrix(CameraPos, pitch, yaw);
+	//viewMat = viewMat * Matrix4::BuildCameraViewMatrix(CameraPos, pitch, yaw);
+	//CameraPos = viewProjPos + Vector3(0.01*x, -0.01* y, 0);
+	viewMat = Matrix4::BuildCameraViewMatrix(CameraPos, pitch_total, yaw_total);
 	/*Mo test*/
 
 
