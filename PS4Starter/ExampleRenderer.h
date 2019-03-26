@@ -41,6 +41,8 @@ namespace NCL {
 
 			RenderObject* test;
 
+			RenderObject* addFloorToWorld(NCL::Vector3 position, NCL::TextureBase* tex, NCL::Vector3 size);
+
 		};
 	}
 }

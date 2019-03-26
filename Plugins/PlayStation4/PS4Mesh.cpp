@@ -81,7 +81,15 @@ PS4Mesh* PS4Mesh::GenerateSphere()
 	mesh->UploadToGPU();
 	return mesh;
 }
-
+PS4Mesh* PS4Mesh::GenerateCube()
+{
+ 	PS4Mesh* mesh = new PS4Mesh("/app0/Cube2.obj");
+//	PS4Mesh* mesh = new PS4Mesh("/app0/smallCube.obj");
+	mesh->indexType = sce::Gnm::IndexSize::kIndexSize32;
+	mesh->primitiveType = sce::Gnm::PrimitiveType::kPrimitiveTypeTriList;
+	mesh->UploadToGPU();
+	return mesh;
+}
 PS4Mesh* PS4Mesh::GenerateSinglePoint() {
 	PS4Mesh* mesh = new PS4Mesh();
 
@@ -126,7 +134,7 @@ void	PS4Mesh::UploadToGPU() {
 
 	for (int i = 0; i < GetVertexCount(); ++i) {
 		memcpy(&vertexBuffer[i].position, &positions[i], sizeof(float) * 3);
-		if (&texCoords[0]) {
+		if (&texCoords[i]) {
 			memcpy(&vertexBuffer[i].textureCoord, &texCoords[i], sizeof(float) * 2);
 		}
 		if (&normals[0]) {
@@ -157,6 +165,7 @@ void	PS4Mesh::InitAttributeBuffer(sce::Gnm::Buffer &buffer, Gnm::DataFormat form
 }
 
 void PS4Mesh::SubmitDraw(Gnmx::GnmxGfxContext& cmdList, Gnm::ShaderStage stage) {
+	//std::cout << attributeCount << " ";
 	cmdList.setVertexBuffers(stage, 0, attributeCount, attributeBuffers);
 	cmdList.setPrimitiveType(primitiveType);
 	cmdList.setIndexSize(indexType);

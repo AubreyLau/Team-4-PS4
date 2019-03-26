@@ -827,6 +827,9 @@ namespace NCL {
 						//	 std::cout << "\nx,y,z=" << x << y << z << "\n";
 						numvertices++;
 						positions.push_back(temp);
+					
+
+
 						//	positions.emplace_back(temp);
 									// std::cout << "\nx,y,z=" <<temp.x << temp.y << temp.z << "\n";
 

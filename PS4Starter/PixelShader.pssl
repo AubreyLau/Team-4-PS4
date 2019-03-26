@@ -1,18 +1,59 @@
 
 SamplerState samp0 : register(s0);
+//SamplerState samp1 : register(s1);
 
 Texture2D colorMap : register( t0 );
+//Texture2D colorMap2 : register( t1 );
 
 
 struct VS_OUTPUT
 {
 	float4 Position		: S_POSITION;
 	float2 UV			: TEXCOORD0;
+	float3 vN;//new
+	float3 vT;
+	float3 binormal ;//new
+	float3 lightPos;
+	float3 cameraPos;
+    float3	lightColour;
+     float 	lightIntensity;
 };
 
 float4 main(VS_OUTPUT In) : S_TARGET_OUTPUT
 {
-	float4 test = colorMap.Sample(samp0, In.UV.xy);
 
-	return test;
+float lightRadius=1000;
+    const float3 vN = In.vN;
+	const float3 vT = In.vT.xyz;
+	const float3 vB = In.vT.z * cross(vN, vT);
+	//float3 vL =  In.lightPos.xyz - In.vPosInView;
+//
+	float3 incident = normalize (In.Position - In.cameraPos );
+ float lambert = max (0.0 , dot ( incident ,vN )); // Different !
+//
+ float dist = length ( In.lightPos - In.Position );
+ float atten = 1.0 - clamp ( dist / lightRadius , 0.1 , 0.8);
+  float lightIntensity =In.	lightIntensity;
+//
+//
+       //
+ //
+	//float3 viewDir = normalize ( In.cameraPos - In.Position );
+	//float3 halfDir = normalize ( incident + viewDir );
+//
+  //float rFactor = max (0.0 , dot ( halfDir , vN  )); // Different !
+  //float sFactor = pow ( rFactor , 33.0 );
+//
+	//float3 colour = (   In.lightColour . rgb );
+    //colour += (  In.lightColour . rgb * sFactor )*0.33;
+	              //
+//
+//
+	float4 test = colorMap.Sample(samp0, In.UV.xy);
+	// test = colorMap2.Sample(samp1, In.UV.xy);
+	 test=float4(test * atten * lightIntensity*lambert*test);
+	 // test=float4(test * lambert*test);
+	// test=float4(lambert,lambert,lambert,1);
+	// test.xyz=vN;
+	 return test;
 }  
