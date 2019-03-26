@@ -1,6 +1,6 @@
 ﻿  PS4Mesh.cpp
 C:\Users\b8052301\Source\Repos\Team-4-PS42\Plugins\PlayStation4\PS4Mesh.cpp(137,8): warning : reference cannot be bound to dereferenced null pointer in well-defined C++ code; pointer may be assumed to always convert to true [-Wundefined-bool-conversion]
-                  if (&texCoords[0]) {
+                  if (&texCoords[i]) {
                   ~~   ^~~~~~~~~~~~
   C:\Program Files (x86)\SCE\ORBIS SDKs\6.000\target\include\vector(1266,12):  note: 'operator[]' returns a reference
           reference operator[](size_type _Pos)

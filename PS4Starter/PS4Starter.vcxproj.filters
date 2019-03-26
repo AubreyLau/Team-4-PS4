@@ -59,15 +59,13 @@
     <CustomBuild Include="test.png">
       <Filter>Textures</Filter>
     </CustomBuild>
+    <CustomBuild Include="brick.png">
+      <Filter>Textures</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <None Include="Cube.msh">
       <Filter>Mesh</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="brick.png">
-      <Filter>Textures</Filter>
-    </Image>
   </ItemGroup>
 </Project>
