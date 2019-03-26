@@ -94,7 +94,7 @@ namespace NCL {
 
 			sce::Gnmx::Toolkit::StackAllocator	stackAllocators[MEMORYMAX];
 
-			//default data
+			PS4Mesh*	defaultCube;
 			PS4Shader*	defaultShader;
 			PS4Mesh*	defaultMesh;
 			PS4Mesh*	defaultSphere;

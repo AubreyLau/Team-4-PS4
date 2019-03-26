@@ -81,7 +81,15 @@ PS4Mesh* PS4Mesh::GenerateSphere()
 	mesh->UploadToGPU();
 	return mesh;
 }
-
+PS4Mesh* PS4Mesh::GenerateCube()
+{
+ 	PS4Mesh* mesh = new PS4Mesh("/app0/Cube.obj");
+//	PS4Mesh* mesh = new PS4Mesh("/app0/smallCube.obj");
+	mesh->indexType = sce::Gnm::IndexSize::kIndexSize32;
+	mesh->primitiveType = sce::Gnm::PrimitiveType::kPrimitiveTypeTriList;
+	mesh->UploadToGPU();
+	return mesh;
+}
 PS4Mesh* PS4Mesh::GenerateSinglePoint() {
 	PS4Mesh* mesh = new PS4Mesh();
 

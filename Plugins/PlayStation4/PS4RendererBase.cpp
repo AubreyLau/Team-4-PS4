@@ -65,7 +65,10 @@ PS4RendererBase::PS4RendererBase(PS4Window*window)
 
 	defaultMesh		= PS4Mesh::GenerateTriangle();
 	defaultSphere = PS4Mesh::GenerateSphere();
+
+
 	myMesh = PS4Mesh::GenerateTriangle();
+	defaultCube= PS4Mesh::GenerateCube();
 	defaultTexture	= PS4Texture::LoadTextureFromFile("/app0/doge.gnf");
 	myTexture= PS4Texture::LoadTextureFromFile("/app0/test.gnf");
 
@@ -150,6 +153,7 @@ PS4RendererBase::~PS4RendererBase()	{
 	delete defaultShader;
 	delete defaultSphere;
 	delete myMesh;
+	delete defaultCube;
 
 	DestroyGCMRendering();
 	DestroyVideoSystem();
@@ -405,7 +409,7 @@ void PS4RendererBase::RenderFrame(float x, float y)			{
 	/*Mo test*/
 
 
-	projMat = Matrix4::Perspective(1.0f, 4000.0f, (float)16 / (float)9, 90.0f);
+	projMat = Matrix4::Perspective(0.01f, 4000.0f, (float)16 / (float)9, 70.0f);
 
 	viewProjMat->ToIdentity();
 	//viewProjPos = viewProjPos + Vector3(0.01*3, -0.01*3, 0);
