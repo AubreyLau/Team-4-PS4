@@ -1,6 +1,1 @@
-﻿  Matrix4.cpp
-C:\Users\b8022172\Source\Repos\Team-4-PS42\Common\Matrix4.cpp(201,14): warning : expression result unused [-Wunused-value]
-          mat.values[0];
-          ~~~~~~~~~~ ~^
-  1 warning generated.
-  Common.vcxproj -> C:\Users\b8022172\Source\Repos\Team-4-PS42\ORBIS\Debug\Common.a
+﻿  Common.vcxproj -> C:\Users\b8052301\Source\Repos\Team-4-PS42\ORBIS\Debug\Common.a

@@ -1,9 +1,1 @@
-﻿  PS4RendererBase.cpp
-C:\Users\b8022172\Source\Repos\Team-4-PS42\Plugins\PlayStation4\PS4RendererBase.cpp(228,9): warning : unused variable 'a' [-Wunused-variable]
-                          bool a = true;
-                               ^
-C:\Users\b8022172\Source\Repos\Team-4-PS42\Plugins\PlayStation4\PS4RendererBase.cpp(257,9): warning : unused variable 'a' [-Wunused-variable]
-                          bool a = true;
-                               ^
-  2 warnings generated.
-  PlayStation4.vcxproj -> C:\Users\b8022172\Source\Repos\Team-4-PS42\ORBIS\Debug\PlayStation4.a
+﻿  PlayStation4.vcxproj -> C:\Users\b8052301\Source\Repos\Team-4-PS42\ORBIS\Debug\PlayStation4.a
