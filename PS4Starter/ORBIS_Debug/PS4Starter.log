@@ -5,6 +5,12 @@
   index) width, height, depth, format            , type        ,      size
       0)   256,    256,     1, B8G8R8X8UNormSrgb , 2d(mips:1)  ,     262144 bytes
   SkyboxVertexShader.pssl
+C:\Users\b8052301\Source\Repos\Team-4-PS42\PS4Starter\SkyboxVertexShader.pssl(47,12): warning D4200: 'lightPos' shadows previous declaration
+         float3    lightPos=float3(1.0f, 3.0f, 1.0f);//test fake light
+                   ^~~~~~~~                                            
+  C:\Users\b8052301\Source\Repos\Team-4-PS42\PS4Starter\SkyboxVertexShader.pssl(13,13) : previous declaration is here
+         float3 lightPos;
+                ^~~~~~~~  
 C:\Users\b8052301\Source\Repos\Team-4-PS42\PS4Starter\SkyboxVertexShader.pssl(49,21): warning D6923: implicit vector type narrowing: 'float4' to 'float3'
      float3    lightColour=float4(500.0f, 500.0f, 500.0f, 1.0f);//
                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    
