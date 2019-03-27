@@ -59,8 +59,8 @@ PS4RendererBase::PS4RendererBase(PS4Window*window)
 	InitialiseVideoSystem();
 
 	defaultShader = PS4Shader::GenerateShader(
-		"/app0/VertexShader.sb",
-		"/app0/PixelShader.sb"
+		"/app0/BasicVertexShader.sb",
+		"/app0/basicPixelShader.sb"
 	);
 
 	defaultMesh		= PS4Mesh::GenerateTriangle();
@@ -69,17 +69,24 @@ PS4RendererBase::PS4RendererBase(PS4Window*window)
 
 	myMesh = PS4Mesh::GenerateTriangle();
 	defaultCube= PS4Mesh::GenerateCube();
-	defaultTexture	= PS4Texture::LoadTextureFromFile("/app0/doge.gnf");
+	defaultTexture	= PS4Texture::LoadTextureFromFile("/app0/test.gnf");
 	myTexture= PS4Texture::LoadTextureFromFile("/app0/brick.gnf");
 
 	viewProjMat		= (Matrix4*)onionAllocator->allocate(sizeof(Matrix4), Gnm::kEmbeddedDataAlignment4);
 	*viewProjMat	= Matrix4();
 
 	/*mo test*/
+	//skyboxShader = PS4Shader::GenerateShader(
+	//	"/app0/BasicVertexShader.sb",
+	//	"/app0/basicPixelShader.sb"
+	//);
+
 	skyboxShader = PS4Shader::GenerateShader(
 		"/app0/SkyboxVertexShader.sb",
 		"/app0/PixelShader.sb"
 	);
+
+
 	SkyboxTextureUp = PS4Texture::LoadTextureFromFile("/app0/up.gnf");
 	SkyboxTextureDown = PS4Texture::LoadTextureFromFile("/app0/down.gnf");
 	SkyboxTextureLeft = PS4Texture::LoadTextureFromFile("/app0/left.gnf");
@@ -99,6 +106,42 @@ PS4RendererBase::PS4RendererBase(PS4Window*window)
 	floorMesh = PS4Mesh::GenerateFloor();
 	testMesh = PS4Mesh::GenerateSphere();
 	/*mo test*/
+
+
+
+
+	lightPos = (Vector3*)onionAllocator->allocate(sizeof(Vector3), Gnm::kEmbeddedDataAlignment4);
+	*lightPos = Vector3();
+
+	camPos = (Vector3*)onionAllocator->allocate(sizeof(Vector3), Gnm::kEmbeddedDataAlignment4);
+	*camPos = Vector3();
+
+	lightColour = (Vector4*)onionAllocator->allocate(sizeof(Vector4), Gnm::kEmbeddedDataAlignment4);
+	*lightColour = Vector4();
+
+
+	lightRadius = (float*)onionAllocator->allocate(sizeof(Vector3), Gnm::kEmbeddedDataAlignment4);
+	*lightRadius = float();
+
+
+	*camPos = CameraPos;
+	*lightPos = Vector3(0, 0, 0);
+	*lightColour = Vector4(1, 1, 1,30);
+	*lightRadius = 100;
+
+
+	lightBuffer.initAsConstantBuffer(lightPos, sizeof(Vector3));
+	lightBuffer.initAsConstantBuffer(camPos, sizeof(Vector3));
+	lightBuffer.initAsConstantBuffer(lightColour, sizeof(Vector4));
+	lightBuffer.initAsConstantBuffer(lightRadius, sizeof(float));
+
+	lightBuffer.setResourceMemoryType(Gnm::kResourceMemoryTypeRO); // it's a constant buffer, so read-only is OK
+
+
+
+
+
+
 
 
 	cameraBuffer.initAsConstantBuffer(viewProjMat, sizeof(Matrix4));
@@ -151,6 +194,7 @@ PS4RendererBase::~PS4RendererBase()	{
 	delete defaultTexture;
 	delete myTexture;
 	delete defaultShader;
+	delete skyboxShader;
 	delete defaultSphere;
 	delete myMesh;
 	delete defaultCube;
@@ -508,12 +552,12 @@ void PS4RendererBase::DrawObject(RenderObject* o) {
 	////currentGFXContext->setTextures(Gnm::kShaderStagePs, 0, 1, &t->GetAPITexture());
 	
 
-	currentGFXContext->setTextures(Gnm::kShaderStagePs, 0, 2, &((PS4Texture*)o->getBasicTex())->GetAPITexture());
+	currentGFXContext->setTextures(Gnm::kShaderStagePs, 0, 1, &((PS4Texture*)o->getBasicTex())->GetAPITexture());
 	//currentGFXContext->setTextures(Gnm::kShaderStagePs, 1, 2, &((PS4Texture*)o->getBasicTex())->GetAPITexture());
 
 	if ((PS4Texture*)o->getBumpTex()!=nullptr) {
 	
-	currentGFXContext->setTextures(Gnm::kShaderStagePs, 1, 2, &((PS4Texture*)o->getBumpTex())->GetAPITexture());
+	currentGFXContext->setTextures(Gnm::kShaderStagePs, 1, 1, &((PS4Texture*)o->getBumpTex())->GetAPITexture());
 	}
 
 //	currentGFXContext->setTextures(Gnm::kShaderStagePs, 0, 1, &((PS4Texture*)o->getBasicTex())->GetAPITexture());

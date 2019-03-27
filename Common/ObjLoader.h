@@ -927,6 +927,9 @@ namespace NCL {
 					n[a] = normal;
 					n[b] = normal;
 					n[c] = normal;
+
+					
+
 				}
 				//	}
 					//else { //just a list of triangles , so generate face normals
@@ -941,8 +944,13 @@ namespace NCL {
 					//	}
 
 					//}
+
+
 				for (int i = 0; i < numvertices; ++i) {
 					normals.push_back(n[i]);
+					
+
+
 				}
 			}
 			void tangentGenerator() {
@@ -960,6 +968,7 @@ namespace NCL {
 			int numvertices = 0;
 
 			vector<Vector2>		texCoords;
+			vector<Vector2>		realTexCoords;
 			vector<Vector4>		colours;
 			vector<Vector3>		normals;
 			Vector3*		n;

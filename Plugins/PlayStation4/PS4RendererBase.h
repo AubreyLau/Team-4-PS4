@@ -115,6 +115,13 @@ namespace NCL {
 			NCL::Maths::Matrix4*	viewProjMat;
 			Gnm::Buffer	cameraBuffer;
 
+
+			NCL::Maths::Vector3*	lightPos;
+			NCL::Maths::Vector3*	camPos;
+			NCL::Maths::Vector4* lightColour;
+			float* lightRadius;
+			Gnm::Buffer	lightBuffer;
+
 			int framesSubmitted;
 
 			//Per frame pointers...

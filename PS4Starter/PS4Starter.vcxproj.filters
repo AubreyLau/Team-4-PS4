@@ -42,13 +42,13 @@
     <OrbisWavePsslc Include="PixelShader.pssl">
       <Filter>Shaders</Filter>
     </OrbisWavePsslc>
-    <OrbisWavePsslc Include="VertexShader.pssl">
-      <Filter>Shaders</Filter>
-    </OrbisWavePsslc>
     <OrbisWavePsslc Include="SkyboxVertexShader.pssl">
       <Filter>Shaders</Filter>
     </OrbisWavePsslc>
-    <OrbisWavePsslc Include="VertexShader1.pssl">
+    <OrbisWavePsslc Include="basicPixelShader.pssl">
+      <Filter>Shaders</Filter>
+    </OrbisWavePsslc>
+    <OrbisWavePsslc Include="BasicVertexShader.pssl">
       <Filter>Shaders</Filter>
     </OrbisWavePsslc>
   </ItemGroup>

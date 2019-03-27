@@ -17,7 +17,9 @@ ExampleRenderer::ExampleRenderer(PS4Window* window) : PS4RendererBase(window)
 	skybox[3] = new RenderObject(skyboxMeshFront, (ShaderBase*)skyboxShader, (TextureBase*)SkyboxTextureFront);
 	skybox[4] = new RenderObject(skyboxMeshUp, (ShaderBase*)skyboxShader, (TextureBase*)SkyboxTextureUp);
 	skybox[5] = new RenderObject(skyboxMeshDown, (ShaderBase*)skyboxShader, (TextureBase*)SkyboxTextureDown);
-	//ball = new RenderObject((MeshGeometry*)setMesh("/app0/bunny.obj"), (ShaderBase*)skyboxShader, (TextureBase*)myTexture); //Now we replace msh by obj. try sphere.obj/ cube.obj/ building10.obj /star3.obj .
+	ball = new RenderObject((MeshGeometry*)setMesh("/app0/polyBunny.obj"), (ShaderBase*)defaultShader, (TextureBase*)defaultTexture); //Now we replace msh by obj. try sphere.obj/ cube.obj/ building10.obj /star3.obj .
+	
+	//ball = new RenderObject((MeshGeometry*)setMesh("/app0/star3.obj"), (ShaderBase*)defaultShader, (TextureBase*)defaultTexture); //Now we replace msh by obj. try sphere.obj/ cube.obj/ building10.obj /star3.obj .
 	ball = new RenderObject((MeshGeometry*)defaultCube, (ShaderBase*)skyboxShader, (TextureBase*)myTexture); //Now we replace msh by obj. try sphere.obj/ cube.obj/ building10.obj /star3.obj .
 	//floor = new RenderObject(floorMesh, (ShaderBase*)skyboxShader, (TextureBase*)floorTexture);
 	/*changePos = Vector3(0,0,0);*/
@@ -80,7 +82,8 @@ void ExampleRenderer::Update(float dt, float x, float y) {
 	changePos= changePos+Vector3(0.01*x, 0, 0.01*y);
 	//BallPos = BallPos + Vector3(0.1*x, 0, 0.1*y);
 
-	ball->SetLocalTransform(Matrix4::Translation(changePos));
+//	ball->SetLocalTransform(Matrix4::Scale(Vector3(5.0f,5.0f,5.0f))*Matrix4::Translation(changePos));
+	ball->SetLocalTransform(Matrix4::Scale(Vector3(1.0f, 1.0f, 1.0f))*Matrix4::Translation(changePos));
 	//ball->SetLocalTransform(Matrix4::Translation(BallPos));
 	//test->SetLocalTransform(Matrix4::Translation(changePos));
 }
@@ -101,10 +104,10 @@ void ExampleRenderer::RenderActiveScene() {
 	DrawRenderObject(skybox[3]);
 	DrawRenderObject(skybox[4]);
 	DrawRenderObject(skybox[5]);
-	//DrawRenderObject(ball);
+	DrawRenderObject(ball);
 
 //	DrawRenderObject(addFloorToWorld(Vector3(1, 8, 1), (TextureBase*)myTexture, Vector3(0.1, 0.01, 0.1)));
-	DrawRenderObject(addFloorToWorld(Vector3(0, 0, 0), (TextureBase*)myTexture, Vector3(2,2,1)));
+	//DrawRenderObject(addFloorToWorld(Vector3(0, 0, 0), (TextureBase*)myTexture, Vector3(2,2,1)));
 	//DrawRenderObject(floor);
 	//DrawRenderObject(test);
 }
@@ -120,7 +123,6 @@ void ExampleRenderer::DrawRenderObject(RenderObject* o) {
 	Vector3* lightPos = new Vector3(0, 0, 0);
 	Vector4* lightColour = new Vector4(1, 1, 1, 1);
 	float* lightRadius;
-	//Gnm::Buffer lightBuffer;
 	//lightBuffer.initAsConstantBuffer(lightPos, sizeof(Vector3));
 	//lightBuffer.initAsConstantBuffer(lightColour, sizeof(Vector4));
 	//lightBuffer.initAsConstantBuffer(transformMat, sizeof(Matrix4));
@@ -135,6 +137,8 @@ void ExampleRenderer::DrawRenderObject(RenderObject* o) {
 
 	currentGFXContext->setConstantBuffers(Gnm::kShaderStageVs, objIndex, 1, &constantBuffer);
 	currentGFXContext->setConstantBuffers(Gnm::kShaderStageVs, camIndex, 1, &cameraBuffer);
+	currentGFXContext->setConstantBuffers(Gnm::kShaderStageVs, lightIndex, 1, &lightBuffer);//
+
 
 	realShader->SubmitShaderSwitch(*currentGFXContext);
 
