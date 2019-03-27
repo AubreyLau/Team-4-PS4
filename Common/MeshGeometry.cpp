@@ -169,6 +169,7 @@ MeshGeometry::MeshGeometry(const std::string&filename) {
 	this->SetVertexIndices(l.getIndices());
 	this->SetVertexNormals(l.getNormals());
 	this->SetVertexTextureCoords(l.getTexcood());
+	this->SetVertexTangents(l.getTangents());
 }
 
 

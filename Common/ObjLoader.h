@@ -67,12 +67,6 @@ struct vertex_index_t {
 		: v_idx(vidx), vt_idx(vtidx), vn_idx(vnidx) {}
 };
 
-//typedef struct {
-//	std::string name;
-//	mesh_t mesh;
-//	path_t path;
-//} shape_t;
-//
 
 static bool tryParseDouble(const char *s, const char *s_end, double *result) {
 	if (s >= s_end) {
@@ -80,17 +74,9 @@ static bool tryParseDouble(const char *s, const char *s_end, double *result) {
 	}
 
 	double mantissa = 0.0;
-	// This exponent is base 2 rather than 10.
-	// However the exponent we parse is supposed to be one of ten,
-	// thus we must take care to convert the exponent/and or the
-	// mantissa to a * 2^E, where a is the mantissa and E is the
-	// exponent.
-	// To get the final double we will use ldexp, it requires the
-	// exponent to be in base 2.
+
 	int exponent = 0;
 
-	// NOTE: THESE MUST BE DECLARED HERE SINCE WE ARE NOT ALLOWED
-	// TO JUMP OVER DEFINITIONS.
 	char sign = '+';
 	char exp_sign = '+';
 	char const *curr = s;
@@ -104,7 +90,6 @@ static bool tryParseDouble(const char *s, const char *s_end, double *result) {
 			BEGIN PARSING.
 	*/
 
-	// Find out what sign we've got.
 	if (*curr == '+' || *curr == '-') {
 		sign = *curr;
 		curr++;
@@ -674,12 +659,6 @@ static bool exportGroupsToShape(shape_t *shape,
 	return true;
 }
 
-typedef struct {
-	std::vector<real_t> vertices;   // 'v'
-	std::vector<real_t> normals;    // 'vn'
-	std::vector<real_t> texcoords;  // 'vt'
-	std::vector<real_t> colors;     // extension: vertex colors
-} attrib_t;
 
 typedef struct {
 	std::vector<NCL::Vector3>		positions;
@@ -746,11 +725,14 @@ namespace NCL {
 		public:
 			ObjLoader() {
 				n = nullptr;
-
+				t = nullptr;
+				tan = nullptr;
 				//	n = new Vector3();
 			};
 			~ObjLoader() {
 				delete[] n;
+				delete[] t;
+				delete[] tan;
 			};
 			//
 			//attrib_t* getAttrib() {
@@ -824,21 +806,9 @@ namespace NCL {
 						temp.y = y;
 						temp.z = z;
 
-						//	 std::cout << "\nx,y,z=" << x << y << z << "\n";
 						numvertices++;
 						positions.push_back(temp);
-					
 
-
-						//	positions.emplace_back(temp);
-									// std::cout << "\nx,y,z=" <<temp.x << temp.y << temp.z << "\n";
-
-
-										//if (found_all_colors /*|| default_vcols_fallback*/) {
-										//	vc.push_back(r);
-										//	vc.push_back(g);
-										//	vc.push_back(b);
-										//}
 
 						continue;
 
@@ -875,25 +845,12 @@ namespace NCL {
 					}
 
 
-
-
-
-
-
 				}
 
 
 				normalGenerator();
 
 
-			}
-			void setAttrib(NCL::MeshGeometry & msh) {
-				//
-
-				msh.SetVertexPositions(attrib_mesh->positions);
-				msh.SetVertexColours(attrib_mesh->colours);
-				msh.SetVertexNormals(attrib_mesh->normals);
-				msh.SetVertexTextureCoords(attrib_mesh->texCoords);
 			}
 
 			vector<Vector3> getPosition() {
@@ -906,13 +863,22 @@ namespace NCL {
 			vector<Vector3> getNormals() {
 				return normals;
 			}
+			vector<Vector3> getTangents() {
+				return tangents;
+			}
 			vector<Vector2> getTexcood() {
-				return texCoords;
+				
+/*				if (texCoords.size() != numvertices) {
+					return realTexCoords;
+				}
+				else */return texCoords;
 			}
 			void normalGenerator() {
 				//	vector<Vector3> normals;
 				//	if (indices[numIndices]) { // Generate per - vertex normals
 				n = new Vector3[numvertices];
+				tan = new Vector3[numvertices];
+			//	t = new Vector2[numvertices];
 				for (int i = 0; i < numvertices; ++i) {
 					n[i] = Vector3();
 				}
@@ -927,41 +893,47 @@ namespace NCL {
 					n[a] = normal;
 					n[b] = normal;
 					n[c] = normal;
-
-					
-
-				}
-				//	}
-					//else { //just a list of triangles , so generate face normals
-					//	for (GLuint i = 0; i < numVertices; i += 3) {
-					//		Vector3 & a = vertices[i];
-					//		Vector3 & b = vertices[i + 1];
-					//		Vector3 & c = vertices[i + 2];
-					//		Vector3 normal = Vector3::Cross(b - a, c - a);
-					//		normals[i] = normal;
-					//		normals[i + 1] = normal;
-					//		normals[i + 2] = normal;
-					//	}
+			
+					//if (texCoords.size() != numvertices) {
+					//			           
+					//t[a] = texCoords[i];
+					//t[b] = texCoords[i];
+					//t[c] = texCoords[i];
 
 					//}
+					//else {
+					//	//t[i] = texCoords[i];
+					//}
+
+					Vector3 tangent = GenerateTangent(positions[a], positions[b],
+						positions[c], texCoords[a],
+						texCoords[a], texCoords[a]);
+					tan[a] = tangent;
+					tan[b] = tangent;
+					tan[c] = tangent;
+			
+
+				}
 
 
 				for (int i = 0; i < numvertices; ++i) {
 					normals.push_back(n[i]);
-					
+					tan[i].Normalise();
+					tangents.push_back(tan[i]);
 
-
+					if (texCoords.size() != numvertices) {
+					//	realTexCoords.push_back(t[i]);
+					}
+			
 				}
+
+
 			}
 			void tangentGenerator() {
 
 			}
 		private:
-			//
-			attrib_t* attrib;
-			attrib_n* attrib_mesh;
-			//NCL::Maths::Vector3 temp;
-		//	 std::vector<NCL::Vector3>* v;
+		
 			GeometryPrimitive	primType;
 			vector<Vector3>		positions;
 			int numIndices = 0;
@@ -972,8 +944,26 @@ namespace NCL {
 			vector<Vector4>		colours;
 			vector<Vector3>		normals;
 			Vector3*		n;
+			Vector3*		tan;
+			Vector2*		t;
 			vector<Vector3>		tangents;
 			vector<unsigned int>	indices;
+
+
+			Vector3 GenerateTangent(const Vector3 &a, const Vector3 &b,
+				const Vector3 &c, const Vector2 & ta,
+				const Vector2 & tb, const Vector2 & tc) {
+				Vector2 coord1 = tb - ta;
+				Vector2 coord2 = tc - ta;
+
+				Vector3 vertex1 = b - a;
+				Vector3 vertex2 = c - a;
+
+				Vector3 axis = Vector3(vertex1 * coord2.y - vertex2 * coord1.y);
+				float factor = 1.0f / (coord1.x * coord2.y - coord2.x * coord1.y);
+				return axis * factor;
+			}
+
 
 
 		};

@@ -7,6 +7,35 @@ ConstantBuffer CameraData
 {
 	column_major matrix camMatrix;
 };
+float4x4 inverse(float4x4 input)
+ {
+     #define minor(a,b,c) determinant(float3x3(input.a, input.b, input.c))
+     //determinant(float3x3(input._22_23_23, input._32_33_34, input._42_43_44))
+     
+     float4x4 cofactors = float4x4(
+          minor(_22_23_24, _32_33_34, _42_43_44), 
+         -minor(_21_23_24, _31_33_34, _41_43_44),
+          minor(_21_22_24, _31_32_34, _41_42_44),
+         -minor(_21_22_23, _31_32_33, _41_42_43),
+         
+         -minor(_12_13_14, _32_33_34, _42_43_44),
+          minor(_11_13_14, _31_33_34, _41_43_44),
+         -minor(_11_12_14, _31_32_34, _41_42_44),
+          minor(_11_12_13, _31_32_33, _41_42_43),
+         
+          minor(_12_13_14, _22_23_24, _42_43_44),
+         -minor(_11_13_14, _21_23_24, _41_43_44),
+          minor(_11_12_14, _21_22_24, _41_42_44),
+         -minor(_11_12_13, _21_22_23, _41_42_43),
+         
+         -minor(_12_13_14, _22_23_24, _32_33_34),
+          minor(_11_13_14, _21_23_24, _31_33_34),
+         -minor(_11_12_14, _21_22_24, _31_32_34),
+          minor(_11_12_13, _21_22_23, _31_32_33)
+     );
+     #undef minor
+     return transpose(cofactors) / determinant(input);
+ }
 
 ConstantBuffer LightData
 {
@@ -49,9 +78,9 @@ Output.Position = mul(mul(camMatrix,modelMatrix), float4(Input.Position.xyz, 1))
    // float3	lightPos=float3(-1.0f, 3.0f, -1.0f);//test fake light
   //  float3	cameraPos=float3(0.0f, 0.0f, 2.0f);//
 	// float3	cameraPos= 
-	float4 lightColour=float4(1.0f, 1.0f, 1.0f,10.0f);//
+	float4 lightColour=float4(3.0f, 2.0f, 0.0f,10.0f);//
 //	float  lightIntensity=30;
-	float lightRadius=1;
+	float lightRadius=10;
 //
 //
 	//Output.cameraDir = normalize(Input.cameraPos.xyz - Output.Position.xyz);
@@ -68,6 +97,17 @@ Output.Position = mul(mul(camMatrix,modelMatrix), float4(Input.Position.xyz, 1))
 	Output.vT=Input.Tangent;
 	Output.lightIntensity=lightColour.w;
 	Output.radius=lightRadius;
+
+
+
+	///
+
+
+
+
+	  float3x3 normalMatrix = transpose ( inverse (  modelMatrix ));
+	  Output. binormal = normalize ( normalMatrix._11_22_33 *normalize ( cross (vN ,vT)));  //._11_22_33???
+
 
 
 	return Output;

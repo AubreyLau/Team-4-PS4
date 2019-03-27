@@ -3,7 +3,7 @@ SamplerState samp0 : register(s0);
 //SamplerState samp1 : register(s1);
 
 Texture2D colorMap : register( t0 );
-//Texture2D colorMap2 : register( t1 );
+Texture2D bumpMap : register( t1 );
 
 
 struct VS_OUTPUT
@@ -24,37 +24,67 @@ float4 main(VS_OUTPUT In) : S_TARGET_OUTPUT
 {
 
 float lightRadius=In.radius;
-    const float3 vN = In.vN;
+     float3 vN = In.vN;
 	const float3 vT = In.vT.xyz;
 	const float3 vB = In.vT.z * cross(vN, vT);
 	//float3 vL =  In.lightPos.xyz - In.vPosInView;
-//
+
+
+
+
+
+// bump test!!!!!!!
+
+ float3x3  TBN = float3x3 ( In.vT , In.binormal , In.vN );
+float3 normal = normalize ( TBN._11_22_33 * ( bumpMap.Sample(samp0, In.UV.xy). rgb * 2.0 - 1.0));  //TBN._11_22_33???
+ // vN=normal;
+
+ //
+
+
+ //
 	float3 incident = normalize (In.Position - In.cameraPos );
- float lambert = max (0.0 , dot ( incident ,vN )); // Different !
+ float lambert = max (0.3 , dot ( incident ,vN )); // Different !
 //
  float dist = length ( In.lightPos - In.Position );
  float atten = 1.0 - clamp ( dist / lightRadius , 0.18 , 0.6);
   float lightIntensity =In.	lightIntensity;
-//
-//
-       //
- //
-	//float3 viewDir = normalize ( In.cameraPos - In.Position );
-	//float3 halfDir = normalize ( incident + viewDir );
-//
-  //float rFactor = max (0.0 , dot ( halfDir , vN  )); // Different !
-  //float sFactor = pow ( rFactor , 33.0 );
-//
-	//float3 colour = (   In.lightColour . rgb );
-    //colour += (  In.lightColour . rgb * sFactor )*0.33;
-	              //
-//
-//
-	float4 test = colorMap.Sample(samp0, In.UV.xy);
-	// test = colorMap2.Sample(samp1, In.UV.xy);
-	 test=float4(test * atten * lightIntensity*lambert*test);
+  lightIntensity =0.8f;
+
+
+
+
+
+
+
+	float3 viewDir = normalize ( In.cameraPos - In.Position );
+	float3 halfDir = normalize ( incident + viewDir );
+  float rFactor = max (0.3 , dot ( halfDir , vN  )); // Different !
+  float sFactor = pow ( rFactor , 33.0 );
+
+	float3 colour = (   In.lightColour . rgb );
+    colour += (  In.lightColour . rgb * sFactor )*0.33;
+	float4 c=(colour,1);
+
+	float4 test = colorMap.Sample(samp0, In.UV.xy)*0.8+c*0.6;
+	 test=float4(test * atten * lambert *lightIntensity*test);
 	 // test=float4(test * lambert*test);
 	// test=float4(lambert,lambert,lambert,1);
 	// test.xyz=vN;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	 return test;
 }  
