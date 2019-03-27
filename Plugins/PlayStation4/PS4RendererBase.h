@@ -102,6 +102,9 @@ namespace NCL {
 			PS4Mesh*    setMesh(const std::string&filename);
 			PS4Mesh*    setOBJ(const std::string&filename);
 			PS4Texture* defaultTexture;
+			PS4Texture* blue1;
+			PS4Texture* blue2;
+			PS4Texture* blue3;
 			PS4Texture* myTexture;
 			PS4Texture* SetTexture(const std::string&basicTexture, const std::string bumpMap="", const std::string heightMap="");
 			PS4Texture* t[3];

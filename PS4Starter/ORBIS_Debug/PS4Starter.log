@@ -15,26 +15,4 @@ C:\Users\b8052301\Source\Repos\Team-4-PS42\PS4Starter\basicPixelShader.pssl(29,1
 C:\Users\b8052301\Source\Repos\Team-4-PS42\PS4Starter\basicPixelShader.pssl(39,8): warning D20088: unreferenced local variable 'normal'
      float3 normal = normalize ( TBN._11_22_33 * ( bumpMap.Sample(samp0, In.UV.xy). rgb * 2.0 - 1.0));  //TBN._11_22_33???
             ^~~~~~                                                                                                         
-  BasicVertexShader.pssl
-C:\Users\b8052301\Source\Repos\Team-4-PS42\PS4Starter\BasicVertexShader.pssl(81,9): warning D4200: 'lightColour' shadows previous declaration
-     float4 lightColour=float4(3.0f, 2.0f, 0.0f,10.0f);//
-            ^~~~~~~~~~~                                   
-  C:\Users\b8052301\Source\Repos\Team-4-PS42\PS4Starter\BasicVertexShader.pssl(44,11) : previous declaration is here
-          float4 lightColour;
-                 ^~~~~~~~~~~  
-C:\Users\b8052301\Source\Repos\Team-4-PS42\PS4Starter\BasicVertexShader.pssl(83,8): warning D4200: 'lightRadius' shadows previous declaration
-     float lightRadius=10;
-           ^~~~~~~~~~~     
-  C:\Users\b8052301\Source\Repos\Team-4-PS42\PS4Starter\BasicVertexShader.pssl(45,10) : previous declaration is here
-     float1 lightRadius;
-            ^~~~~~~~~~~  
-C:\Users\b8052301\Source\Repos\Team-4-PS42\PS4Starter\BasicVertexShader.pssl(94,24): warning D6923: implicit vector type narrowing: 'float4' to 'float3'
-     Output.lightColour = lightColour;
-                          ^~~~~~~~~~~  
-C:\Users\b8052301\Source\Repos\Team-4-PS42\PS4Starter\BasicVertexShader.pssl(108,28): warning D6923: implicit vector type narrowing: 'column_major float4x4' to 'column_major float3x3'
-       float3x3 normalMatrix = transpose ( inverse (  modelMatrix ));
-                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  
-C:\Users\b8052301\Source\Repos\Team-4-PS42\PS4Starter\BasicVertexShader.pssl(87,9): warning D20088: unreferenced local variable 'incident'
-     float3 incident = normalize(Input.Position-cameraPos);
-            ^~~~~~~~                                        
   PS4Starter.vcxproj -> C:\Users\b8052301\Source\Repos\Team-4-PS42\ORBIS_Debug\PS4Starter.elf

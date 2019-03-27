@@ -19,7 +19,7 @@ ExampleRenderer::ExampleRenderer(PS4Window* window) : PS4RendererBase(window)
 	skybox[5] = new RenderObject(skyboxMeshDown, (ShaderBase*)skyboxShader, (TextureBase*)SkyboxTextureDown);
 //	ball = new RenderObject((MeshGeometry*)setMesh("/app0/polyBunny.obj"), (ShaderBase*)defaultShader, (TextureBase*)defaultTexture); //Now we replace msh by obj. try sphere.obj/ cube.obj/ building10.obj /star3.obj .
 	
-	ball = new RenderObject((MeshGeometry*)setMesh("/app0/building10.obj"), (ShaderBase*)defaultShader, (TextureBase*)defaultTexture,(TextureBase*)myTexture); //Now we replace msh by obj. try sphere.obj/ cube.obj/ building10.obj /star3.obj .
+	ball = new RenderObject((MeshGeometry*)setMesh("/app0/building10.obj"), (ShaderBase*)defaultShader, (TextureBase*)blue3, (TextureBase*)myTexture); //Now we replace msh by obj. try sphere.obj/ cube.obj/ building10.obj /star3.obj .
 	//ball = new RenderObject((MeshGeometry*)defaultCube, (ShaderBase*)skyboxShader, (TextureBase*)myTexture); //Now we replace msh by obj. try sphere.obj/ cube.obj/ building10.obj /star3.obj .
 	//floor = new RenderObject(floorMesh, (ShaderBase*)skyboxShader, (TextureBase*)floorTexture);
 	/*changePos = Vector3(0,0,0);*/
