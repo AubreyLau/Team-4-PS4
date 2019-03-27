@@ -62,6 +62,9 @@
     <CustomBuild Include="brick.png">
       <Filter>Textures</Filter>
     </CustomBuild>
+    <CustomBuild Include="white.png">
+      <Filter>Textures</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <None Include="Cube.msh">

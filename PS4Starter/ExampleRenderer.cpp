@@ -17,10 +17,10 @@ ExampleRenderer::ExampleRenderer(PS4Window* window) : PS4RendererBase(window)
 	skybox[3] = new RenderObject(skyboxMeshFront, (ShaderBase*)skyboxShader, (TextureBase*)SkyboxTextureFront);
 	skybox[4] = new RenderObject(skyboxMeshUp, (ShaderBase*)skyboxShader, (TextureBase*)SkyboxTextureUp);
 	skybox[5] = new RenderObject(skyboxMeshDown, (ShaderBase*)skyboxShader, (TextureBase*)SkyboxTextureDown);
-	ball = new RenderObject((MeshGeometry*)setMesh("/app0/polyBunny.obj"), (ShaderBase*)defaultShader, (TextureBase*)defaultTexture); //Now we replace msh by obj. try sphere.obj/ cube.obj/ building10.obj /star3.obj .
+//	ball = new RenderObject((MeshGeometry*)setMesh("/app0/polyBunny.obj"), (ShaderBase*)defaultShader, (TextureBase*)defaultTexture); //Now we replace msh by obj. try sphere.obj/ cube.obj/ building10.obj /star3.obj .
 	
-	//ball = new RenderObject((MeshGeometry*)setMesh("/app0/star3.obj"), (ShaderBase*)defaultShader, (TextureBase*)defaultTexture); //Now we replace msh by obj. try sphere.obj/ cube.obj/ building10.obj /star3.obj .
-	ball = new RenderObject((MeshGeometry*)defaultCube, (ShaderBase*)skyboxShader, (TextureBase*)myTexture); //Now we replace msh by obj. try sphere.obj/ cube.obj/ building10.obj /star3.obj .
+	ball = new RenderObject((MeshGeometry*)setMesh("/app0/building10.obj"), (ShaderBase*)defaultShader, (TextureBase*)defaultTexture,(TextureBase*)myTexture); //Now we replace msh by obj. try sphere.obj/ cube.obj/ building10.obj /star3.obj .
+	//ball = new RenderObject((MeshGeometry*)defaultCube, (ShaderBase*)skyboxShader, (TextureBase*)myTexture); //Now we replace msh by obj. try sphere.obj/ cube.obj/ building10.obj /star3.obj .
 	//floor = new RenderObject(floorMesh, (ShaderBase*)skyboxShader, (TextureBase*)floorTexture);
 	/*changePos = Vector3(0,0,0);*/
 	//BallPos = Vector3(0, 0, 0);
@@ -83,7 +83,7 @@ void ExampleRenderer::Update(float dt, float x, float y) {
 	//BallPos = BallPos + Vector3(0.1*x, 0, 0.1*y);
 
 //	ball->SetLocalTransform(Matrix4::Scale(Vector3(5.0f,5.0f,5.0f))*Matrix4::Translation(changePos));
-	ball->SetLocalTransform(Matrix4::Scale(Vector3(1.0f, 1.0f, 1.0f))*Matrix4::Translation(changePos));
+	ball->SetLocalTransform(Matrix4::Scale(Vector3(0.1f, 0.1f, 0.1f))*Matrix4::Translation(changePos));
 	//ball->SetLocalTransform(Matrix4::Translation(BallPos));
 	//test->SetLocalTransform(Matrix4::Translation(changePos));
 }

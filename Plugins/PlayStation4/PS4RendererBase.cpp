@@ -69,7 +69,7 @@ PS4RendererBase::PS4RendererBase(PS4Window*window)
 
 	myMesh = PS4Mesh::GenerateTriangle();
 	defaultCube= PS4Mesh::GenerateCube();
-	defaultTexture	= PS4Texture::LoadTextureFromFile("/app0/test.gnf");
+	defaultTexture	= PS4Texture::LoadTextureFromFile("/app0/white.gnf");
 	myTexture= PS4Texture::LoadTextureFromFile("/app0/brick.gnf");
 
 	viewProjMat		= (Matrix4*)onionAllocator->allocate(sizeof(Matrix4), Gnm::kEmbeddedDataAlignment4);
