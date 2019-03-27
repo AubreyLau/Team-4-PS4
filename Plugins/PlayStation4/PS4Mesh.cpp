@@ -134,7 +134,7 @@ void	PS4Mesh::UploadToGPU() {
 
 	for (int i = 0; i < GetVertexCount(); ++i) {
 		memcpy(&vertexBuffer[i].position, &positions[i], sizeof(float) * 3);
-		if (&texCoords[i]) {
+		if (&texCoords[0]) {
 			memcpy(&vertexBuffer[i].textureCoord, &texCoords[i], sizeof(float) * 2);
 		}
 		if (&normals[0]) {

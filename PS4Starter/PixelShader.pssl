@@ -17,12 +17,13 @@ struct VS_OUTPUT
 	float3 cameraPos;
     float3	lightColour;
      float 	lightIntensity;
+	 float 	radius;
 };
 
 float4 main(VS_OUTPUT In) : S_TARGET_OUTPUT
 {
 
-float lightRadius=1000;
+float lightRadius=In.radius;
     const float3 vN = In.vN;
 	const float3 vT = In.vT.xyz;
 	const float3 vB = In.vT.z * cross(vN, vT);
@@ -32,7 +33,7 @@ float lightRadius=1000;
  float lambert = max (0.0 , dot ( incident ,vN )); // Different !
 //
  float dist = length ( In.lightPos - In.Position );
- float atten = 1.0 - clamp ( dist / lightRadius , 0.1 , 0.8);
+ float atten = 1.0 - clamp ( dist / lightRadius , 0.1 , 0.9);
   float lightIntensity =In.	lightIntensity;
 //
 //
@@ -51,7 +52,7 @@ float lightRadius=1000;
 //
 	float4 test = colorMap.Sample(samp0, In.UV.xy);
 	// test = colorMap2.Sample(samp1, In.UV.xy);
-	 test=float4(test * atten * lightIntensity*lambert*test);
+//	 test=float4(test * atten * lightIntensity*lambert*test);
 	 // test=float4(test * lambert*test);
 	// test=float4(lambert,lambert,lambert,1);
 	// test.xyz=vN;

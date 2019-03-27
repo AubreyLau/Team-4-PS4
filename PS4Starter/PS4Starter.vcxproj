@@ -96,13 +96,14 @@
       <Profile Condition="'$(Configuration)|$(Platform)'=='Release|ORBIS'">sce_vs_vs_orbis</Profile>
       <OutputFileName Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">$(ProjectDir)%(FileName).sb</OutputFileName>
     </OrbisWavePsslc>
-    <OrbisWavePsslc Include="VertexShader.pssl">
+    <OrbisWavePsslc Include="BasicVertexShader.pssl">
       <Profile Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">sce_vs_vs_orbis</Profile>
       <OutputFileName Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">$(ProjectDir)%(FileName).sb</OutputFileName>
     </OrbisWavePsslc>
-    <OrbisWavePsslc Include="VertexShader1.pssl">
-      <Profile Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">sce_vs_vs_orbis</Profile>
+    <OrbisWavePsslc Include="basicPixelShader.pssl">
+      <Profile Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">sce_ps_orbis</Profile>
       <Profile Condition="'$(Configuration)|$(Platform)'=='Release|ORBIS'">sce_vs_vs_orbis</Profile>
+      <OutputFileName Condition="'$(Configuration)|$(Platform)'=='Debug|ORBIS'">$(ProjectDir)%(FileName).sb</OutputFileName>
     </OrbisWavePsslc>
   </ItemGroup>
   <ItemGroup>

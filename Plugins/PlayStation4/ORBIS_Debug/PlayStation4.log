@@ -1,21 +1,9 @@
-﻿  PS4Mesh.cpp
-C:\Users\b8052301\Source\Repos\Team-4-PS42\Plugins\PlayStation4\PS4Mesh.cpp(137,8): warning : reference cannot be bound to dereferenced null pointer in well-defined C++ code; pointer may be assumed to always convert to true [-Wundefined-bool-conversion]
-                  if (&texCoords[i]) {
-                  ~~   ^~~~~~~~~~~~
-  C:\Program Files (x86)\SCE\ORBIS SDKs\6.000\target\include\vector(1266,12):  note: 'operator[]' returns a reference
-          reference operator[](size_type _Pos)
-                    ^
-C:\Users\b8052301\Source\Repos\Team-4-PS42\Plugins\PlayStation4\PS4Mesh.cpp(140,8): warning : reference cannot be bound to dereferenced null pointer in well-defined C++ code; pointer may be assumed to always convert to true [-Wundefined-bool-conversion]
-                  if (&normals[0]) {
-                  ~~   ^~~~~~~~~~
-  C:\Program Files (x86)\SCE\ORBIS SDKs\6.000\target\include\vector(1266,12):  note: 'operator[]' returns a reference
-          reference operator[](size_type _Pos)
-                    ^
-C:\Users\b8052301\Source\Repos\Team-4-PS42\Plugins\PlayStation4\PS4Mesh.cpp(143,8): warning : reference cannot be bound to dereferenced null pointer in well-defined C++ code; pointer may be assumed to always convert to true [-Wundefined-bool-conversion]
-                  if (&tangents[0]) {
-                  ~~   ^~~~~~~~~~~
-  C:\Program Files (x86)\SCE\ORBIS SDKs\6.000\target\include\vector(1266,12):  note: 'operator[]' returns a reference
-          reference operator[](size_type _Pos)
-                    ^
-  3 warnings generated.
+﻿  PS4RendererBase.cpp
+C:\Users\b8052301\Source\Repos\Team-4-PS42\Plugins\PlayStation4\PS4RendererBase.cpp(281,9): warning : unused variable 'a' [-Wunused-variable]
+                          bool a = true;
+                               ^
+C:\Users\b8052301\Source\Repos\Team-4-PS42\Plugins\PlayStation4\PS4RendererBase.cpp(310,9): warning : unused variable 'a' [-Wunused-variable]
+                          bool a = true;
+                               ^
+  2 warnings generated.
   PlayStation4.vcxproj -> C:\Users\b8052301\Source\Repos\Team-4-PS42\ORBIS\Debug\PlayStation4.a
