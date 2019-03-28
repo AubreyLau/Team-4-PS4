@@ -56,5 +56,7 @@ float lightRadius=In.radius;
 	 // test=float4(test * lambert*test);
 	// test=float4(lambert,lambert,lambert,1);
 	// test.xyz=vN;
+		test*=0.8;
+
 	 return test;
 }  

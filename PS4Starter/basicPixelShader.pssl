@@ -35,21 +35,23 @@ float lightRadius=In.radius;
 
 // bump test!!!!!!!
 
- float3x3  TBN = float3x3 ( In.vT , In.binormal , In.vN );
-float3 normal = normalize ( TBN._11_22_33 * ( bumpMap.Sample(samp0, In.UV.xy). rgb * 2.0 - 1.0));  //TBN._11_22_33???
- // vN=normal;
-
+ //row_major float3x3  TBN = float3x3 ( In.vT , In.binormal , In.vN );
+//float3 normal = normalize ( TBN * ( bumpMap.Sample(samp0, In.UV.xy). rgb * 2.0 - 1.0));  //TBN._11_22_33???
+ //// vN=normal;
+//
  //
 
 
  //
-	float3 incident = normalize (In.Position - In.cameraPos );
- float lambert = max (0.3 , dot ( incident ,vN )); // Different !
+	//float3 incident = normalize (In.Position - In.cameraPos );
+float3 incident = normalize (In.lightPos - In.Position );
+
+ float lambert = max (0.15 , dot ( incident ,vN )); // Different !
 //
  float dist = length ( In.lightPos - In.Position );
- float atten = 1.0 - clamp ( dist / lightRadius , 0.18 , 0.6);
+ float atten = 1.0 - clamp ( dist / lightRadius , 0.18 , 0.9);
   float lightIntensity =In.	lightIntensity;
-  lightIntensity =0.8f;
+  lightIntensity =8.8f;
 
 
 
@@ -57,24 +59,24 @@ float3 normal = normalize ( TBN._11_22_33 * ( bumpMap.Sample(samp0, In.UV.xy). r
 
 
 
-	float3 viewDir = normalize ( In.cameraPos - In.Position );
+	float3 viewDir = normalize (   (In.cameraPos,1)-In.Position);
 	float3 halfDir = normalize ( incident + viewDir );
-  float rFactor = max (0.3 , dot ( halfDir , vN  )); // Different !
+  float rFactor = max (0.0 , dot ( halfDir , vN  )); // Different !
   float sFactor = pow ( rFactor , 33.0 );
 
-	float3 colour = (   In.lightColour . rgb );
-    colour += (  In.lightColour . rgb * sFactor )*0.33;
-	float4 c=(colour,1);
+	float3 lightColour = ( In.lightColour . rgb );
+    lightColour += (  In.lightColour . rgb * sFactor )*0.33;
+	float4 c=(lightColour,1);
 
-	float4 test = colorMap.Sample(samp0, In.UV.xy)*0.8+c*0.6;
-	 test=float4(test * atten * lambert *lightIntensity*test);
+	float4 test = colorMap.Sample(samp0, In.UV.xy)*0.9+c*0.2;
+	 test=float4(test * atten * lambert *lightIntensity);
 	 // test=float4(test * lambert*test);
 	// test=float4(lambert,lambert,lambert,1);
 	// test.xyz=vN;
 
 
 
-
+//	 test=float4(viewDir,1);
 
 
 

@@ -6,7 +6,7 @@ C:\Users\b8052301\Source\Repos\Team-4-PS42\Common/../Common/ObjLoader.h(225,13):
 C:\Users\b8052301\Source\Repos\Team-4-PS42\Common/../Common/ObjLoader.h(397,13): warning : unused function 'exportGroupsToShape' [-Wunused-function]
   static bool exportGroupsToShape(shape_t *shape,
               ^
-C:\Users\b8052301\Source\Repos\Team-4-PS42\Common/../Common/ObjLoader.h(937,22): warning : private field 'primType' is not used [-Wunused-private-field]
+C:\Users\b8052301\Source\Repos\Team-4-PS42\Common/../Common/ObjLoader.h(927,22): warning : private field 'primType' is not used [-Wunused-private-field]
                           GeometryPrimitive       primType;
                                                   ^
   3 warnings generated.

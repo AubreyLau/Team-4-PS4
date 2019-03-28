@@ -28,7 +28,7 @@ namespace NCL {
 
 			/*Mo test*/
 			RenderObject* skybox[6];
-			RenderObject* ball;
+			RenderObject* building;
 			RenderObject* testbunny;
 
 			RenderObject* floor;

@@ -893,24 +893,14 @@ namespace NCL {
 					n[a] = normal;
 					n[b] = normal;
 					n[c] = normal;
-			
-					//if (texCoords.size() != numvertices) {
-					//			           
-					//t[a] = texCoords[i];
-					//t[b] = texCoords[i];
-					//t[c] = texCoords[i];
 
-					//}
-					//else {
-					//	//t[i] = texCoords[i];
-					//}
 
-					Vector3 tangent = GenerateTangent(positions[a], positions[b],
-						positions[c], texCoords[a],
-						texCoords[a], texCoords[a]);
-					tan[a] = tangent;
-					tan[b] = tangent;
-					tan[c] = tangent;
+				//	Vector3 tangent = GenerateTangent(positions[a], positions[b],
+				//		positions[c], texCoords[a],
+				//		texCoords[a], texCoords[a]);
+				//	tan[a] = tangent;
+				//	tan[b] = tangent;
+				//	tan[c] = tangent;
 			
 
 				}
