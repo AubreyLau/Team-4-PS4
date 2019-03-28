@@ -110,7 +110,7 @@ void ExampleRenderer::RenderActiveScene() {
 	DrawRenderObject(building);
 
 //	DrawRenderObject(addFloorToWorld(Vector3(1, 0, 1), (TextureBase*)myTexture, Vector3(2, 2, 0.1)));
-	DrawRenderObject(addFloorToWorld(Vector3(0, -0.2, 0), (TextureBase*)blue3, Vector3(20,0.1,20)));
+	DrawRenderObject(addFloorToWorld(Vector3(0, -0.3, 0), (TextureBase*)blue3, Vector3(20,0.1,20)));
 //	DrawRenderObject(floor);
 	DrawRenderObject(testbunny);
 }
