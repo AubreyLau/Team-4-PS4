@@ -29,6 +29,7 @@ sce::Gnmx::Toolkit::IAllocator	oAllocator;
 sce::Gnmx::Toolkit::IAllocator	gAllocator;
 
 
+
 Maths::Vector3 viewProjPos = Maths::Vector3(0, 0, 2);
 Maths::Matrix4 viewMat = Maths::Matrix4();
 Maths::Matrix4 projMat = Maths::Matrix4();
@@ -58,6 +59,9 @@ PS4RendererBase::PS4RendererBase(PS4Window*window)
 	InitialiseGCMRendering();
 	InitialiseVideoSystem();
 
+	//l =Light(NCL::Vector3(0,0,0), NCL::Vector3(0, 0, 0), 100.0f);
+	
+
 	defaultShader = PS4Shader::GenerateShader(
 		"/app0/BasicVertexShader.sb",
 		"/app0/basicPixelShader.sb"
@@ -72,7 +76,7 @@ PS4RendererBase::PS4RendererBase(PS4Window*window)
 	defaultTexture	= PS4Texture::LoadTextureFromFile("/app0/white.gnf");
 	myTexture= PS4Texture::LoadTextureFromFile("/app0/brick.gnf");
 
-	//blue1 = PS4Texture::LoadTextureFromFile("/app0/white.gnf");
+	pink = PS4Texture::LoadTextureFromFile("/app0/test.gnf");
 	//blue2 = PS4Texture::LoadTextureFromFile("/app0/white.gnf");
 	blue3 = PS4Texture::LoadTextureFromFile("/app0/blue.gnf");
 
@@ -114,30 +118,52 @@ PS4RendererBase::PS4RendererBase(PS4Window*window)
 
 
 
-	lightPos = (Vector3*)onionAllocator->allocate(sizeof(Vector3), Gnm::kEmbeddedDataAlignment4);
-	*lightPos = Vector3();
+	//lightPos = (Vector3*)onionAllocator->allocate(sizeof(Vector3), Gnm::kEmbeddedDataAlignment4);
+	//*lightPos = Vector3();
 
-	camPos = (Vector3*)onionAllocator->allocate(sizeof(Vector3), Gnm::kEmbeddedDataAlignment4);
-	*camPos = Vector3();
+	//camPos = (Vector3*)onionAllocator->allocate(sizeof(Vector3), Gnm::kEmbeddedDataAlignment4);
+	//*camPos = Vector3();
 
-	lightColour = (Vector4*)onionAllocator->allocate(sizeof(Vector4), Gnm::kEmbeddedDataAlignment4);
-	*lightColour = Vector4();
-
-
-	lightRadius = (float*)onionAllocator->allocate(sizeof(Vector3), Gnm::kEmbeddedDataAlignment4);
-	*lightRadius = float();
+	//lightColour = (Vector4*)onionAllocator->allocate(sizeof(Vector4), Gnm::kEmbeddedDataAlignment4);
+	//*lightColour = Vector4();
 
 
-	*camPos = CameraPos;
-	*lightPos = Vector3(0, 0, 0);
-	*lightColour = Vector4(1, 1, 1,30);
-	*lightRadius = 100;
+	//lightRadius = (float*)onionAllocator->allocate(sizeof(Vector3), Gnm::kEmbeddedDataAlignment4);
+	//*lightRadius = float();
 
 
-	lightBuffer.initAsConstantBuffer(lightPos, sizeof(Vector3));
-	lightBuffer.initAsConstantBuffer(camPos, sizeof(Vector3));
-	lightBuffer.initAsConstantBuffer(lightColour, sizeof(Vector4));
-	lightBuffer.initAsConstantBuffer(lightRadius, sizeof(float));
+	//*camPos = CameraPos;
+//	*lightPos = Vector3(0, 0, 0);
+//	*lightColour = Vector4(1, 1, 1,30);
+//	*lightRadius = 100;
+	
+
+	light_position_Radius = (Vector4*)onionAllocator->allocate(sizeof(Vector4), Gnm::kEmbeddedDataAlignment4);
+	*light_position_Radius = Vector4();
+	
+	light_colours_Intensity = (Vector4*)onionAllocator->allocate(sizeof(Vector4), Gnm::kEmbeddedDataAlignment4);
+	*light_colours_Intensity = Vector4();
+
+
+	*light_colours_Intensity = Vector4(1, 1, 1, 30);
+	*light_position_Radius = Vector4(0, 1, 0, 300);
+
+
+	lightBuffer.initAsConstantBuffer(light_colours_Intensity, sizeof(Vector4));
+	lightBuffer.initAsConstantBuffer(light_position_Radius, sizeof(Vector4));
+
+
+	//lightBuffer.initAsConstantBuffer(lightPos, sizeof(Vector3));
+	//lightBuffer.initAsConstantBuffer(camPos, sizeof(Vector3));
+	//lightBuffer.initAsConstantBuffer(lightColour, sizeof(Vector4));
+	//lightBuffer.initAsConstantBuffer(lightRadius, sizeof(float));
+
+
+
+//	_l = (_light*)onionAllocator->allocate(sizeof(_light), Gnm::kEmbeddedDataAlignment4);
+	//lightBuffer.initAsConstantBuffer(lightPos, sizeof(_light));
+//	*(_l->_colours_Intensity) = *lightColour;
+//	*(_l->_position_Radius) = *lightColour;
 
 	lightBuffer.setResourceMemoryType(Gnm::kResourceMemoryTypeRO); // it's a constant buffer, so read-only is OK
 
@@ -197,7 +223,7 @@ PS4RendererBase::~PS4RendererBase()	{
 	delete defaultMesh;
 	delete defaultTexture;
 	delete myTexture;
-	delete blue1;
+	delete pink;
 	delete blue2;
 	delete blue3;
 	delete defaultShader;
@@ -404,13 +430,13 @@ void PS4RendererBase::RenderFrame(float x, float y)			{
 	pitch_total = pitch_total + pitch;
 
 	std::cout << pitch_total << std::endl;
-	if (pitch_total > 30.0f) 
+	if (pitch_total > 70.0f) 
 	{
 		pitch_total = pitch_total - pitch;
 		pitch = 0.0f;
 	}
 
-	if (pitch_total < -25.0f)
+	if (pitch_total < -65.0f)
 	{
 		pitch_total = pitch_total - pitch;
 		pitch = 0.0f;
@@ -418,13 +444,13 @@ void PS4RendererBase::RenderFrame(float x, float y)			{
 	
 	yaw_total = yaw_total + yaw;
 
-	if (yaw_total > 30.0f)
+	if (yaw_total > 70.0f)
 	{
 		yaw_total = yaw_total - yaw;
 		yaw = 0.0f;
 	}
 
-	if (yaw_total < -30.0f)
+	if (yaw_total < -70.0f)
 	{
 		yaw_total = yaw_total - yaw;
 		yaw = 0.0f;
@@ -439,7 +465,7 @@ void PS4RendererBase::RenderFrame(float x, float y)			{
 	//viewMat = viewMat * Matrix4::BuildCameraViewMatrix(CameraPos, pitch, yaw);
 	//CameraPos = viewProjPos + Vector3(0.01*x, -0.01* y, 0);
 	//std::cout << "Change Pos is " << changePos << std::endl;
-	CameraPos = changePos + Vector3(0, 0, 2);
+	CameraPos = changePos + Vector3(0, 1, 6.5);
 
 	double pitch_sin = sin(pitch_total*PI / 180);
 	double pitch_cos = cos(pitch_total*PI / 180);
@@ -460,7 +486,7 @@ void PS4RendererBase::RenderFrame(float x, float y)			{
 	/*Mo test*/
 
 
-	projMat = Matrix4::Perspective(0.01f, 4000.0f, (float)16 / (float)9, 70.0f);
+	projMat = Matrix4::Perspective(0.01f, 4000.0f, (float)16 / (float)9, 65.0f);
 
 	viewProjMat->ToIdentity();
 	//viewProjPos = viewProjPos + Vector3(0.01*3, -0.01*3, 0);

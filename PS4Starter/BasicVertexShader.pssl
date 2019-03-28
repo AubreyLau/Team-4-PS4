@@ -37,12 +37,10 @@ float4x4 inverse(float4x4 input)
      return transpose(cofactors) / determinant(input);
  }
 
-ConstantBuffer LightData
+ ConstantBuffer LightData
 {
-	   float3 lightPos;
-	    float3 cameraPos;
-	 	float4 lightColour;
-		float1 lightRadius;
+	float4 light_colours_Intensity ;
+	float4 light_position_Radius ;
 };
 
 struct VS_INPUT
@@ -71,43 +69,33 @@ VS_OUTPUT main(VS_INPUT Input)
 {
 	VS_OUTPUT Output;
 
-
 Output.Position = mul(mul(camMatrix,modelMatrix), float4(Input.Position.xyz, 1));
 	
 	Output.UV = Input.UV;
-   // float3	lightPos=float3(-1.0f, 3.0f, -1.0f);//test fake light
-  //  float3	cameraPos=float3(0.0f, 0.0f, 2.0f);//
-	// float3	cameraPos= 
-	float4 lightColour=float4(3.0f, 2.0f, 0.0f,10.0f);//
-//	float  lightIntensity=30;
-	float lightRadius=10;
-//
-//
+
+	float3 cameraPos=camMatrix._41_42_43;
+	float4 lightColour = light_colours_Intensity ;
+	float3 lightPos = light_position_Radius.xyz ;
+	float lightRadius = light_position_Radius.w ;
+	float lightIntensity = lightColour.w;
+
 	//Output.cameraDir = normalize(Input.cameraPos.xyz - Output.Position.xyz);
 	float3 incident = normalize(Input.Position-cameraPos);
 	float3 vN = normalize(mul(float4(Input.Normal,0), mul(camMatrix,modelMatrix)).xyz);
     float3 vT = normalize(mul(float4(Input.Tangent,0), mul(camMatrix,modelMatrix)).xyz);
 
 
-     	Output.lightPos = lightPos;
-		Output.cameraPos = cameraPos;
-		Output.lightColour = lightColour;
-
-	Output.vN=Input.Normal;
-	Output.vT=Input.Tangent;
-	Output.lightIntensity=lightColour.w;
+    Output.lightPos = lightPos;
+	Output.cameraPos = cameraPos;
+	Output.lightColour = lightColour;
+	Output.lightIntensity=lightIntensity;
 	Output.radius=lightRadius;
+	
 
-
-
-	///
-
-
-
-
-	  float3x3 normalMatrix = transpose ( inverse (  modelMatrix ));
-	  Output. binormal = normalize ( normalMatrix._11_22_33 *normalize ( cross (vN ,vT)));  //._11_22_33???
-
+	 float3x3 normalMatrix = transpose ( inverse (  modelMatrix ));
+	 Output. binormal = normalize ( normalMatrix._11_22_33 *normalize ( cross (vN ,vT)));  //._11_22_33???
+     Output.vN=Input.Normal;
+	 Output.vT=Input.Tangent;
 
 
 	return Output;

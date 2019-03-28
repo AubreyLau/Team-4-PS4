@@ -11,6 +11,7 @@
 #include <..\samples\sample_code\graphics\api_gnm\toolkit\toolkit.h>
 #include "PS4Frame.h"
 #include "PS4Texture.h"
+#include"../../Common/Light.h"
 
 using namespace sce;
 using namespace Gnmx;
@@ -26,6 +27,12 @@ namespace NCL {
 			ONION,
 			MEMORYMAX
 		};
+		typedef struct {
+			Vector4* _position_Radius;
+			Vector4* _colours_Intensity;
+			/*std::vector<NCL::Vector4>	_position_Radius;
+			std::vector<NCL::Vector4>	_colours_Intensity;*/
+		}_light;
 
 		struct PS4ScreenBuffer {
 			sce::Gnm::RenderTarget		colourTarget;
@@ -102,7 +109,7 @@ namespace NCL {
 			PS4Mesh*    setMesh(const std::string&filename);
 			PS4Mesh*    setOBJ(const std::string&filename);
 			PS4Texture* defaultTexture;
-			PS4Texture* blue1;
+			PS4Texture* pink;
 			PS4Texture* blue2;
 			PS4Texture* blue3;
 			PS4Texture* myTexture;
@@ -119,10 +126,8 @@ namespace NCL {
 			Gnm::Buffer	cameraBuffer;
 
 
-			NCL::Maths::Vector3*	lightPos;
-			NCL::Maths::Vector3*	camPos;
-			NCL::Maths::Vector4* lightColour;
-			float* lightRadius;
+			NCL::Maths::Vector4*	light_position_Radius;
+			NCL::Maths::Vector4*	light_colours_Intensity;
 			Gnm::Buffer	lightBuffer;
 
 			int framesSubmitted;
@@ -158,7 +163,9 @@ namespace NCL {
 			PS4Texture* floorTexture;
 
 			PS4Mesh* testMesh;
+		//	Light l;
 
+			_light* _l;
 
 			float pitch ;
 			float yaw ;

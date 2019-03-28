@@ -84,6 +84,7 @@ PS4Mesh* PS4Mesh::GenerateSphere()
 PS4Mesh* PS4Mesh::GenerateCube()
 {
  	PS4Mesh* mesh = new PS4Mesh("/app0/Cube2.obj");
+ 	//PS4Mesh* mesh = new PS4Mesh("/app0/centeredcube.obj");
 //	PS4Mesh* mesh = new PS4Mesh("/app0/smallCube.obj");
 	mesh->indexType = sce::Gnm::IndexSize::kIndexSize32;
 	mesh->primitiveType = sce::Gnm::PrimitiveType::kPrimitiveTypeTriList;
