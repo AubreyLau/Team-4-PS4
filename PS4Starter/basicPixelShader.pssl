@@ -85,8 +85,5 @@ float3 incident = normalize (In.lightPos - In.Position );
 
 
 
-
-
-
 	 return test;
 }  

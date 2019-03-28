@@ -465,7 +465,7 @@ void PS4RendererBase::RenderFrame(float x, float y)			{
 	//viewMat = viewMat * Matrix4::BuildCameraViewMatrix(CameraPos, pitch, yaw);
 	//CameraPos = viewProjPos + Vector3(0.01*x, -0.01* y, 0);
 	//std::cout << "Change Pos is " << changePos << std::endl;
-	CameraPos = changePos + Vector3(0, 1, 6.5);
+	CameraPos = changePos + Vector3(0, 0.6, 6);
 
 	double pitch_sin = sin(pitch_total*PI / 180);
 	double pitch_cos = cos(pitch_total*PI / 180);
